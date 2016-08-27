@@ -8,6 +8,7 @@ class Avatar
 	end
 
 	def can_move?(direction)
+		# valid directions (depending on the room) are up, down, north, south, east, and west
 		@current_room.has_room_to_the?(direction)
 	end
 

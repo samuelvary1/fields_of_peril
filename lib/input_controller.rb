@@ -10,30 +10,35 @@ class InputController
 	end
 
 	def initialize_message
-		@current_message = avatar.location.description
+		@current_message = "#{avatar.location.header}\n #{avatar.location.first_time_message}"	
 	end
 
 	def evaluate(input)
-		tokens = input.split
+		entered_words = input.split
 		unless valid?(input)
 			@current_message = "Sorry, that is not a valid command."
 			return
 		end		
 
-		command = tokens.first
+		command = entered_words.first
 
 		if command == "go"
-			direction = tokens.last
+			direction = entered_words.last
 			if avatar.can_move?(direction)
 				avatar.move(direction)
-				@current_message = avatar.location.description
+				@current_message = "#{avatar.location.header}\n #{avatar.location.first_time_message}"
 			else
 				@current_message = "Sorry, you cannot go #{direction} from here."
 			end
 		end	
 
+		if entered_words == ["look", "closer"]
+			@current_message = avatar.location.details
+			return
+		end
+
 		if command == "look"
-			@current_message = avatar.location.info
+			@current_message = avatar.location.description
 		end
 		
 		if command == "help"
@@ -47,11 +52,11 @@ class InputController
 	end
 
 	def valid?(input)
-		tokens = input.split
+		entered_words = input.split
 		result = false
-		if valid_commands.include?(tokens.first) && tokens.size == 1
+		if valid_commands.include?(entered_words.first) && entered_words.size == 1
 			result = true
-		elsif tokens.size == 2
+		elsif entered_words.size == 2
 			result = true
 		end
 		result

@@ -1,10 +1,14 @@
 -
   starting_location: true
+  header: CHAPTER 1
   title: the_apartment
-  first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near St. Petersburg.
+  first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near the village. On the eastern side of the room there is a rickety wooden door.
+  # you should not be able to leave the room unless you pick up the brass key from the mantle. but in this room there should be the option to type 'break door' which allows you to get through but maybe deducts Health Points from your character.
   description: The apartment seems to have sustained some damage from shelling but is mostly intact.
-  items: rifle
   details: Looks like there are some random objects on the dusty mantle.
+  items: 
+    rifle: a battered mosin nagant rifle.
+    key: a brass key
   rooms: 
     north: window
     west: stairwell
@@ -12,10 +16,23 @@
   title: stairwell
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
   description: Several of the stairs look like they can barely support a person's weight.
-  items: none
+  # for this room, you'll need to program in a way for the character to get killed falling through the rotted steps UNLESS they type 'look closer', which allows them to see a safe way to hop over the stairs. Also make the danger more apparent in the main description.
   details: You see a way to hop over the stairs safely.
+  items: none
   rooms: 
     east: the_apartment
+    north: hallway_north
+    south: hallway_south
     up: the_roof
-    down: the_street
+    down: second_floor
+-
+  title: the_street
+  first_time_message: The ruined streets of tbd city. The entrance to the apartment building 
+  description: Craters decorate the street.
+  details: details of the street
+  items: lots of items here to be included in the description and the details
+  rooms:
+    north: town_square
+    east: stairwell
+
 

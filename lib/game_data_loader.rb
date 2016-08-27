@@ -1,5 +1,6 @@
 require File.join(File.dirname(__FILE__), 'room')
 require 'yaml'
+require 'pry'
 
 class GameDataLoader
 
@@ -21,20 +22,30 @@ class GameDataLoader
 	end
 
 	def establish_relationships(all_rooms)
+		# binding.pry
 		all_rooms.each do |room|
-			room.rooms.each do |direction, handle|
-				room.rooms[direction] = all_rooms.find {|r| r.handle == handle}
+			room.rooms.each do |direction, title|
+				room.rooms[direction] = all_rooms.find {|r| r.title == title}
 			end
 		end
 	end
 
+	# def display_items(all_rooms)
+	# 	puts "This room currently contains:"
+	# 	room.items.each do |name, item_description|
+	# 		puts "#{name}: #{item_description}"
+	# 	end
+	# end
+
 	def build_room(room_data)
 		room = get_room
-		room.handle            = room_data["handle"]
-		room.description       = room_data["desc"]
-		room.info              = room_data["info"]
-		room.rooms             = room_data["rooms"]
+		room.title = room_data["title"]
+		room.header = room_data["header"]
+		room.first_time_message = room_data["first_time_message"]
+		room.description = room_data["description"]
+		room.details = room_data["details"]
 		room.starting_location = room_data["starting_location"]
+		room.rooms = room_data["rooms"]
 		room
 	end
 
