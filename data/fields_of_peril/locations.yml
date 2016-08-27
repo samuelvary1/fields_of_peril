@@ -25,6 +25,7 @@
     south: hallway_south
     up: the_roof
     down: second_floor
+    # need to draw maps and flesh out the rest of the apartment building 
 -
   title: the_street
   first_time_message: The ruined streets of tbd city. The entrance to the apartment building 
