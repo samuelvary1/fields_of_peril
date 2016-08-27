@@ -1,6 +1,7 @@
 -
   starting_location: true
   header: CHAPTER 1
+  # if you leave the room and go back in currently it shows chapter 1 and the first time message again
   title: the_apartment
   first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near the village. On the eastern side of the room there is a rickety wooden door.
   # you should not be able to leave the room unless you pick up the brass key from the mantle. but in this room there should be the option to type 'break door' which allows you to get through but maybe deducts Health Points from your character.
@@ -11,9 +12,9 @@
     key: a brass key
   rooms: 
     north: window
-    west: stairwell
+    west: 3rd_floor_hallway_stairwell
 -
-  title: stairwell
+  title: 3rd_floor_hallway_stairwell
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
   description: Several of the stairs look like they can barely support a person's weight.
   # for this room, you'll need to program in a way for the character to get killed falling through the rotted steps UNLESS they type 'look closer', which allows them to see a safe way to hop over the stairs. Also make the danger more apparent in the main description.
@@ -21,11 +22,34 @@
   items: none
   rooms: 
     east: the_apartment
-    north: hallway_north
-    south: hallway_south
+    north: 3rd_floor_hallway_north
+    south: 3rd_floor_hallway_south
     up: the_roof
-    down: second_floor
+    down: 2nd_floor_hallway_stairwell
     # need to draw maps and flesh out the rest of the apartment building 
+-
+  title: 2nd_floor_hallway_stairwell
+  first_time_message: You arrive on the second floor of the old apartment building.
+  description: Some old oil lamps flicker in the hallway. It's a wonder there's still any power here.
+  details: tbd
+  items: tbd
+  rooms: 
+    north: 2nd_floor_hallway_north
+    south: 2nd_floor_hallway_south
+    up: 3rd_floor_hallway_stairwell
+    down: 1st_floor_hallway_stairwell  
+-
+  title: 1st_floor_hallway_stairwell
+  first_time_message: You arrive on the first floor of the old apartment building.
+  description: tbd
+  details: tbd
+  items: tbd
+  rooms: 
+    north: 1st_floor_hallway_north
+    south: 1st_floor_hallway_south
+    up: 2nd_floor_hallway_stairwell
+    west: the_street
+
 -
   title: the_street
   first_time_message: The ruined streets of tbd city. The entrance to the apartment building 
@@ -34,6 +58,6 @@
   items: lots of items here to be included in the description and the details
   rooms:
     north: town_square
-    east: stairwell
+    east: 1st_floor_hallway_stairwell
 
 
