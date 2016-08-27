@@ -1,0 +1,21 @@
+-
+  starting_location: true
+  title: the_apartment
+  first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near St. Petersburg.
+  description: The apartment seems to have sustained some damage from shelling but is mostly intact.
+  items: rifle
+  details: Looks like there are some random objects on the dusty mantle.
+  rooms: 
+    north: window
+    west: stairwell
+-
+  title: stairwell
+  first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
+  description: Several of the stairs look like they can barely support a person's weight.
+  items: none
+  details: You see a way to hop over the stairs safely.
+  rooms: 
+    east: the_apartment
+    up: the_roof
+    down: the_street
+
