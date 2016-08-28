@@ -3,6 +3,7 @@ class InputController
 	
 	def avatar=(avatar)
 		@avatar = avatar
+		# binding.pry
 	end
 
 	def messages=(messages)
@@ -15,6 +16,11 @@ class InputController
 
 	def evaluate(input)
 		entered_words = input.split
+		
+		entered_words.each do |word|
+			word.downcase!
+		end
+
 		unless valid?(input)
 			@current_message = "Sorry, that is not a valid command."
 			return
@@ -40,6 +46,17 @@ class InputController
 		if command == "look"
 			@current_message = avatar.location.description
 		end
+
+		if command == "inventory" || command == "i"
+			if avatar.items == {}
+				@current_message = "You are not currently carrying anything"
+			else
+				@current_message = "You are currently carrying:\n"
+				avatar.items.each do |name, description|
+					puts "#{name}: #{description}"
+				end
+			end
+		end
 		
 		if command == "help"
 			@current_message = @messages["help"]
@@ -63,7 +80,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(look exit quit help)
+		@commands ||= %w(look exit quit help inventory i)
 	end
 
 end

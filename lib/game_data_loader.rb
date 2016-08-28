@@ -22,13 +22,14 @@ class GameDataLoader
 	end
 
 	def establish_relationships(all_rooms)
-		# binding.pry
 		all_rooms.each do |room|
 			room.rooms.each do |direction, title|
 				room.rooms[direction] = all_rooms.find {|r| r.title == title}
 			end
 		end
 	end
+
+	# obviously need to modify this method so it recognizes the CURRENT room you nitwit:
 
 	# def display_items(all_rooms)
 	# 	puts "This room currently contains:"
@@ -39,12 +40,13 @@ class GameDataLoader
 
 	def build_room(room_data)
 		room = get_room
+		room.starting_location = room_data["starting_location"]
 		room.title = room_data["title"]
 		room.header = room_data["header"]
 		room.first_time_message = room_data["first_time_message"]
 		room.description = room_data["description"]
 		room.details = room_data["details"]
-		room.starting_location = room_data["starting_location"]
+		room.items = room_data["items"]
 		room.rooms = room_data["rooms"]
 		room
 	end

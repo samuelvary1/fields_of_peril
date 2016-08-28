@@ -1,6 +1,8 @@
 class Avatar
+	attr_accessor :items
 	def initialize(starting_location)
 		@current_room = starting_location
+		@items = {}
 	end
 
 	def location
@@ -21,4 +23,8 @@ class Avatar
 			false
 		end
 	end
+
+	# def pickup(item)
+	# 	@items << item
+	# end
 end
