@@ -1,4 +1,4 @@
-zork help screen:
+zork original help screen:
 
 Useful commands:
 
