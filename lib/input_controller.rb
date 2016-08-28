@@ -40,8 +40,6 @@ class InputController
 		if command == "look"
 			@current_message = avatar.location.description
 		end
-
-		if command == "time"
 		
 		if command == "help"
 			@current_message = @messages["help"]
