@@ -23,8 +23,4 @@ class Avatar
 			false
 		end
 	end
-
-	# def pickup(item)
-	# 	@items << item
-	# end
 end

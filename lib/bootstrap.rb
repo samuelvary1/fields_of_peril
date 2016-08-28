@@ -3,6 +3,7 @@ lib_dir = File.expand_path(File.dirname(__FILE__))
 require File.join(lib_dir, 'avatar')
 require File.join(lib_dir, 'input_controller')
 require File.join(lib_dir, 'game_data_loader')
+require 'pry'
 
 class Bootstrap
   def initialize(location_data_file, message_data_file)

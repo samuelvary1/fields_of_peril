@@ -1,9 +1,7 @@
 require File.join(File.dirname(__FILE__), 'room')
 require 'yaml'
-require 'pry'
 
 class GameDataLoader
-
 	def load_location_data(file)
 		data = load_data_from(file)
 		rooms = load_initial_state(data)
