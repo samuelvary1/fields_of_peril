@@ -9,3 +9,4 @@
 * look harder, look closely, look carefully, check surroundings carefully: see detailed room description.
 * inventory, i: view all items you are currently carrying.
 * help, h: display help / instructions
+* look kjnkjnkj: sorry, i only understand you as far as wanting to look.
