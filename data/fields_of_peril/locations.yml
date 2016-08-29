@@ -8,11 +8,30 @@
   description: The apartment seems to have sustained some damage from shelling but is mostly intact.
   details: Looks like there are some random objects on the dusty mantle.
   items: 
-    rifle: a battered mosin nagant rifle.
-    key: a brass key
+    - 
+      handle: rifle 
+      description: a battered mosin nagant rifle
+      first_time_item_message: You pull the rifle out from behind a pile of sheetrock and sling it on your back.
+      points: 5
+    - 
+      handle: brass key
+      description: a worn old key that looks like it might open that apartment door.
+      first_time_item_message: You scoop up the key from the dusty mantle.
+      points: 7
   rooms: 
     north: window
     west: 3rd_floor_hallway_stairwell
+  access_points:
+    -
+      handle: door
+      open: false 
+      locked: true
+      breakable: false 
+    -
+      handle: window
+      open: false
+      locked: false
+      breakable: true
 -
   title: 3rd_floor_hallway_stairwell
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
