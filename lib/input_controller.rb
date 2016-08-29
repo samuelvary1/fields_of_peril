@@ -35,7 +35,9 @@ class InputController
 			@current_message = avatar.location.description
 		elsif 
 			input == "look carefully" || input == "look harder" || input == "look closer" || input == "look closely" || input == "check surroundings carefully"
-			@current_message = avatar.location.details
+			binding.pry
+			@current_message = avatar.location.details["phrase"]
+			# this is where you'll need to check if knowledge == true for a room details, and if so add it to the avatar's knowledge array
 		elsif input.include?("look")
 			@current_message = "Sorry, I only understand you as far as wanting to look."
 		end

@@ -6,8 +6,7 @@
   first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near the town. On the western side of the room there is a rickety wooden door.
   # you should not be able to leave the room unless you pick up the brass key from the mantle. but in this room there should be the option to type 'break door' which allows you to get through but maybe deducts Health Points from your character.
   description: The apartment seems to have sustained some damage from shelling but is mostly intact.
-  details: 
-    -
+  details:
       phrase: Looks like there are some random objects on the dusty mantle.
       knowledge: false
   items: 
@@ -18,7 +17,6 @@
       points: 5
       details:
       # a command "look carefully at #{object}" should give you details["phrase"] and if knowledge == true, add the phrase to  
-        -
           phrase: you can just make out initials carved in the stock "V.L."
           acquired_phrase: The mosin nagant has the initials "V.L." carved raggedly into the stock.
           knowledge: true
@@ -29,7 +27,6 @@
       first_time_item_message: You scoop up the key from the dusty mantle.
       points: 7
       details:
-        -
           phrase: there isn't much else to see
           acquired_phrase: nil
           knowledge: false
@@ -56,7 +53,6 @@
   description: Several of the stairs look like they can barely support a person's weight.
   # for this room, you'll need to program in a way for the character to get killed falling through the rotted steps UNLESS they type 'look closer', which allows them to see a safe way to hop over the stairs. Also make the danger more apparent in the main description.
   details: 
-    -
       phrase: You see a way to hop over the stairs safely.
       acquired_phrase: You know a way to hop over the stairs safely.
       knowledge: true
