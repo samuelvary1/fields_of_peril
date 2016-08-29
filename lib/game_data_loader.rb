@@ -46,6 +46,7 @@ class GameDataLoader
 		room.details = room_data["details"]
 		room.items = room_data["items"]
 		room.rooms = room_data["rooms"]
+		room.access_points = room_data["access_points"]
 		room
 	end
 
