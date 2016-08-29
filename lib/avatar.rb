@@ -1,8 +1,10 @@
 class Avatar
-	attr_accessor :items
+	attr_accessor :items, :knowledge, :score
 	def initialize(starting_location)
 		@current_room = starting_location
-		@items = {}
+		@items = []
+		@knowledge = []
+		@score = 0
 	end
 
 	def location
