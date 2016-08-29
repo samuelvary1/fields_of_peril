@@ -55,7 +55,6 @@ class InputController
 	end
 
 	def evaluate(input)
-		binding.pry
 		input.downcase!
 		entered_words = input.split
 
