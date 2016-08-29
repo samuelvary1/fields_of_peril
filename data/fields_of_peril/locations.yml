@@ -25,6 +25,12 @@
       description: a worn old key that looks like it might open that apartment door.
       first_time_item_message: You scoop up the key from the dusty mantle.
       points: 7
+      details:
+        -
+          phrase: there isn't much else to see
+          acquired_phrase: nil
+          knowledge: false
+          points: nil
   rooms: 
     north: window
     west: 3rd_floor_hallway_stairwell
