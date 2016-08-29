@@ -41,14 +41,31 @@ class InputController
 		end
 	end
 
+	def check_pickup_item(entered_words)
+		# right now this only works with single word objects
+		if entered_words[0] == "take"
+			object = entered_words[1]
+			avatar.location.items.each do |item|
+				if item.has_value?("#{object}")
+					avatar.items << item
+					avatar.location.items.delete(item)
+					@current_message = "You've picked up the #{object}"
+				else
+					@current_message = "Sorry, that doesn't appear to be here."
+				end
+			end
+		end
+	end
+
 	def check_inventory(input)
 		if input == "inventory" || input == "i"
-			if avatar.items == {}
+			if avatar.items.size == 0
 				@current_message = "You are not currently carrying anything"
 			else
-				@current_message = "You are currently carrying:\n"
-				avatar.items.each do |name, description|
-					puts "#{name}: #{description}"
+				# this displays but does not print in the correct order
+				@current_message = "You are currently carrying:"
+				avatar.items.each_with_index do |item, index|
+					puts "#{index + 1}. #{item['handle']}: #{item['description']}"
 				end
 			end
 		end
@@ -69,6 +86,7 @@ class InputController
 		check_movement(command, entered_words)
 		check_looking(input)
 		check_inventory(input)
+		check_pickup_item(entered_words)
 
 		if input == "help" || input == "h"
 			@current_message = @messages["help"]
@@ -93,6 +111,6 @@ class InputController
 
 	def valid_commands
 		# only needs to pass the first word or letter of the command to be considered valid
-		@commands ||= %w(look exit quit help h inventory i)
+		@commands ||= %w(look exit quit help h inventory i take)
 	end
 end
