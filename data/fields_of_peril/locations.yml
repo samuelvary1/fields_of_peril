@@ -3,7 +3,7 @@
   header: CHAPTER 1
   # if you leave the room and go back in currently it shows chapter 1 and the first time message again
   title: the_apartment
-  first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near the village. On the eastern side of the room there is a rickety wooden door.
+  first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near the village. On the western side of the room there is a rickety wooden door.
   # you should not be able to leave the room unless you pick up the brass key from the mantle. but in this room there should be the option to type 'break door' which allows you to get through but maybe deducts Health Points from your character.
   description: The apartment seems to have sustained some damage from shelling but is mostly intact.
   details: Looks like there are some random objects on the dusty mantle.
@@ -13,6 +13,13 @@
       description: a battered mosin nagant rifle
       first_time_item_message: You pull the rifle out from behind a pile of sheetrock and sling it on your back.
       points: 5
+      details:
+      # a command "look carefully at #{object}" should give you details["phrase"] and if knowledge == true, add the phrase to  
+        -
+          phrase: you can just make out initials carved in the stock "V.L."
+          acquired_phrase: The mosin nagant has the initials "V.L." carved raggedly into the stock.
+          knowledge: true
+          points: 1
     - 
       handle: brass key
       description: a worn old key that looks like it might open that apartment door.
@@ -24,11 +31,13 @@
   access_points:
     -
       handle: door
+      direction: west
       open: false 
       locked: true
       breakable: false 
     -
       handle: window
+      direction: north
       open: false
       locked: false
       breakable: true
@@ -37,15 +46,26 @@
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
   description: Several of the stairs look like they can barely support a person's weight.
   # for this room, you'll need to program in a way for the character to get killed falling through the rotted steps UNLESS they type 'look closer', which allows them to see a safe way to hop over the stairs. Also make the danger more apparent in the main description.
-  details: You see a way to hop over the stairs safely.
-  items: none
+  details: 
+    -
+      phrase: You see a way to hop over the stairs safely.
+      acquired_phrase: You know a way to hop over the stairs safely.
+      knowledge: true
+      points: 1
+  items:
   rooms: 
     east: the_apartment
     north: 3rd_floor_hallway_north
     south: 3rd_floor_hallway_south
     up: the_roof
     down: 2nd_floor_hallway_stairwell
-    # need to draw maps and flesh out the rest of the apartment building 
+  access_points: 
+    - 
+      handle: door
+      direction: east
+      open: false
+      locked: true
+      breakable: false
 -
   title: 2nd_floor_hallway_stairwell
   first_time_message: You arrive on the second floor of the old apartment building.

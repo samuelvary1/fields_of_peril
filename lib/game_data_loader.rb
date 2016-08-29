@@ -16,7 +16,6 @@ class GameDataLoader
 	def load_initial_state(data)
 		rooms = []
 		data.each {|room_data| rooms << build_room(room_data)}
-		binding.pry
 		rooms
 	end
 
@@ -47,6 +46,7 @@ class GameDataLoader
 		room.details = room_data["details"]
 		room.items = room_data["items"]
 		room.rooms = room_data["rooms"]
+		room.access_points = room_data["access_points"]
 		room
 	end
 
