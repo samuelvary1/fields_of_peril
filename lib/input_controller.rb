@@ -14,7 +14,7 @@ class InputController
 	end
 
 	def check_movement(command, entered_words)
-		if command == "go"
+		
 			direction = entered_words.last
 			if avatar.can_move?(direction)
 				avatar.move(direction)
@@ -27,14 +27,13 @@ class InputController
 			else
 				@current_message = "Sorry, you cannot go #{direction} from here."
 			end
-		end	
 	end
 
 	def check_looking(input)
-		if input == "look" || input == "look around" || input == "check surroundings"
+		if input == "look"
 			@current_message = avatar.location.description
 		elsif 
-			input == "look carefully" || input == "look harder" || input == "look closer" || input == "look closely" || input == "check surroundings carefully"
+			input == "look carefully" || input == "look closer"
 			@current_message = avatar.location.details["phrase"]
 			# this is where you'll need to check if knowledge == true for a room details, and if so add it to the avatar's knowledge array
 		elsif input.include?("look")
@@ -42,10 +41,18 @@ class InputController
 		end
 	end
 
-	def check_pickup_item(entered_words)
-		# right now this only works with single word objects
-		if entered_words[0] == "take"
-			object = entered_words[1]
+	def check_pickup_item(object)
+		checker = avatar.items.find do |item_hash|
+			item_hash.has_value?(object)
+		end
+
+		if !checker.nil? && checker["handle"] == object
+			# binding.pry
+			@current_message = "You're already holding that!"
+			@toggle = false
+		end
+
+		if @toggle
 			avatar.location.items.each do |item|
 				if item.has_value?("#{object}")
 					avatar.items << item
@@ -58,21 +65,16 @@ class InputController
 		end
 	end
 
-	def check_inventory(input)
-		if input == "inventory" || input == "i"
-			if avatar.items.size == 0
-				@current_message = "You are not currently carrying anything"
-			else
-				# this displays but does not print in the correct order
-				@current_message = "You are currently carrying:"
-				avatar.items.each_with_index do |item, index|
-					puts "#{index + 1}. #{item['handle']}: #{item['description']}"
-				end
-			end
+	def check_inventory
+		if avatar.items.size != 0
+			@current_message = avatar.list_items
+		else
+			@current_message = "You are not currently carrying anything"
 		end
 	end
 
 	def evaluate(input)
+		@toggle = false
 		input.downcase!
 		entered_words = input.split
 
@@ -84,10 +86,21 @@ class InputController
 		command = entered_words[0]
 		command_two = entered_words[1]
 
-		check_movement(command, entered_words)
+
 		check_looking(input)
-		check_inventory(input)
-		check_pickup_item(entered_words)
+		
+		if input == "inventory" || input == "i"
+			check_inventory
+		end
+
+		if command == "go"
+			check_movement(command, entered_words)
+		end
+
+		if command == "take"
+			@toggle = true
+			check_pickup_item(command_two)
+		end
 
 		if input == "help" || input == "h"
 			@current_message = @messages["help"]

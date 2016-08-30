@@ -13,7 +13,6 @@
     - 
       handle: rifle 
       description: a battered mosin nagant rifle
-      first_time_item_message: You pull the rifle out from behind a pile of sheetrock and sling it on your back.
       points: 5
       details:
       # a command "look carefully at #{object}" should give you details["phrase"] and if knowledge == true, add the phrase to  
@@ -22,17 +21,15 @@
           knowledge: true
           points: 1
     - 
-      handle: brass key
-      description: a worn old key that looks like it might open that apartment door.
-      first_time_item_message: You scoop up the key from the dusty mantle.
+      handle: key
+      description: a worn old brass key that looks like it might open that apartment door.
       points: 7
       details:
           phrase: there isn't much else to see
           acquired_phrase: nil
           knowledge: false
           points: nil
-  rooms: 
-    north: window
+  rooms:
     west: 3rd_floor_hallway_stairwell
   access_points:
     -
