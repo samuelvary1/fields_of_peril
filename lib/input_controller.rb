@@ -76,7 +76,6 @@ class InputController
 	end
 
 	def evaluate(input)
-		@toggle = false
 		input.downcase!
 		entered_words = input.split
 
@@ -100,7 +99,6 @@ class InputController
 		end
 
 		if command == "take"
-			@toggle = true
 			check_pickup_item(command_two)
 		end
 
@@ -117,9 +115,7 @@ class InputController
 	def valid?(input)
 		entered_words = input.split
 		result = false
-		if valid_commands.include?(entered_words.first) && entered_words.size == 1
-			result = true
-		elsif entered_words.size >= 2 
+		if valid_commands.include?(entered_words.first) && entered_words.size >= 1
 			result = true
 		end
 		result
@@ -127,6 +123,6 @@ class InputController
 
 	def valid_commands
 		# only needs to pass the first word or letter of the command to be considered valid
-		@commands ||= %w(look exit quit help h inventory i take)
+		@commands ||= %w(go look exit quit help h inventory i take)
 	end
 end
