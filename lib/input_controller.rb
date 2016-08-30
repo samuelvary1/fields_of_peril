@@ -14,19 +14,18 @@ class InputController
 	end
 
 	def check_movement(command, entered_words)
-		
-			direction = entered_words.last
-			if avatar.can_move?(direction)
-				avatar.move(direction)
-				# this is where we need a way to check if the player has ever been in the room before. if true, first_time_message, else, basic description
-				# currently with this setup you obviously get the first_time_message every time you go into a room, no matter how many times you've been there.
-				# the first_time_message is important because there should be things that are triggered (such as ambushes etc.) the first time you get somewhere
-				# it will also be key because if that first_time action is triggered and you don't have a certain item, you'll get killed. 
-				# that is an important part of the overall gameplay.
-				@current_message = avatar.location.first_time_message
-			else
-				@current_message = "Sorry, you cannot go #{direction} from here."
-			end
+		direction = entered_words.last
+		if avatar.can_move?(direction)
+			avatar.move(direction)
+			# this is where we need a way to check if the player has ever been in the room before. if true, first_time_message, else, basic description
+			# currently with this setup you obviously get the first_time_message every time you go into a room, no matter how many times you've been there.
+			# the first_time_message is important because there should be things that are triggered (such as ambushes etc.) the first time you get somewhere
+			# it will also be key because if that first_time action is triggered and you don't have a certain item, you'll get killed. 
+			# that is an important part of the overall gameplay.
+			@current_message = avatar.location.first_time_message
+		else
+			@current_message = "Sorry, you cannot go #{direction} from here."
+		end
 	end
 
 	def check_looking(input)
@@ -42,32 +41,35 @@ class InputController
 	end
 
 	def check_pickup_item(object)
-		checker = avatar.items.find do |item_hash|
-			item_hash.has_value?(object)
+		inventory_checker = avatar.items.find do |item|
+			item.has_value?(object)
 		end
 
-		if !checker.nil? && checker["handle"] == object
-			# binding.pry
+		if inventory_checker != nil && inventory_checker["handle"] == object
 			@current_message = "You're already holding that!"
-			@toggle = false
+			return
 		end
 
-		if @toggle
+		room_checker = avatar.location.items.find do |item|
+			item.has_value?(object)
+		end
+
+		if room_checker != nil
 			avatar.location.items.each do |item|
-				if item.has_value?("#{object}")
+				if room_checker["handle"] == object
 					avatar.items << item
 					avatar.location.items.delete(item)
 					@current_message = "You've picked up the #{object}"
-				else
-					@current_message = "Sorry, that doesn't appear to be here."
 				end
 			end
+		else
+			@current_message = "Sorry, that doesn't appear to be here."
 		end
 	end
 
-	def check_inventory
+	def view_inventory
 		if avatar.items.size != 0
-			@current_message = avatar.list_items
+			@current_message = "This is where it should say what you're holding"
 		else
 			@current_message = "You are not currently carrying anything"
 		end
@@ -90,7 +92,7 @@ class InputController
 		check_looking(input)
 		
 		if input == "inventory" || input == "i"
-			check_inventory
+			view_inventory
 		end
 
 		if command == "go"
