@@ -28,15 +28,14 @@ class InputController
 		end
 	end
 
-	def check_looking(input)
-		if input == "look"
-			@current_message = avatar.location.description
-		elsif 
-			input == "look carefully" || input == "look closer"
+	def look(input, command, command_two)
+		if input == "look closer"
 			@current_message = avatar.location.details["phrase"]
 			# this is where you'll need to check if knowledge == true for a room details, and if so add it to the avatar's knowledge array
-		elsif input.include?("look")
+		elsif command == "look" && command_two != "closer" && !command_two.nil?
 			@current_message = "Sorry, I only understand you as far as wanting to look."
+		else
+			@current_message = avatar.location.description
 		end
 	end
 
@@ -86,9 +85,12 @@ class InputController
 
 		command = entered_words[0]
 		command_two = entered_words[1]
+		command_three = entered_words[2]
+		command_four = entered_words[3]
 
-
-		check_looking(input)
+		if command == "look"
+			look(input, command, command_two)
+		end
 		
 		if input == "inventory" || input == "i"
 			view_inventory
