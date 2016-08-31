@@ -51,7 +51,7 @@ class InputController
 		end
 	end
 
-	def pick_up_item(object)
+	def take_item(object)
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
 		end
@@ -127,7 +127,7 @@ class InputController
 		end
 		
 		if command == "take"
-			pick_up_item(command_two)
+			take_item(command_two)
 		end
 
 		if command == "drop"

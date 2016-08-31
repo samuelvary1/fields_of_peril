@@ -10,3 +10,4 @@
 * inventory, i: view all items you are currently carrying.
 * help, h: display help / instructions
 * take object: can pickup single word objects right now and add them to your inventory
+* drop object: drop any object you are currently carrying and add it to the items in the current room.
