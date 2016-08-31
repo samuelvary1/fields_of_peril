@@ -56,8 +56,8 @@
 -
   title: 2nd_floor_hallway_stairwell
   first_time_message: You arrive on the second floor of the old apartment building.
-  description: Some old oil lamps flicker in the hallway. It's a wonder there's still any power here.
-  details: tbd
+  description: You're standing on the second floor of the apartment building. 
+  details: Some old lamps flicker in the hallway. It's a wonder there's still any power here.
   items:
   rooms: 
     up: 3rd_floor_hallway_stairwell
@@ -65,13 +65,12 @@
 -
   title: 1st_floor_hallway_stairwell
   first_time_message: You arrive on the first floor of the old apartment building.
-  description: tbd
-  details: tbd
+  description: you are standing in the entranceway on the first floor of the apartment building
+  details: not much else to see here...
   items:
   rooms: 
     up: 2nd_floor_hallway_stairwell
     west: the_street
-
 -
   title: the_street
   first_time_message: The ruined streets of tbd city. The entrance to the apartment building 
