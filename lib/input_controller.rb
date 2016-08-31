@@ -55,7 +55,7 @@ class InputController
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
 		end
-		
+
 		if inventory_checker != nil && inventory_checker["handle"] == object
 			@current_message = "You're already holding that!"
 			return
@@ -86,7 +86,7 @@ class InputController
 
 		if inventory_checker != nil && inventory_checker["handle"] == object			
 			avatar.items.each do |item|
-				if inventory_checker["handle"] == object
+				if item["handle"] == object
 					avatar.items.delete(item)
 					avatar.location.items.insert(0, item)
 				end
