@@ -101,6 +101,22 @@ class InputController
 		# binding.pry
 	end
 
+	def unlock_access_point(command, command_two, command_three, command_four)
+		avatar.location.access_points.each do |direction, access_point|
+			if access_point && access_point["handle"] == command_two && !access_point["locked"]
+				@current_message = "That appears to be already unlocked."
+				return
+			end
+
+			if access_point["handle"] && access_point["handle"] == command_two && access_point["locked"]
+				access_point["locked"] = false
+				@current_message = "you've unlocked the #{access_point["handle"]}"
+			else
+				@current_message = "I don't think you can unlock anything like that here."
+			end
+		end
+	end
+
 	def view_inventory
 		if avatar.items.size != 0
 			@current_message = avatar.list_items
@@ -139,6 +155,10 @@ class InputController
 			drop_item(command_two)
 		end
 
+		if command == "unlock"
+			unlock_access_point(command, command_two, command_three, command_four)
+		end
+
 		if input == "inventory" || input == "i"
 			view_inventory
 		end
@@ -164,6 +184,6 @@ class InputController
 
 	def valid_commands
 		# only needs to pass the first word or letter of the command to be considered valid
-		@commands ||= %w(go look exit quit help h inventory i take drop)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock)
 	end
 end
