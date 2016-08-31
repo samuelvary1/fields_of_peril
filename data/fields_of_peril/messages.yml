@@ -1,2 +1,2 @@
-splash: FIELDS OF PERIL by Sam Vary
-help: valid commands include look; look closer; go (direction); take (item); unlock (access point); unlock (access point) with (item); drop (item); h or help; i or inventory; 
+splash: "FIELDS OF PERIL by Sam Vary"
+help: "valid commands include:\n -look\n -look closer\n -go [direction]\n -take [item]\n -unlock [access point]\n -unlock [access point] with [item]\n -drop [item]\n -h or help\n -i or inventory"
