@@ -11,7 +11,7 @@
       knowledge: false
   items: 
     - 
-      handle: rifle 
+      handle: rifle
       description: a battered mosin nagant rifle
       points: 5
       details:
@@ -36,13 +36,8 @@
       handle: door
       direction: west
       open: false 
-      locked: true
+      unlocked: false
       breakable: false 
-    -
-      handle: window
-      direction: north
-      open: false
-      locked: false
 -
   title: 3rd_floor_hallway_stairwell
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
@@ -56,9 +51,6 @@
   items:
   rooms: 
     east: the_apartment
-    # north: 3rd_floor_hallway_north
-    # south: 3rd_floor_hallway_south
-    # up: the_roof
     down: 2nd_floor_hallway_stairwell
   access_points: 
     - 
@@ -73,8 +65,6 @@
   details: tbd
   items:
   rooms: 
-    # north: 2nd_floor_hallway_north
-    # south: 2nd_floor_hallway_south
     up: 3rd_floor_hallway_stairwell
     down: 1st_floor_hallway_stairwell  
 -
@@ -84,8 +74,6 @@
   details: tbd
   items:
   rooms: 
-    # north: 1st_floor_hallway_north
-    # south: 1st_floor_hallway_south
     up: 2nd_floor_hallway_stairwell
     west: the_street
 
@@ -96,7 +84,6 @@
   details: details of the street
   items:
   rooms:
-    # north: town_square
     east: 1st_floor_hallway_stairwell
 
 
