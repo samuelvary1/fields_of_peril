@@ -100,7 +100,7 @@ class InputController
 
 	def view_inventory
 		if avatar.items.size != 0
-			@current_message = "This is where it should say what you're holding"
+			@current_message = avatar.list_items
 		else
 			@current_message = "You are not currently carrying anything"
 		end

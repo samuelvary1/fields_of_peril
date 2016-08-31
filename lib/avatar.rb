@@ -12,8 +12,10 @@ class Avatar
 	end
 
 	def list_items
-		self.items.map do |item|
-			puts "#{item['description']}"
+		puts "You are currently carrying: "
+		
+		items.collect do |item|
+			item.values_at("description")
 		end
 	end
 
