@@ -35,7 +35,13 @@ class GameDataLoader
 		room.first_time_message = room_data["first_time_message"]
 		room.description = room_data["description"]
 		room.details = room_data["details"]
-		room.items = room_data["items"]
+		
+		if room_data["items"].nil?
+			room.items = []
+		else	
+			room.items = room_data["items"]
+		end
+		
 		room.rooms = room_data["rooms"]
 		room.access_points = room_data["access_points"]
 		room.been_before = false

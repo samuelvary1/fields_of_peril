@@ -55,7 +55,7 @@ class InputController
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
 		end
-
+		
 		if inventory_checker != nil && inventory_checker["handle"] == object
 			@current_message = "You're already holding that!"
 			return
@@ -68,7 +68,7 @@ class InputController
 		if room_checker != nil
 			avatar.location.items.each do |item|
 				if room_checker["handle"] == object
-					avatar.items << item
+					avatar.items.insert(0, item)
 					avatar.location.items.delete(item)
 					@current_message = "You've picked up the #{object}"
 				end
@@ -76,6 +76,7 @@ class InputController
 		else
 			@current_message = "Sorry, that doesn't appear to be here."
 		end
+		# binding.pry
 	end
 
 	def drop_item(object)
@@ -87,13 +88,14 @@ class InputController
 			avatar.items.each do |item|
 				if inventory_checker["handle"] == object
 					avatar.items.delete(item)
-					avatar.location.items << item
+					avatar.location.items.insert(0, item)
 				end
 			end
 			@current_message = "You have dropped the #{object}"
 		else
 			@current_message = "Ummm I don't think you're carrying that, dude"
 		end
+		# binding.pry
 	end
 
 	def view_inventory
