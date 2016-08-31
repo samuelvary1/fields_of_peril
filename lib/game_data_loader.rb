@@ -27,15 +27,6 @@ class GameDataLoader
 		end
 	end
 
-	# obviously need to modify this method so it recognizes the CURRENT room you nitwit:
-
-	# def display_items(all_rooms)
-	# 	puts "This room currently contains:"
-	# 	room.items.each do |name, item_description|
-	# 		puts "#{name}: #{item_description}"
-	# 	end
-	# end
-
 	def build_room(room_data)
 		room = get_room
 		room.starting_location = room_data["starting_location"]
@@ -47,6 +38,7 @@ class GameDataLoader
 		room.items = room_data["items"]
 		room.rooms = room_data["rooms"]
 		room.access_points = room_data["access_points"]
+		room.been_before = false
 		room
 	end
 

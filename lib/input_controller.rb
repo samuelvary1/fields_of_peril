@@ -11,18 +11,30 @@ class InputController
 
 	def initialize_message
 		@current_message = "#{avatar.location.header}\n #{avatar.location.first_time_message}"	
+
+		if avatar.location.title == "the_apartment"
+			avatar.location.been_before = true
+		end
 	end
 
 	def input_movement(command, entered_words)
 		direction = entered_words.last
+		
 		if avatar.can_move?(direction)
-			avatar.move(direction)
-			# this is where we need a way to check if the player has ever been in the room before. if true, first_time_message, else, basic description
-			# currently with this setup you obviously get the first_time_message every time you go into a room, no matter how many times you've been there.
-			# the first_time_message is important because there should be things that are triggered (such as ambushes etc.) the first time you get somewhere
-			# it will also be key because if that first_time action is triggered and you don't have a certain item, you'll get killed. 
-			# that is an important part of the overall gameplay.
-			@current_message = avatar.location.first_time_message
+
+			new_room = avatar.location.rooms[direction]
+			
+			if new_room.been_before
+				avatar.move(direction)
+				@current_message = avatar.location.description
+			end
+
+			if !new_room.been_before
+				avatar.move(direction)
+				@current_message = avatar.location.first_time_message
+				new_room.been_before = true
+			end
+
 		else
 			@current_message = "Sorry, you cannot go #{direction} from here."
 		end
