@@ -29,6 +29,10 @@ class InputController
 				direction = "east"
 			when "w"
 				direction = "west"
+			when "d"
+				direction = "down"
+			when "u"
+				direction = "up"
 		end
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
