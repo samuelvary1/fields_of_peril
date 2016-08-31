@@ -5,7 +5,7 @@
   title: the_apartment
   first_time_message: You wake up to find yourself in a bombed-out apartment building. Your last memory was fighting in a battle in the woods near the town. On the western side of the room there is a rickety wooden door.
   # you should not be able to leave the room unless you pick up the brass key from the mantle. but in this room there should be the option to type 'break door' which allows you to get through but maybe deducts Health Points from your character.
-  description: The apartment seems to have sustained some damage from shelling but is mostly intact.
+  description: "The apartment seems to have sustained some damage from shelling but is mostly intact. There is a dusty old rifle standing in one corner, and on the mantle you think you might have spotted a key."
   details:
       phrase: Looks like there are some random objects on the dusty mantle.
       knowledge: false

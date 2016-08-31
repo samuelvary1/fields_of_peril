@@ -32,7 +32,7 @@ class InputController
 		end
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
-			@current_message = "Sorry, that access point seems to be locked."
+			@current_message = "Sorry, that #{avatar.location.access_points[direction]["handle"]} seems to be locked."
 			return
 		end
 
