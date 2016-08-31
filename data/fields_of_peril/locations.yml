@@ -24,6 +24,7 @@
       handle: key
       description: a worn old brass key that looks like it might open that apartment door.
       points: 7
+      code: 123
       details:
           phrase: there isn't much else to see
           acquired_phrase: 
@@ -32,12 +33,10 @@
   rooms:
     west: 3rd_floor_hallway_stairwell
   access_points:
-    -
+    west:
       handle: door
-      direction: west
-      open: false 
-      unlocked: false
-      breakable: false 
+      locked: true
+      code: 123
 -
   title: 3rd_floor_hallway_stairwell
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
@@ -53,11 +52,7 @@
     east: the_apartment
     down: 2nd_floor_hallway_stairwell
   access_points: 
-    - 
-      handle: door
-      direction: east
-      open: false
-      locked: true
+    east: door_1
 -
   title: 2nd_floor_hallway_stairwell
   first_time_message: You arrive on the second floor of the old apartment building.

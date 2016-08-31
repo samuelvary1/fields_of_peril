@@ -19,8 +19,12 @@ class InputController
 
 	def input_movement(command, entered_words)
 		direction = entered_words.last
-		
-		if avatar.can_move?(direction)
+
+		if avatar.can_move?(direction) 
+			if avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
+				@current_message = "Sorry, that access point seems to be locked."
+				return
+			end
 
 			new_room = avatar.location.rooms[direction]
 			
@@ -34,7 +38,6 @@ class InputController
 				@current_message = avatar.location.first_time_message
 				new_room.been_before = true
 			end
-
 		else
 			@current_message = "Sorry, you cannot go #{direction} from here."
 		end
