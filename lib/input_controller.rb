@@ -18,7 +18,18 @@ class InputController
 	end
 
 	def input_movement(command, entered_words)
+		entered_words = [entered_words[0], entered_words[1]]
 		direction = entered_words.last
+		case direction 
+			when "n"
+				direction = "north"
+			when "s"
+				direction = "south"
+			when "e"
+				direction = "east"
+			when "w"
+				direction = "west"
+		end
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
 			@current_message = "Sorry, that access point seems to be locked."
@@ -158,7 +169,11 @@ class InputController
 		command_five  = entered_words[4]
 
 		if command == "go"
-			input_movement(command, entered_words)
+			if valid_directions.include?(entered_words[1])
+				input_movement(command, entered_words)
+			else
+				@current_message = "Sorry, that doesn't seem to be a valid direction.."
+			end
 		end
 
 		if command == "look"
@@ -203,5 +218,9 @@ class InputController
 	def valid_commands
 		# only needs to pass the first word or letter of the command to be considered valid
 		@commands ||= %w(go look exit quit help h inventory i take drop unlock)
+	end
+
+	def valid_directions
+		@valid_directions ||= %(up down north south east west)
 	end
 end
