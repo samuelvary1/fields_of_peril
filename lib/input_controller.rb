@@ -13,7 +13,7 @@ class InputController
 		@current_message = "#{avatar.location.header}\n #{avatar.location.first_time_message}"	
 	end
 
-	def check_movement(command, entered_words)
+	def input_movement(command, entered_words)
 		direction = entered_words.last
 		if avatar.can_move?(direction)
 			avatar.move(direction)
@@ -39,7 +39,7 @@ class InputController
 		end
 	end
 
-	def check_pickup_item(object)
+	def pick_up_item(object)
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
 		end
@@ -66,6 +66,24 @@ class InputController
 		end
 	end
 
+	def drop_item(object)
+		inventory_checker = avatar.items.find do |item|
+			item.has_value?(object)
+		end
+
+		if inventory_checker != nil && inventory_checker["handle"] == object			
+			avatar.items.each do |item|
+				if inventory_checker["handle"] == object
+					avatar.items.delete(item)
+					avatar.location.items << item
+				end
+			end
+			@current_message = "You have dropped the #{object}"
+		else
+			@current_message = "Ummm I don't think you're carrying that, dude"
+		end
+	end
+
 	def view_inventory
 		if avatar.items.size != 0
 			@current_message = "This is where it should say what you're holding"
@@ -88,20 +106,24 @@ class InputController
 		command_three = entered_words[2]
 		command_four = entered_words[3]
 
+		if command == "go"
+			input_movement(command, entered_words)
+		end
+
 		if command == "look"
 			look(input, command, command_two)
 		end
 		
+		if command == "take"
+			pick_up_item(command_two)
+		end
+
+		if command == "drop"
+			drop_item(command_two)
+		end
+
 		if input == "inventory" || input == "i"
 			view_inventory
-		end
-
-		if command == "go"
-			check_movement(command, entered_words)
-		end
-
-		if command == "take"
-			check_pickup_item(command_two)
 		end
 
 		if input == "help" || input == "h"
@@ -125,6 +147,6 @@ class InputController
 
 	def valid_commands
 		# only needs to pass the first word or letter of the command to be considered valid
-		@commands ||= %w(go look exit quit help h inventory i take)
+		@commands ||= %w(go look exit quit help h inventory i take drop)
 	end
 end
