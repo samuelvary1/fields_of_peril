@@ -43,10 +43,10 @@
   description: Several of the stairs look like they can barely support a person's weight.
   # for this room, you'll need to program in a way for the character to get killed falling through the rotted steps UNLESS they type 'look closer', which allows them to see a safe way to hop over the stairs. Also make the danger more apparent in the main description.
   details: 
-      phrase: You see a way to hop over the stairs safely.
-      acquired_phrase: You know a way to hop over the stairs safely.
-      knowledge: true
-      points: 1
+    phrase: You see a way to hop over the stairs safely.
+    acquired_phrase: You know a way to hop over the stairs safely.
+    knowledge: true
+    points: 1
   items:
   rooms: 
     east: the_apartment
@@ -57,7 +57,8 @@
   title: 2nd_floor_hallway_stairwell
   first_time_message: You arrive on the second floor of the old apartment building.
   description: You're standing on the second floor of the apartment building. 
-  details: Some old lamps flicker in the hallway. It's a wonder there's still any power here.
+  details: 
+    phrase: Some old lamps flicker in the hallway. It's a wonder there's still any power here.
   items:
   rooms: 
     up: 3rd_floor_hallway_stairwell
@@ -66,16 +67,18 @@
   title: 1st_floor_hallway_stairwell
   first_time_message: You arrive on the first floor of the old apartment building.
   description: you are standing in the entranceway on the first floor of the apartment building
-  details: not much else to see here...
+  details: 
+    phrase: not much else to see here...
   items:
   rooms: 
     up: 2nd_floor_hallway_stairwell
     west: the_street
 -
   title: the_street
-  first_time_message: The ruined streets of tbd city. The entrance to the apartment building 
+  first_time_message: The ruined streets of tbd city. The entrance to the apartment building lies to your east.
   description: Craters decorate the street.
-  details: details of the street
+  details: 
+    phrase: details of the street
   items:
   rooms:
     east: 1st_floor_hallway_stairwell
