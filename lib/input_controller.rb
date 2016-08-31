@@ -101,6 +101,37 @@ class InputController
 		# binding.pry
 	end
 
+	def unlock_access_point(input, command, command_two, command_three, command_four, command_five)
+		avatar.location.access_points.each do |direction, access_point|
+			if access_point && access_point["handle"] == command_two && access_point["locked"]
+				if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
+					@current_message = "What do you want to unlock the #{command_two} with?"
+					return
+				end
+			end
+
+			if access_point["handle"] && access_point["handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
+				key = avatar.items.find do |item|
+					item["handle"] == command_four
+				end
+
+				if key.nil?
+					@current_message = "I don't think you're carrying that"
+				elsif key["code"] == access_point["code"]
+					access_point["locked"] = false
+					@current_message = "It fits! you've unlocked the #{access_point["handle"]}"
+				else
+					@current_message = "shoot, that's not the right key"
+				end
+
+			elsif access_point["handle"] == command_two && !access_point["locked"]
+				@current_message = "That already appears to be unlocked."
+			else
+				@current_message = "I don't think you can unlock anything like that here."
+			end
+		end
+	end
+
 	def view_inventory
 		if avatar.items.size != 0
 			@current_message = avatar.list_items
@@ -118,10 +149,11 @@ class InputController
 			return
 		end		
 
-		command = entered_words[0]
-		command_two = entered_words[1]
+		command       = entered_words[0]
+		command_two   = entered_words[1]
 		command_three = entered_words[2]
-		command_four = entered_words[3]
+		command_four  = entered_words[3]
+		command_five  = entered_words[4]
 
 		if command == "go"
 			input_movement(command, entered_words)
@@ -137,6 +169,10 @@ class InputController
 
 		if command == "drop"
 			drop_item(command_two)
+		end
+
+		if command == "unlock"
+			unlock_access_point(input, command, command_two, command_three, command_four, command_five)
 		end
 
 		if input == "inventory" || input == "i"
@@ -164,6 +200,6 @@ class InputController
 
 	def valid_commands
 		# only needs to pass the first word or letter of the command to be considered valid
-		@commands ||= %w(go look exit quit help h inventory i take drop)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock)
 	end
 end

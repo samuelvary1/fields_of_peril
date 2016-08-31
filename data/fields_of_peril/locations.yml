@@ -52,7 +52,7 @@
     east: the_apartment
     down: 2nd_floor_hallway_stairwell
   access_points: 
-    east: door_1
+    east: door
 -
   title: 2nd_floor_hallway_stairwell
   first_time_message: You arrive on the second floor of the old apartment building.
