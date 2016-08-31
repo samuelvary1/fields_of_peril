@@ -67,7 +67,7 @@ class InputController
 
 		if room_checker != nil
 			avatar.location.items.each do |item|
-				if room_checker["handle"] == object
+				if item["handle"] == object
 					avatar.items.insert(0, item)
 					avatar.location.items.delete(item)
 					@current_message = "You've picked up the #{object}"
