@@ -26,9 +26,9 @@
       points: 7
       details:
           phrase: there isn't much else to see
-          acquired_phrase: nil
+          acquired_phrase: 
           knowledge: false
-          points: nil
+          points: 
   rooms:
     west: 3rd_floor_hallway_stairwell
   access_points:
@@ -43,7 +43,6 @@
       direction: north
       open: false
       locked: false
-      breakable: true
 -
   title: 3rd_floor_hallway_stairwell
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
@@ -57,9 +56,9 @@
   items:
   rooms: 
     east: the_apartment
-    north: 3rd_floor_hallway_north
-    south: 3rd_floor_hallway_south
-    up: the_roof
+    # north: 3rd_floor_hallway_north
+    # south: 3rd_floor_hallway_south
+    # up: the_roof
     down: 2nd_floor_hallway_stairwell
   access_points: 
     - 
@@ -67,16 +66,15 @@
       direction: east
       open: false
       locked: true
-      breakable: false
 -
   title: 2nd_floor_hallway_stairwell
   first_time_message: You arrive on the second floor of the old apartment building.
   description: Some old oil lamps flicker in the hallway. It's a wonder there's still any power here.
   details: tbd
-  items: tbd
+  items:
   rooms: 
-    north: 2nd_floor_hallway_north
-    south: 2nd_floor_hallway_south
+    # north: 2nd_floor_hallway_north
+    # south: 2nd_floor_hallway_south
     up: 3rd_floor_hallway_stairwell
     down: 1st_floor_hallway_stairwell  
 -
@@ -84,10 +82,10 @@
   first_time_message: You arrive on the first floor of the old apartment building.
   description: tbd
   details: tbd
-  items: tbd
+  items:
   rooms: 
-    north: 1st_floor_hallway_north
-    south: 1st_floor_hallway_south
+    # north: 1st_floor_hallway_north
+    # south: 1st_floor_hallway_south
     up: 2nd_floor_hallway_stairwell
     west: the_street
 
@@ -96,9 +94,9 @@
   first_time_message: The ruined streets of tbd city. The entrance to the apartment building 
   description: Craters decorate the street.
   details: details of the street
-  items: lots of items here to be included in the description and the details
+  items:
   rooms:
-    north: town_square
+    # north: town_square
     east: 1st_floor_hallway_stairwell
 
 
