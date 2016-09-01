@@ -46,7 +46,7 @@ class InputController
 		
 			if new_room.been_before
 				avatar.move(direction)
-				@current_message = avatar.location.description
+				@current_message = avatar.location.header
 			end
 
 			if !new_room.been_before

@@ -1,6 +1,6 @@
 -
   starting_location: true
-  header: CHAPTER 1
+  header: Apartment Living Room
   # if you leave the room and go back in currently it shows chapter 1 and the first time message again
   title: apartment_living_room
   first_time_message: "You wake up to find yourself in the living room of a bombed-out apartment. Your last memory was fighting in a battle in the woods near the town. On the western side of the room there is a rickety wooden door. To the south is another door. You see a key on the mantle, and a dinged-up rifle in the corner"
@@ -42,6 +42,7 @@
       locked: true
       code: 123
 -
+  header: Bathroom
   title: bathroom
   first_time_message: "For the first time, you step into the bathroom"
   description: Ornate tiles cover the floor. There is a medicine cabinet over the sink.
@@ -54,6 +55,55 @@
   rooms:
     north: apartment_living_room
 -
+  header: Secret Room
+  title: secret_room
+  first_time_message: You pull on the candle-holder above the mantle and watch as a small door in the fireplace slides open. You step through.
+  description: It appears to be some kind of secret meeting room. Various posters supporting the resistance decorate the walls.
+  details: 
+    phrase: "One poster says 'death to the fascists'"
+    acquired_phrase:
+    knowledge:
+    points:
+  items: 
+    -
+      handle:
+      description:
+      points:
+      details:
+        phrase:
+        acquired_phrase:
+        knowledge:
+        points:
+  rooms:
+    west: apartment_living_room
+    north: gallery
+    # south: intel_room
+  access_points:
+-
+  header: The Gallery
+  title: gallery
+  first_time_message: You step into the gallery and draw a sharp breath as you look at all the paintings and photographs on display.
+  description: There are a ton of photographs and portraits of heroes from the war and heroic moments and such.
+  details: 
+    phrase: You see a portrait of Alexander Matrosov. 
+    acquired_phrase:
+    knowledge:
+    points:
+  items: 
+    -
+      handle:
+      description:
+      points:
+      details:
+        phrase:
+        acquired_phrase:
+        knowledge:
+        points:
+  rooms:
+    south: secret_room
+  access_points:
+-
+  header: Third Floor Stairs
   title: 3rd_floor_stairs
   first_time_message: You emerge into a gloomy stairwell. The stairs lead down into shadows and darkness. 
   description: Several of the stairs look like they can barely support a person's weight.
@@ -70,6 +120,7 @@
   access_points: 
     east: door_1
 -
+  header: Second Floor Stairs
   title: 2nd_floor_stairs
   first_time_message: You arrive on the second floor of the old apartment building.
   description: You're standing on the second floor of the apartment building. 
@@ -80,6 +131,7 @@
     up: 3rd_floor_stairs
     down: 1st_floor_stairs  
 -
+  header: First Floor Stairs
   title: 1st_floor_stairs
   first_time_message: You arrive on the first floor of the old apartment building.
   description: you are standing in the entranceway on the first floor of the apartment building
@@ -90,6 +142,7 @@
     up: 2nd_floor_stairs
     west: the_street
 -
+  header: "Street, West of Apartment Building"
   title: the_street
   first_time_message: The ruined streets of tbd city. The entrance to the apartment building lies to your east.
   description: Craters decorate the street.
