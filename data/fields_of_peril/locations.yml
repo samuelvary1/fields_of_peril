@@ -77,8 +77,39 @@
   rooms:
     west: apartment_living_room
     north: gallery
-    # south: intel_room
+    south: intel_room
   access_points:
+    # south:
+-
+  header: Intel Room
+  title: intel_room 
+  first_time_message: "You solve x puzzle and the secret passageway reveals itself, allowing you to step into a room full of documents and equipment."
+  description: "The room seems full of paperwork and specialized equipment, possibly for codebreaking. Most of it looks too heavy to move but there are some interesting pieces of paper on a metal desk against the southern wall."
+  details: 
+    phrase: Not much else to see right now..
+    acquired_phrase:
+    knowledge:
+    points:
+  items: 
+    -
+      handle:
+      description:
+      points:
+      details:
+        phrase:
+        acquired_phrase:
+        knowledge:
+        points:
+  rooms:
+    north: secret_room
+    # east: forbidden_tunnel
+  access_points:
+    # east:
+    #   handle: mechanical_keypad_1
+    #   game_handle: keypad
+    #   game_handle_display: forbidden tunnel
+    #   locked: true
+    #   code: 1408
 -
   header: The Gallery
   title: gallery
