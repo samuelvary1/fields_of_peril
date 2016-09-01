@@ -145,7 +145,6 @@ class InputController
 				@current_message = "That already appears to be unlocked."
 			else
 				@current_message = "I don't think you can unlock anything like that here."
-				binding.pry
 			end
 		end
 	end
