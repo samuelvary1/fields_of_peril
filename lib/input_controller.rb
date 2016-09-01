@@ -12,7 +12,7 @@ class InputController
 	def initialize_message
 		@current_message = "#{avatar.location.header}\n #{avatar.location.first_time_message}"	
 
-		if avatar.location.title == "the_apartment"
+		if avatar.location.title == "apartment_living_room"
 			avatar.location.been_before = true
 		end
 	end
@@ -36,7 +36,7 @@ class InputController
 		end
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
-			@current_message = "Sorry, that #{avatar.location.access_points[direction]["handle"]} seems to be locked."
+			@current_message = "Sorry, that #{avatar.location.access_points[direction]["game_handle"]} seems to be locked."
 			return
 		end
 
@@ -120,14 +120,14 @@ class InputController
 
 	def unlock_access_point(input, command, command_two, command_three, command_four, command_five)
 		avatar.location.access_points.each do |direction, access_point|
-			if access_point && access_point["handle"] == command_two && access_point["locked"]
+			if access_point && access_point["game_handle"] == command_two && access_point["locked"]
 				if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
 					@current_message = "What do you want to unlock the #{command_two} with?"
 					return
 				end
 			end
 
-			if access_point["handle"] && access_point["handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
+			if access_point["game_handle"] && access_point["game_handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
 				key = avatar.items.find do |item|
 					item["handle"] == command_four
 				end
@@ -136,15 +136,16 @@ class InputController
 					@current_message = "I don't think you're carrying that"
 				elsif key["code"] == access_point["code"]
 					access_point["locked"] = false
-					@current_message = "It fits! you've unlocked the #{access_point["handle"]}"
+					@current_message = "It fits! you've unlocked the #{access_point["game_handle_display"]}"
 				else
 					@current_message = "shoot, that's not the right key"
 				end
 
-			elsif access_point["handle"] == command_two && !access_point["locked"]
+			elsif access_point["game_handle"] == command_two && !access_point["locked"]
 				@current_message = "That already appears to be unlocked."
 			else
 				@current_message = "I don't think you can unlock anything like that here."
+				binding.pry
 			end
 		end
 	end
