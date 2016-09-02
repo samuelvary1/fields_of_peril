@@ -182,18 +182,8 @@
   items:
   rooms:
     north: apartment_building_north
-    south: apartment_building_south
+    # south: apartment_building_south
     east: 1st_floor_stairs
--
-  header: North of Apartment Building
-  title: apartment_building_north
-  first_time_message: You walk north on the street
-  description: You are standing to the north of the apartment building.
-  details:
-    phrase: not much else to see right now..
-  items:
-  rooms: 
-    # north: town_square
-    south: the_street
+
 
 
