@@ -199,7 +199,7 @@
   header: South of Apartment Building
   title: apartment_building_south
   first_time_message: "You step around to the south side of the apartment building for the first time. A dog with its leg blown off suddenly emerges from the shadows and begins to snarl at you."
-  description: You are standing to the south of the apartment building.
+  description: You are standing to the south of the apartment building. That dog looks hungry.
   details:
     phrase: "I would stay as far away from that dog as possible, if I were you."
   items:
@@ -207,5 +207,18 @@
     north: the_street
     # east: alley
     west: garden
+-
+  header: Garden 
+  title: garden 
+  first_time_message: "You push gently on a rusty metal gate, which creaks open to reveal a surprisingly lush garden."
+  description: Grasshoppers buzz and flit from leaf to leaf. Something about this place gives you the creeps. There's no telling what might be hidden in all this foliage. Off to the west you see what appears to be some kind of dilapidated toolshed."
+  details: 
+    phrase: Is that a skeletal hand poking out of a flowerbed to the south?
+  items:
+  rooms:
+    # north: access_road
+    east: apartment_building_south
+    # west: abandoned_shed
+
 
 
