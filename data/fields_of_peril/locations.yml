@@ -215,9 +215,20 @@
     phrase: not much else to see right now..
   items:
   rooms: 
-    # north: town_square
+    north: town_square
     south: the_street
     west: access_road
+-
+  header: Town Square 
+  title: town_square
+  first_time_message: First time message for entering the town square (possible sniper attack?)
+  description: You're standing in the middle of what was probably once a very beautiful town square. A fountain seems to be the last intact remain of that architectural splendor.
+  details:
+    phrase: seems like there are actually some valuable objects in the fountain..
+  items:
+  rooms: 
+    # north: abandoned_outpost
+    south: apartment_building_north
 -
   header: South of Apartment Building
   title: apartment_building_south
