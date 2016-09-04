@@ -195,6 +195,7 @@
   rooms: 
     # north: town_square
     south: the_street
+    west: access_road
 -
   header: South of Apartment Building
   title: apartment_building_south
@@ -216,9 +217,23 @@
     phrase: Is that a skeletal hand poking out of a flowerbed to the south?
   items:
   rooms:
-    # north: access_road
+    north: access_road
     east: apartment_building_south
     # west: abandoned_shed
+-
+  header: Access Road 
+  title: access_road
+  first_time_message: "You find yourself on an access road. Off to your west you've spotted an imposing, medieval looking bell tower."
+  description: It's just an access road. You see a few craters and some empty shell casings scattered around in the mud.
+  details:
+    phrase: not much else to see right now...
+  items:
+  rooms:
+    # north: corpse_road
+    south: garden
+    east: apartment_building_north
+    # west: bell_tower
+
 
 
 
