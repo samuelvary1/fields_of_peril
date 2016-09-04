@@ -182,7 +182,7 @@
   items:
   rooms:
     north: apartment_building_north
-    # south: apartment_building_south
+    south: apartment_building_south
     east: 1st_floor_stairs
 -
   header: North of Apartment Building
@@ -195,5 +195,17 @@
   rooms: 
     # north: town_square
     south: the_street
+-
+  header: South of Apartment Building
+  title: apartment_building_south
+  first_time_message: "You step around to the south side of the apartment building for the first time. A dog with its leg blown off suddenly emerges from the shadows and begins to snarl at you."
+  description: You are standing to the south of the apartment building.
+  details:
+    phrase: "I would stay as far away from that dog as possible, if I were you."
+  items:
+  rooms:
+    north: the_street
+    # east: alley
+    west: garden
 
 
