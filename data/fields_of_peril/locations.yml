@@ -219,7 +219,18 @@
   rooms:
     north: access_road
     east: apartment_building_south
-    # west: abandoned_shed
+    west: abandoned_shed
+-
+  header: Abandoned Garden Shed
+  title: abandoned_shed
+  first_time_message: You open the shed for the first time. It's pretty messy in here.
+  description: You look around at the various implements and tools. A rug lies in the middle of the shed.
+  details: 
+    phrase: That rug looks kind of crooked.
+  items:
+  rooms:
+    east: garden 
+    # down: secret_bomb_shelter 
 -
   header: Access Road 
   title: access_road
