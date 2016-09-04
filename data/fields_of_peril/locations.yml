@@ -172,6 +172,28 @@
   rooms: 
     up: 2nd_floor_stairs
     west: the_street
+    down: cellar_1
+-
+  header: Cellar 
+  title: cellar_1
+  first_time_message: First time message stepping into the cellar of the apartment building.
+  description: Lotta cobwebs down here. There's a heavy looking door built into the eastern wall.
+  details: 
+    phrase: looks like there's some sort of mechanical keypad on the heavy door. 
+  items:
+  rooms:
+    east: vault_1
+    up: 1st_floor_stairs
+-
+  header: Apartment Building Vault Chamber
+  title: vault_1
+  first_time_message: You solve the keypad puzzle and enter the vault!
+  description: description of the vault to go here.
+  details:
+    phrase: detailed description of the vault to go here.
+  items:
+  rooms:
+    west: cellar_1
 -
   header: "Street, West of Apartment Building"
   title: the_street
