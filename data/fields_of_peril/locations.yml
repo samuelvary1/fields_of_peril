@@ -227,8 +227,22 @@
     phrase: seems like there are actually some valuable objects in the fountain..
   items:
   rooms: 
-    # north: abandoned_outpost
+    north: abandoned_outpost
     south: apartment_building_north
+-
+  header: Abandoned Outpost 
+  title: abandoned_outpost
+  first_time_message: "You step into a clearing where you spot a dead body slumped over a machine gun. Looks like this was a key roadblock at some point recently, but now it is abandoned."
+  description: "A dead machine gunner wearing a rebel uniform lies slumped over his weapon, which is mounted on a wall of sandbags. You can see a bunker to the east, although it looks pretty secure considering that fairly new-looking padlock on the door."
+  details:
+    phrase: It looks like that body might have some useful stuff in its pockets. Not much else to see about the bunker. To the north you see a weird path leading off into some brush. Looks sketchy af. Another equally sketchy road (this one looks like it could be used for vehicles) stretches off to the west.
+  items:
+  rooms:
+    # north: scrapyard
+    south: town_square
+    # east: bunker_1
+    # west: corpse_road
+
 -
   header: South of Apartment Building
   title: apartment_building_south
