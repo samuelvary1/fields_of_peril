@@ -288,7 +288,17 @@
   items:
   rooms:
     east: garden 
-    # down: secret_bomb_shelter 
+    down: secret_bomb_shelter
+-
+  header: Secret Bomb Shelter 
+  title: secret_bomb_shelter
+  first_time_message: "You pull the trapdoor - hard - and are just able to get it flipped over on the floor, allowing you to climb down inside a small, one-room bomb shelter."
+  description: bomb shelter description goes here.
+  details:
+    phrase: bomb shelter details to go here.
+  items:
+  rooms:
+    up: abandoned_shed
 -
   header: Access Road 
   title: access_road
@@ -302,6 +312,7 @@
     south: garden
     east: apartment_building_north
     # west: bell_tower
+
 
 
 
