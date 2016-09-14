@@ -310,7 +310,18 @@
     north: corpse_road
     south: garden
     east: apartment_building_north
-    # west: bell_tower
+    west: bell_tower
+-
+  header: Bell Tower Entry Hall 
+  title: bell_tower
+  first_time_message: You enter the bell tower for the first time.
+  description: You are standing in the entrance way. It is very quiet.
+  details:
+    phrase: You gaze through a window on the northern wall. You can make out what appears to be a graveyard to the north of the bell tower.
+  items:
+  rooms:
+    east: access_road
+    # up: boobytrap_room
 -
   header: Corpse Road 
   title: corpse_road
