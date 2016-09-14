@@ -257,13 +257,13 @@
 -
   header: Alley 
   title: alley 
-  first_time_message: You make it past the dog and are in an alley kinda south of the apartment building.
+  first_time_message: You find yourself in an alley kinda south of the apartment building.
   description: There's a ton of trash and stuff here.
   details:
     phrase: not much else to see right now...
   items:
   rooms:
-    # north: behind_apartment_building
+    east: behind_apartment_building
     west: apartment_building_south
 -
   header: Garden 
@@ -370,7 +370,18 @@
   rooms:
     west: clearing 
     # up: scaffolding
-    # east: behind_apartment_building
+    east: behind_apartment_building
+-
+  header: Behind Apartment Building 
+  title: behind_apartment_building
+  first_time_message: behind apartment first time message goes here.
+  description: you find yourself in a cramped alley directly behind the apartment building you started out in.
+  details:
+    phrase: this place is weird.
+  items:
+  rooms:
+    north: bombed_alley
+    south: alley
 
 
 
