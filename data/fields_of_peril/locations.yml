@@ -345,9 +345,32 @@
     phrase: detailed description of scrapyard to go here...
   items:
   rooms:
-    # east: clearing
+    east: clearing
     south: abandoned_outpost
     west: corpse_road
+-
+  header: Clearing (East of Scrapyard)
+  title: clearing
+  first_time_message: first time message for clearing east of scrapyard.
+  description: pretty empty space.
+  details:
+    phrase: you look to the south and can see what looks like a bunker. The old concrete pillbox has ivy creeping all over it. 
+  items:
+  rooms:
+    east: bombed_alley
+    west: scrapyard 
+-
+  header: Bombed Alley
+  title: bombed_alley
+  first_time_message: A cinder block almost falls on your head!
+  description: there's some old scaffolding off to the north side of the alley.
+  details:
+    phrase: You think you see a way to safely climb up the scaffolding.
+  items:
+  rooms:
+    west: clearing 
+    # up: scaffolding
+    # east: behind_apartment_building
 
 
 
