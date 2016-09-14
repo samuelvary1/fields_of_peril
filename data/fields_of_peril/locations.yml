@@ -321,7 +321,18 @@
   items:
   rooms:
     east: access_road
-    # up: boobytrap_room
+    up: boobytrap_room
+-
+  header: Boobytrap Room 
+  title: boobytrap_room
+  first_time_message: "[first time message] should probably have a certain trap go off if you haven't done something specific before this point."
+  description: The room appears to be outfitted with a variety of deadly-looking traps.
+  details:
+    phrase: Detailed description of booby trap room.
+  items:
+  rooms:
+    # up: bell_chamber
+    down: bell_tower
 -
   header: Corpse Road 
   title: corpse_road
