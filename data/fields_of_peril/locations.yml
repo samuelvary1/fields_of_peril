@@ -238,7 +238,7 @@
     phrase: It looks like that body might have some useful stuff in its pockets. Not much else to see about the bunker. To the north you see a weird path leading off into some brush. Looks sketchy af. Another equally sketchy road (this one looks like it could be used for vehicles) stretches off to the west.
   items:
   rooms:
-    # north: scrapyard
+    north: scrapyard
     south: town_square
     # east: bunker_1
     west: corpse_road
@@ -331,10 +331,25 @@
     phrase: not much else to see right now...
   items:
   rooms:
-    # north: scrapyard
+    north: scrapyard
     south: access_road
     east: abandoned_outpost
     # west: graveyard
+-
+  header: Scrapyard
+  title: scrapyard 
+  first_time_message: "First time message for entering the scrapyard. A weird little kid runs up to you and gives you something, then disappears."
+  # figure out a way to give a player something automatically (sometimes) when they first enter a room. Will be handy. 
+  description: This place probably contains some useful items.
+  details:
+    phrase: detailed description of scrapyard to go here...
+  items:
+  rooms:
+    # east: clearing
+    south: abandoned_outpost
+    west: corpse_road
+
+
 
 
 
