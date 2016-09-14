@@ -241,8 +241,7 @@
     # north: scrapyard
     south: town_square
     # east: bunker_1
-    # west: corpse_road
-
+    west: corpse_road
 -
   header: South of Apartment Building
   title: apartment_building_south
@@ -308,10 +307,23 @@
     phrase: not much else to see right now...
   items:
   rooms:
-    # north: corpse_road
+    north: corpse_road
     south: garden
     east: apartment_building_north
     # west: bell_tower
+-
+  header: Corpse Road 
+  title: corpse_road
+  first_time_message: First time message for stepping out onto Corpse Road.
+  description: "There are a lot of bodies that appear to have been dropped by machine gun fire. Based on their positions, the bullets must have come from the East."
+  details:
+    phrase: not much else to see right now...
+  items:
+  rooms:
+    # north: scrapyard
+    south: access_road
+    east: abandoned_outpost
+    # west: graveyard
 
 
 
