@@ -341,7 +341,7 @@
     phrase: Detailed description of booby trap room.
   items:
   rooms:
-    up: bell_chamber
+    up: bell_chamber_a
     down: bell_tower
 -
   header: Bell Chamber (East)
@@ -437,6 +437,16 @@
     north: crypt
     south: graveyard
 -
+  header: Graveyard South
+  title: graveyard_south
+  first_time_message: You head to the south of the graveyard for the first time.
+  description: "You can see the doorway to a bell tower to the south, but it's blocked off by thick foliage."
+  details:
+    phrase: Something important should happen here.
+  items:
+  rooms:
+    north: graveyard
+-
   header: The Crypt 
   title: crypt 
   first_time_message: Some cobwebs shudder and fall to the side as you wrench the heavy stone door open and step inside. This seems like a bad idea...
@@ -480,6 +490,16 @@
   items:
   rooms:
     east: burial_chamber
+    west: terror_room_b
+-
+  header: Burial Chamber 
+  title: burial_chamber
+  first_time_message: The super scary burial chamber.
+  description: Important accomplishment or item pickup happens in here.
+  details:
+    phrase: Details of burial chamber go here.
+  items:
+  rooms:
     west: terror_room_c
 -
   header: Scrapyard
