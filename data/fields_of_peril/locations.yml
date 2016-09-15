@@ -331,8 +331,63 @@
     phrase: Detailed description of booby trap room.
   items:
   rooms:
-    # up: bell_chamber
+    up: bell_chamber
     down: bell_tower
+-
+  header: Bell Chamber (East)
+  title: bell_chamber_a
+  first_time_message: First time message for bell chamber (located just below the sniper's nest).
+  description: You see a ladder leading up into the belfry of the bell tower. 
+  details:
+    phrase: Possible clues here about the sniper nest just above you.
+  items: 
+  rooms:
+    up: snipers_nest
+    down: boobytrap_room
+    west: bell_chamber_b
+-
+  header: Bell Chamber (West)
+  title: bell_chamber_b
+  first_time_message: First time message for bell chamber west.
+  description: Might be some important objects here.
+  details: 
+    phrase: Perhaps you spot some secret stairs leading down to the monk's quarters here.
+  items:
+  rooms:
+    east: bell_chamber_a
+    down: monks_quarters
+-
+  header: Sniper's Nest 
+  title: snipers_nest
+  first_time_message: "Probably will be a confrontation with the sniper here depending on in-game action. I think he should probably take a shot at you when you step into the either the town square or the graveyard, too"
+  description: Description of sniper's nest. Possibly a body here.
+  details:
+    phrase: Probably want to take some items off the sniper's body. Should bodies act like containers? Probably. Just cant open or close them or look 'in' them like other containers. Bodies should be a special container.
+  items:
+  rooms:
+    down: bell_chamber_a
+-
+  header: Monk's Quarters 
+  title: monks_quarters
+  first_time_message: Maybe something cool happens here like the candles suddenly go out and you hear a freaky voice and then they go back on again or something sort of scary and supernatural. 
+  description: The living quarters of a simple monk.
+  details: 
+    phrase: That floorboard looks a little loose...
+  items:
+  rooms:
+    up: bell_chamber_b
+    down: rebel_war_room
+-
+  header: Rebel War Room
+  title: rebel_war_room
+  first_time_message: First time message for entering the war room.
+  description: charts and maps decorate the walls. They were preparing for something big.
+  details:
+    phrase: That hatch in the middle of the floor looks promising.
+  items:
+  rooms:
+    up: monks_quarters
+    down: tunnel_entrance
 -
   header: Corpse Road 
   title: corpse_road
@@ -393,7 +448,17 @@
   rooms:
     north: bombed_alley
     south: alley
-
+-
+  header: Tunnel Entrance 
+  title: tunnel_entrance
+  first_time_message: You open the hatch and climb down a ladder for what seems like ages. You finally arrive to find yourself looking at the gated entrance to a creepy tunnel heading off to the west. You have no idea how far beneath the earth you are at this point.
+  description: Wow. This is getting serious. Do you really want to try and proceed down the tunnel?
+  details:
+    phrase: "Man, that's a big padlock on the gate."
+  items:
+  rooms:
+    # west: PART_TWO
+    up: rebel_war_room
 
 
 
