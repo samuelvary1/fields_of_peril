@@ -29,7 +29,23 @@
           phrase: there isn't much else to see
           acquired_phrase: 
           knowledge: false
-          points: 
+          points:
+    -
+      handle: bookcase
+      description: that bookcase looks a little odd...
+      points:
+      code:
+      details:
+      special_interaction: push
+      special_interaction_result: "You give the bookcase a hearty shove, which moves just enough to reveal a small door and a mechanical keypad!"
+    -
+      handle: keypad
+      description: It's got the numbers 0-9 on it. 
+      points:
+      code: 4918
+      details:
+      special_interaction: use
+      special_interaction_result: Please punch in the code:
   rooms:
     west: 3rd_floor_stairs
     east: secret_room
@@ -41,6 +57,12 @@
       game_handle_display: apartment entrance
       locked: true
       code: 123
+    east:
+      handle: secret_door_1
+      game_handle: secret_door_1
+      game_handle_display: secret door
+      locked: true
+      code: 4918
 -
   header: Bathroom
   title: bathroom
