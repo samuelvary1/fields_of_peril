@@ -240,8 +240,18 @@
   rooms:
     north: scrapyard
     south: town_square
-    # east: bunker_1
+    east: bunker_1
     west: corpse_road
+-
+  header: The Bunker 
+  title: bunker_1
+  first_time_message: You finally force your way into the bunker (there's a TBD puzzle to get in here).
+  description: An old bunker with a dead body slumped over a machine gun at the front window.
+  details:
+    phrase: More details about the bunker go here.
+  items:
+  rooms:
+    west: abandoned_outpost
 -
   header: South of Apartment Building
   title: apartment_building_south
