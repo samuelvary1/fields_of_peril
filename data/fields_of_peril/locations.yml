@@ -337,7 +337,8 @@
   header: Bell Chamber (East)
   title: bell_chamber_a
   first_time_message: First time message for bell chamber (located just below the sniper's nest).
-  description: You see a ladder leading up into the belfry of the bell tower. 
+  description: You see a ladder leading up into the belfry of the bell tower. There's also a rickety zipline leading out a window and down into the graveyard.
+  # might want to think about having a 'special cases' controller that has a kind of 'animation' (bit of specialized text) if special case criteria are fulfilled, for instance going east out of the bell-chamber would be using the zipline to get to the graveyard, so that should maybe have a special blurb anytime you do it. 
   details:
     phrase: Possible clues here about the sniper nest just above you.
   items: 
@@ -345,6 +346,7 @@
     up: snipers_nest
     down: boobytrap_room
     west: bell_chamber_b
+    east: graveyard
 -
   header: Bell Chamber (West)
   title: bell_chamber_b
@@ -400,7 +402,75 @@
     north: scrapyard
     south: access_road
     east: abandoned_outpost
-    # west: graveyard
+    west: graveyard
+-
+  header: Graveyard 
+  title: graveyard
+  first_time_message: "You push open the creaky gate into the graveyard. This may be the place where the sniper takes a shot at you, I haven't decided yet."
+  description: "This is a really creepy graveyard. There are also the bodies of some soldiers lying around, but you don't really feel like messing with those."
+  details:
+    phrase: details of the graveyard to go here.
+  items:
+  rooms:
+    north: graveyard_north
+    south: graveyard_south
+    east: corpse_road
+-
+  header: Graveyard North 
+  title: graveyard_north
+  first_time_message: You head to the north of the graveyard for the first time.
+  description: To the north is a seriously creepy looking crypt.
+  details:
+    phrase: That crypt is very intimidating. I would not go in there.
+  items:
+  rooms:
+    north: crypt
+    south: graveyard
+-
+  header: The Crypt 
+  title: crypt 
+  first_time_message: Some cobwebs shudder and fall to the side as you wrench the heavy stone door open and step inside. This seems like a bad idea...
+  description: There's a very heavy looking pillar in the floor.
+  details:
+    phrase: There are some weird stones on the wall. They are labeled A-D. Weird.
+    # this will be a good puzzle to get inside terror room A.
+  items:
+  rooms:
+    south: graveyard_north
+    down: terror_room_a
+-
+  header: The First Room of Horrors
+  title: terror_room_a
+  first_time_message: Something scary af happens.
+  description: You don't want to know.
+  details:
+    phrase: "Oh god, it's so horrible!"
+  items:
+  rooms:
+    east: terror_room_b
+    up: crypt
+-
+  header: The Second Room of Horrors
+  title: terror_room_b
+  first_time_message: "Wow, you somehow managed to survive that first room. Good for you. This one's even worse."
+  description: You don't want to know.
+  details:
+    phrase: you've basically already gone blind at this point..
+  items:
+  rooms:
+    east: terror_room_c
+    west: terror_room_a
+-
+  header: The Third Room of Horrors
+  title: terror_room_c
+  first_time_message: I'm actually shocked you're not dead yet. The final challenge awaits...
+  description: You don't want to know.
+  details:
+    phrase: Oh god what is that???
+  items:
+  rooms:
+    east: burial_chamber
+    west: terror_room_c
 -
   header: Scrapyard
   title: scrapyard 
@@ -435,8 +505,18 @@
   items:
   rooms:
     west: clearing 
-    # up: scaffolding
+    up: scaffolding
     east: behind_apartment_building
+-
+  header: Scaffolding 
+  title: scaffolding
+  first_time_message: "You climb up the scaffolding, being very careful"
+  description: Some very important objects up here.
+  details:
+    phrase: not much else to see right now.
+  items:
+  rooms:
+    down: bombed_alley
 -
   header: Behind Apartment Building 
   title: behind_apartment_building
@@ -449,7 +529,7 @@
     north: bombed_alley
     south: alley
 -
-  header: Tunnel Entrance 
+  header: Tunnel Entrance
   title: tunnel_entrance
   first_time_message: You open the hatch and climb down a ladder for what seems like ages. You finally arrive to find yourself looking at the gated entrance to a creepy tunnel heading off to the west. You have no idea how far beneath the earth you are at this point.
   description: Wow. This is getting serious. Do you really want to try and proceed down the tunnel?
