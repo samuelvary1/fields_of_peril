@@ -1,6 +1,8 @@
+require 'readline'
+
 class InputController
 	attr_reader :avatar, :current_message
-	
+
 	def avatar=(avatar)
 		@avatar = avatar
 	end
@@ -36,7 +38,11 @@ class InputController
 		end
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
-			@current_message = "Sorry, that #{avatar.location.access_points[direction]["game_handle"]} seems to be locked."
+			if !avatar.location.access_points[direction]["visible"]
+				@current_message = "Sorry, you cannot go #{direction} from here."
+				return
+			end
+			@current_message = "Sorry, that #{avatar.location.access_points[direction]["game_handle_display"]} seems to be locked."
 			return
 		end
 
@@ -115,39 +121,66 @@ class InputController
 		else
 			@current_message = "Ummm I don't think you're carrying that, dude"
 		end
-		# binding.pry
 	end
 
-	def unlock_access_point(input, command, command_two, command_three, command_four, command_five)
-		avatar.location.access_points.each do |direction, access_point|
-			if access_point && access_point["game_handle"] == command_two && access_point["locked"]
-				if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
-					@current_message = "What do you want to unlock the #{command_two} with?"
-					return
+	def use_keypad
+		keypad = avatar.location.items.find do |item|
+			item.has_value?("keypad")
+		end
+
+		if avatar.location.access_points[keypad["location"]]["locked"] == false
+			@current_message = "you've already successfully authorized with this keypad, ya big dummy."
+			return
+		end
+
+		if keypad != nil && keypad["handle"] == "keypad" 
+			puts "your fingers hover over the keypad. what's the code, champ?"
+			input = Readline.readline('CODE:', true)
+
+			if input.to_i != 0
+				attempt = input.to_i
+
+				if attempt == keypad["code"]
+					@current_message = "that worked! you've unlocked the access point."
+					avatar.location.access_points[keypad["location"]]["locked"] = false
+				else
+					@current_message = "i'm sorry, that's incorrect."
 				end
 			end
+		else
+			@current_message = "I'm sorry, i don't see a keypad anywhere around here."
+		end			
+	end
 
-			if access_point["game_handle"] && access_point["game_handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
-				key = avatar.items.find do |item|
-					item["handle"] == command_four
+		def unlock_access_point(input, command, command_two, command_three, command_four, command_five)
+			avatar.location.access_points.each do |direction, access_point|
+				if access_point && access_point["game_handle"] == command_two && access_point["locked"]
+					if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
+						@current_message = "What do you want to unlock the #{command_two} with?"
+					end
 				end
 
-				if key.nil?
-					@current_message = "I don't think you're carrying that"
-				elsif key["code"] == access_point["code"]
-					access_point["locked"] = false
-					@current_message = "It fits! you've unlocked the #{access_point["game_handle_display"]}"
+				if access_point["game_handle"] && access_point["game_handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
+					key = avatar.items.find do |item|
+						item["handle"] == command_four
+					end
+
+					if key.nil?
+						@current_message = "I don't think you're carrying that"
+					elsif key["code"] == access_point["code"]
+						access_point["locked"] = false
+						@current_message = "It fits! you've unlocked the #{access_point["game_handle_display"]}"
+					else
+						@current_message = "shoot, that's not the right key"
+					end
+
+				elsif access_point["game_handle"] == command_two && !access_point["locked"]
+					@current_message = "That already appears to be unlocked."
 				else
-					@current_message = "shoot, that's not the right key"
+					@current_message = "I don't think you can unlock anything like that here."
 				end
-
-			elsif access_point["game_handle"] == command_two && !access_point["locked"]
-				@current_message = "That already appears to be unlocked."
-			else
-				@current_message = "I don't think you can unlock anything like that here."
 			end
 		end
-	end
 
 	def view_inventory
 		if avatar.items.size != 0
@@ -158,6 +191,7 @@ class InputController
 	end
 
 	def evaluate(input)
+
 		input.downcase!
 		entered_words = input.split
 
@@ -192,15 +226,19 @@ class InputController
 			drop_item(command_two)
 		end
 
+		if input == "use keypad"
+			use_keypad
+		end
+
 		if command == "unlock"
 			unlock_access_point(input, command, command_two, command_three, command_four, command_five)
 		end
 
-		if input == "inventory" || input == "i"
+		if command == "inventory" || command == "i"
 			view_inventory
 		end
 
-		if input == "help" || input == "h"
+		if command == "help" || command == "h"
 			@current_message = @messages["help"]
 		end
 
@@ -220,8 +258,7 @@ class InputController
 	end
 
 	def valid_commands
-		# only needs to pass the first word or letter of the command to be considered valid
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot)
 	end
 
 	def valid_directions

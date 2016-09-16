@@ -7,61 +7,60 @@
   # you should not be able to leave the room unless you pick up the brass key from the mantle. but in this room there should be the option to type 'break door' which allows you to get through but maybe deducts Health Points from your character.
   description: "The apartment seems to have sustained some damage from shelling but is mostly intact."
   details:
-      phrase: Looks like there are some random objects on the dusty mantle.
-      knowledge: false
+      phrase: Looks like there are some random objects on the dusty mantle. And that bookcase looks a little weird..
+      knowledge: true
   items: 
     - 
       handle: rifle
       description: a battered mosin nagant rifle
-      points: 5
+      # points: 5
       details:
       # a command "look carefully at #{object}" should give you details["phrase"] and if knowledge == true, add the phrase to  
-          phrase: you can just make out initials carved in the stock "V.L."
-          acquired_phrase: The mosin nagant has the initials "V.L." carved raggedly into the stock.
-          knowledge: true
-          points: 1
+        phrase: you can just make out initials carved in the stock "V.L."
+        # acquired_phrase: The mosin nagant has the initials "V.L." carved raggedly into the stock.
+        # knowledge: true
+        # points: 1
     - 
       handle: key
       description: a worn old brass key that looks like it might open that apartment door.
-      points: 7
+      # points: 7
       code: 123
       details:
-          phrase: there isn't much else to see
-          acquired_phrase: 
-          knowledge: false
-          points:
-    -
-      handle: bookcase
-      description: that bookcase looks a little odd...
-      points:
-      code:
-      details:
-      special_interaction: push
-      special_interaction_result: "You give the bookcase a hearty shove, which moves just enough to reveal a small door and a mechanical keypad!"
+        phrase: there isn't much else to see
+        # acquired_phrase: 
+        # knowledge: false
+        # points:
+    # -
+    #   handle: bookcase
+    #   description: that bookcase looks a little odd...
+    #   special_interaction: push
+    #   visible: true
+    #   # if a player attempts a special interaction with an object, check if that matches what's here
+    #   special_interaction_result: "You give the bookcase a hearty shove, which moves just enough to reveal a small door and a mechanical keypad!"
     -
       handle: keypad
       description: It's got the numbers 0-9 on it. 
-      points:
       code: 4918
-      details:
-      special_interaction: use
-      special_interaction_result: Please punch in the code:
+      # visible: false
+      location: east
   rooms:
     west: 3rd_floor_stairs
     east: secret_room
     south: bathroom
   access_points:
     west:
-      handle: door_1
-      game_handle: door
+      handle: door
+      game_handle: entrance
       game_handle_display: apartment entrance
       locked: true
+      visible: true
       code: 123
     east:
-      handle: secret_door_1
-      game_handle: secret_door_1
-      game_handle_display: secret door
+      handle: fireplace
+      game_handle: fireplace
+      game_handle_display: secret door in the fireplace
       locked: true
+      visible: true
       code: 4918
 -
   header: Bathroom
