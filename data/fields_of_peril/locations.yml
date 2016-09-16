@@ -50,14 +50,14 @@
   access_points:
     west:
       handle: door
-      game_handle: entrance
+      game_handle: door
       game_handle_display: apartment entrance
       locked: true
       visible: true
       code: 123
     east:
-      handle: fireplace
-      game_handle: fireplace
+      handle: secret_door
+      game_handle: secret_door
       game_handle_display: secret door in the fireplace
       locked: true
       visible: true

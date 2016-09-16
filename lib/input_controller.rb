@@ -157,6 +157,7 @@ class InputController
 				if access_point && access_point["game_handle"] == command_two && access_point["locked"]
 					if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
 						@current_message = "What do you want to unlock the #{command_two} with?"
+						return
 					end
 				end
 
@@ -167,11 +168,14 @@ class InputController
 
 					if key.nil?
 						@current_message = "I don't think you're carrying that"
+						return
 					elsif key["code"] == access_point["code"]
 						access_point["locked"] = false
 						@current_message = "It fits! you've unlocked the #{access_point["game_handle_display"]}"
+						return
 					else
 						@current_message = "shoot, that's not the right key"
+						return
 					end
 
 				elsif access_point["game_handle"] == command_two && !access_point["locked"]
