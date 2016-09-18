@@ -152,39 +152,39 @@ class InputController
 		end			
 	end
 
-		def unlock_access_point(input, command, command_two, command_three, command_four, command_five)
-			avatar.location.access_points.each do |direction, access_point|
-				if access_point && access_point["game_handle"] == command_two && access_point["locked"]
-					if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
-						@current_message = "What do you want to unlock the #{command_two} with?"
-						return
-					end
-				end
-
-				if access_point["game_handle"] && access_point["game_handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
-					key = avatar.items.find do |item|
-						item["handle"] == command_four
-					end
-
-					if key.nil?
-						@current_message = "I don't think you're carrying that"
-						return
-					elsif key["code"] == access_point["code"]
-						access_point["locked"] = false
-						@current_message = "It fits! you've unlocked the #{access_point["game_handle_display"]}"
-						return
-					else
-						@current_message = "shoot, that's not the right key"
-						return
-					end
-
-				elsif access_point["game_handle"] == command_two && !access_point["locked"]
-					@current_message = "That already appears to be unlocked."
-				else
-					@current_message = "I don't think you can unlock anything like that here."
+	def unlock_access_point(input, command, command_two, command_three, command_four, command_five)
+		avatar.location.access_points.each do |direction, access_point|
+			if access_point && access_point["game_handle"] == command_two && access_point["locked"]
+				if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
+					@current_message = "What do you want to unlock the #{command_two} with?"
+					return
 				end
 			end
+
+			if access_point["game_handle"] && access_point["game_handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
+				key = avatar.items.find do |item|
+					item["handle"] == command_four
+				end
+
+				if key.nil?
+					@current_message = "I don't think you're carrying that"
+					return
+				elsif key["code"] == access_point["code"]
+					access_point["locked"] = false
+					@current_message = "It fits! you've unlocked the #{access_point["game_handle_display"]}"
+					return
+				else
+					@current_message = "shoot, that's not the right key"
+					return
+				end
+
+			elsif access_point["game_handle"] == command_two && !access_point["locked"]
+				@current_message = "That already appears to be unlocked."
+			else
+				@current_message = "I don't think you can unlock anything like that here."
+			end
 		end
+	end
 
 	def view_inventory
 		if avatar.items.size != 0
@@ -194,8 +194,47 @@ class InputController
 		end
 	end
 
-	def evaluate(input)
+	def look_at(object)
+		check_inventory = avatar.items.find do |item|
+			item.has_value?(object)
+		end
 
+		check_room = avatar.location.items.find do |item|
+			item.has_value?(object)
+		end
+
+		if check_inventory.nil? && check_room.nil?
+			@current_message = "I don't think you can look at anything like that here."
+		end
+
+		if check_inventory
+			@current_message = check_inventory["description"]
+			# need to check if knowledge is true and if so add it to a knowledge inventory.. if you decide to implement that system.
+		end
+
+		if check_room
+			@current_message = check_room["description"]
+		end			 
+	end
+
+	def open(object)
+		container = avatar.location.items.find do |item|
+			item.has_value?(object) && item["container"] == true
+		end
+
+		if container.nil?
+			@current_message = "I don't see anything like that to open in here."
+		elsif container["locked"] 
+			@current_message = "It seems to be locked"
+		elsif container["open"]
+			@current_message = "It's already open, champ"
+		else
+			@current_message = "You open the #{container["handle"]}"
+			container["open"] = true
+		end
+	end
+
+	def evaluate(input)
 		input.downcase!
 		entered_words = input.split
 
@@ -218,8 +257,17 @@ class InputController
 			end
 		end
 
-		if command == "look"
+		if "#{command} #{command_two}" == "look at"
+			# this will break if you haven't added a details phrase to the item. you could make a default if there isn't much else to see, or you have to write a details phrase for every item in the game, whether there's anything to see or not. might add more layers to the game if you don't rely on a default.
+			look_at(command_three)
+		end
+
+		if command == "look" && command_two != "at"
 			look(input, command, command_two)
+		end
+
+		if command == "open"
+			open(command_two)
 		end
 		
 		if command == "take"
@@ -233,6 +281,7 @@ class InputController
 		if input == "use keypad"
 			use_keypad
 		end
+
 
 		if command == "unlock"
 			unlock_access_point(input, command, command_two, command_three, command_four, command_five)
@@ -262,7 +311,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open)
 	end
 
 	def valid_directions

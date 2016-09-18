@@ -21,7 +21,7 @@
         # knowledge: true
         # points: 1
     - 
-      handle: key
+      handle: key_1
       description: a worn old brass key that looks like it might open that apartment door.
       # points: 7
       code: 123
@@ -30,6 +30,27 @@
         # acquired_phrase: 
         # knowledge: false
         # points:
+    -
+      handle: mailbox
+      description: that's a fine lookin mailbox
+      details:
+        phrase: it's got some kind of ornate design on the side.
+      container: true
+      open: false
+      locked: false
+      code: 12345
+      contents: 
+        -
+          handle: secret_letter
+          letter: true
+          description: if letter is true you should be able to type read letter and it should print details - phrase 
+          details: 
+            phrase: "Dearest diary, this house is haunted!"
+    -
+      handle: mail_key 
+      description: i bet you can open the mailbox with that.
+      details:
+
     # -
     #   handle: bookcase
     #   description: that bookcase looks a little odd...
@@ -54,7 +75,7 @@
       game_handle_display: apartment entrance
       locked: true
       visible: true
-      code: 123
+      code: 123 
     east:
       handle: secret_door
       game_handle: secret_door
