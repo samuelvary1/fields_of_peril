@@ -219,11 +219,11 @@ class InputController
 
 	def look_in(object)
 		check_inventory = avatar.items.find do |item|
-			item.has_value?(object) && item["container"] == true
+			item.has_value?(object) && item["container"]
 		end
 
 		check_room = avatar.location.items.find do |item|
-			item.has_value?(object) && item["container"] == true
+			item.has_value?(object) && item["container"]
 		end
 
 		if check_inventory.nil? && check_room.nil?
@@ -234,31 +234,78 @@ class InputController
 			if check_inventory["open"] || check_inventory["transparent"]
 				@current_message = "Inside the #{check_inventory["handle"]} you see #{check_inventory["contents"]}."
 			elsif !check_inventory["open"] && !check_inventory["transparent"]
-				@current_message = "That's closed and not transparent, you can't see inside it."
+				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
 		else
 			if check_room["open"] || check_room["transparent"]
 				@current_message = "Inside the #{check_room["handle"]} you see a #{check_room["contents"]["handle"]}"
 			elsif !check_room["open"] && !check_room["transparent"]
-				@current_message = "That's closed and not transparent, you can't see inside it."
+				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
 		end
 	end
 
 	def open(object)
-		container = avatar.location.items.find do |item|
-			item.has_value?(object) && item["container"] == true
+		room_container = avatar.location.items.find do |item|
+			item.has_value?(object) && item["container"]
 		end
 
-		if container.nil?
+		carried_container = avatar.items.find do |item|
+			item.has_value?(object) && item["container"]
+		end
+
+		if room_container.nil? && carried_container.nil?
 			@current_message = "I don't see anything like that to open in here."
-		elsif container["locked"] 
-			@current_message = "It seems to be locked"
-		elsif container["open"]
-			@current_message = "It's already open, champ"
-		else
-			@current_message = "You open the #{container["handle"]}"
-			container["open"] = true
+		end
+
+		if room_container.nil? && !carried_container.nil?
+			if carried_container["locked"]
+				@current_message = "That seems to be locked"
+			elsif carried_container["open"]
+				@current_message = "That's already open"
+			else
+				@current_message = "You've opened the #{carried_container["handle"]}"
+				carried_container["open"] = true
+			end
+		elsif carried_container.nil? && !room_container.nil?
+			if room_container["locked"]
+				@current_message = "That seems to be locked"
+			elsif room_container["open"]
+				@current_message = "That's already open."
+			else
+				@current_message = "You've opened the #{room_container["handle"]}"
+				room_container["open"] = true
+			end
+		end
+	end
+
+	def close(object)
+		room_container = avatar.location.items.find do |item|
+			item.has_value?(object) && item["container"]
+		end
+
+		carried_container = avatar.items.find do |item|
+			item.has_value?(object) && item["container"]
+		end
+
+		if room_container.nil? && carried_container.nil?
+			@current_message = "I don't see anything like that to open in here."
+		end
+
+		if room_container.nil? && !carried_container.nil?
+			if !carried_container["open"]
+				@current_message = "That seems to be already closed"
+			else
+				@current_message = "You've closed the #{carried_container["handle"]}"
+				carried_container["open"] = false
+			end
+		elsif carried_container.nil? && !room_container.nil?
+			if !room_container["open"]
+				@current_message = "That seems to be already closed"
+			else
+				@current_message = "You've closed the #{room_container["handle"]}"
+				room_container["open"] = false
+			end
 		end
 	end
 
@@ -300,6 +347,10 @@ class InputController
 
 		if command == "open"
 			open(command_two)
+		end
+
+		if command == "close"
+			close(command_two)
 		end
 		
 		if command == "take"
@@ -343,7 +394,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open close)
 	end
 
 	def valid_directions
