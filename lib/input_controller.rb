@@ -78,6 +78,7 @@ class InputController
 	end
 
 	def take_item(object)
+		containers = []
 
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
@@ -100,46 +101,50 @@ class InputController
 			item["container"] && item["contents"] && item["open"]
 		end
 
-		if inventory_container_checker.size == 0 && room_container_checker.size > 0 
-			correct_container = room_container_checker.find do |item|
-				item["contents"].find do |content|
-					content.has_value?(object)
-				end
-			end
-		elsif inventory_container_checker.size > 0 && room_container_checker.size == 0 
-			correct_container = inventory_container_checker.find do |item|
-				item["contents"].find do |content|
-					content.has_value?(object)
-				end
+		if room_container_checker.size > 0
+			room_container_checker.each do |item|
+				containers << item
 			end
 		end
 
-		if !correct_container.nil?
-			selected_object = correct_container["contents"].find do |item|
-				item.has_value?(object)
+		if inventory_container_checker.size > 0 
+			inventory_container_checker.each do |container|
+				containers << container
 			end
-			avatar.items.insert(0, selected_object)
-			correct_container["contents"].delete(selected_object)
-			@current_message = "You've picked up the #{object}"
-			return
-			elsif room_checker != nil		
-			  if room_checker["mobile"] == false
-			  	@current_message = "It won't budge"
-			  	return
-		  	end	
-				avatar.location.items.each do |item|
-					if item["handle"] == object
-						avatar.items.insert(0, item)
-						avatar.location.items.delete(item)
-						@current_message = "You've picked up the #{object}"
-					end
+		end
+
+		if room_checker != nil		
+		  if room_checker["mobile"] == false
+		  	@current_message = "It won't budge"
+		  	return
+	  	end	
+			avatar.location.items.each do |item|
+				if item["handle"] == object
+					avatar.items.insert(0, item)
+					avatar.location.items.delete(item)
+					@current_message = "You've picked up the #{object}"
 				end
+			end
 		else
 			@current_message = "Sorry, that doesn't appear to be here."
+		end
+
+		containers.each do |container|
+			container["contents"].each do |item|
+				if item.has_value?(object) && item["mobile"].nil? || item["mobile"]
+				  avatar.items.insert(0, item)
+				  container["contents"].delete(item)
+				  @current_message = "You've picked up the #{item["handle"]} from the #{container["handle"]}"	
+				  return
+				elsif !item["mobile"] && item.has_value?(object)
+					@current_message = "That won't budge"
+				end
+			end
 		end
 	end
 
 	def put_in_container(object, container)
+		containers = []
 
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
@@ -153,22 +158,26 @@ class InputController
 			item["container"] && item["open"]
 		end
 
+		if room_container_checker.size > 0
+			room_container_checker.each do |item|
+				containers << item
+			end
+		end
+
+		if inventory_container_checker.size > 0
+			inventory_container_checker.each do |item|
+				containers << item
+			end
+		end
+
 		if inventory_checker.nil?
 			@current_message = "I don't think you're carrying that"
 			return
 		end
 
-		if room_container_checker.size > 0 && inventory_container_checker.size == 0
-			correct_container = room_container_checker.find do |item|
-				item.has_value?(container)
-			end
-			elsif inventory_container_checker.size > 0 && room_container_checker.size == 0
-				correct_container = inventory_container_checker.find do |item|
-					item.has_value?(container)
-				end
+		correct_container = containers.find do |item|
+			item.has_value?(container)
 		end
-
-		# binding.pry
 
 		if correct_container.nil?
 			@current_message = "There are no open containers like that here"
