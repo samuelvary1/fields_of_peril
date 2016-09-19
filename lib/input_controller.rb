@@ -101,10 +101,8 @@ class InputController
 			item["container"] && item["contents"] && item["open"]
 		end
 
-		if inventory_container_checker.size > 0 && room_container_checker.size > 0 
-			containers < inventory_container_checker
-			containers < room_container_checker
-			correct_container = containers.find do |item|
+		if inventory_container_checker.size == 0 && room_container_checker.size > 0 
+			correct_container = room_container_checker.find do |item|
 				item["contents"].find do |content|
 					content.has_value?(object)
 				end
@@ -115,15 +113,9 @@ class InputController
 					content.has_value?(object)
 				end
 			end
-		elsif inventory_container_checker.size == 0 && room_container_checker.size > 0
-			correct_container = room_container_checker.find do |item|
-				item["contents"].find do |content|
-					content.has_value?(object)
-				end
-			end
 		end
 
-		if !correct_container.nil?
+		if !correct_container.nil? && room_checker.nil?
 			selected_object = correct_container["contents"].find do |item|
 				item.has_value?(object)
 			end
@@ -131,20 +123,60 @@ class InputController
 			avatar.items.insert(0, selected_object)
 			correct_container["contents"].delete(selected_object)
 			@current_message = "You've picked up the #{object}"
-			return
-		end
-
-		if room_checker != nil
-			avatar.location.items.each do |item|
-				if item["handle"] == object
-					avatar.items.insert(0, item)
-					avatar.location.items.delete(item)
-					@current_message = "You've picked up the #{object}"
+			elsif room_checker != nil			
+				avatar.location.items.each do |item|
+					if item["handle"] == object
+						avatar.items.insert(0, item)
+						avatar.location.items.delete(item)
+						@current_message = "You've picked up the #{object}"
+					end
 				end
-			end
 		else
 			@current_message = "Sorry, that doesn't appear to be here."
 		end
+	end
+
+	def put_in_container(object, container)
+
+		inventory_checker = avatar.items.find do |item|
+			item.has_value?(object)
+		end
+
+		room_container_checker = avatar.location.items.select do |item|
+			item["container"] && item["open"]
+		end
+
+		inventory_container_checker = avatar.items.select do |item|
+			item["container"] && item["open"]
+		end
+
+		if inventory_checker.nil?
+			@current_message = "I don't think you're carrying that"
+			return
+		end
+
+		if room_container_checker.size > 0 && inventory_container_checker.size == 0 
+			correct_container = room_container_checker.find do |item|
+				item.has_value?(container)
+			end
+			elsif inventory_container_checker.size > 0 && room_container_checker.size == 0
+				correct_container = inventory_container_checker.find do |item|
+					item.has_value?(container)
+				end
+		else
+			@current_message = "There are no open containers like that there."
+			return
+		end
+
+		avatar.items.each do |item|
+			if item["handle"] == object
+				avatar.items.delete(item)
+				correct_container["contents"].insert(0, item)
+			end
+		end
+
+		@current_message = "You have placed the #{object} in the #{container}"
+
 	end
 
 	def drop_item(object)
@@ -270,6 +302,7 @@ class InputController
 
 		if check_inventory.nil? && check_room.nil?
 			@current_message = "I don't think you can look inside anything like that here"
+			return
 		end
 
 		if check_room.nil? && !check_inventory.nil?
@@ -331,7 +364,7 @@ class InputController
 		end
 
 		if room_container.nil? && carried_container.nil?
-			@current_message = "I don't see anything like that to open in here."
+			@current_message = "I don't see anything like that to close in here."
 		end
 
 		if room_container.nil? && !carried_container.nil?
@@ -391,6 +424,10 @@ class InputController
 			open(command_two)
 		end
 
+		if command == "put" && command_three == "in"
+			put_in_container(command_two, command_four)
+		end
+
 		if command == "close"
 			close(command_two)
 		end
@@ -436,7 +473,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open close)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open close put)
 	end
 
 	def valid_directions
