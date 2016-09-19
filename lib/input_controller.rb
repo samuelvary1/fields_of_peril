@@ -114,8 +114,6 @@ class InputController
 			end
 		end
 
-		binding.pry
-
 		if !correct_container.nil? && room_checker.nil?
 			selected_object = correct_container["contents"].find do |item|
 				item.has_value?(object)
