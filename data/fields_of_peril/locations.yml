@@ -1,10 +1,8 @@
 -
   starting_location: true
   header: Apartment Living Room
-  # if you leave the room and go back in currently it shows chapter 1 and the first time message again
   title: apartment_living_room
   first_time_message: "You wake up to find yourself in the living room of a bombed-out apartment. Your last memory was fighting in a battle in the woods near the town. On the western side of the room there is a rickety wooden door. To the south is another door. You see a key on the mantle, and a dinged-up rifle in the corner"
-  # you should not be able to leave the room unless you pick up the brass key from the mantle. but in this room there should be the option to type 'break door' which allows you to get through but maybe deducts Health Points from your character.
   description: "The apartment seems to have sustained some damage from shelling but is mostly intact."
   details:
       phrase: Looks like there are some random objects on the dusty mantle. And that bookcase looks a little weird..
@@ -15,21 +13,7 @@
       description: a battered mosin nagant rifle
       # points: 5
       details:
-      # a command "look carefully at #{object}" should give you details["phrase"] and if knowledge == true, add the phrase to  
         phrase: you can just make out initials carved in the stock "V.L."
-        # acquired_phrase: The mosin nagant has the initials "V.L." carved raggedly into the stock.
-        # knowledge: true
-        # points: 1
-    - 
-      handle: key_1
-      description: a worn old brass key that looks like it might open that apartment door.
-      # points: 7
-      code: 123
-      details:
-        phrase: there isn't much else to see
-        # acquired_phrase: 
-        # knowledge: false
-        # points:
     -
       handle: mailbox
       description: that's a fine lookin mailbox
@@ -40,14 +24,13 @@
       transparent: false
       mobile: false
       locked: false
-      code: 12345
       contents: 
         -
-          handle: secret_letter
+          handle: parchment
           letter: true
           description: a charred bit of parchment with some writing on it.
           details: 
-            phrase: "Dearest diary, this house is haunted!"
+            phrase: "To open the apartment entrance, who is the artist who wrote Danny Brown's favorite song of all time?"
     -
       handle: box
       description: a simple wooden box
@@ -65,6 +48,7 @@
           description: a skeleton key
           details:
             phrase: not much else to see.
+          code: 4918
     # -
     #   handle: bookcase
     #   description: that bookcase looks a little odd...
@@ -75,9 +59,9 @@
     -
       handle: keypad
       description: It's got the numbers 0-9 on it. 
-      code: 4918
+      code: 14119
       # visible: false
-      location: east
+      location: west
   rooms:
     west: 3rd_floor_stairs
     east: secret_room
@@ -89,11 +73,11 @@
       game_handle_display: apartment entrance
       locked: true
       visible: true
-      code: 123 
+      code: 14119 
     east:
-      handle: secret_door
-      game_handle: secret_door
-      game_handle_display: secret door in the fireplace
+      handle: fireplace
+      game_handle: fireplace
+      game_handle_display: fireplace
       locked: true
       visible: true
       code: 4918
