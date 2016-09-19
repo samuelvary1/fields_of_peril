@@ -68,8 +68,8 @@
     south: bathroom
   access_points:
     west:
-      handle: door
-      game_handle: door
+      handle: entrance
+      game_handle: entrance
       game_handle_display: apartment entrance
       locked: true
       visible: true
