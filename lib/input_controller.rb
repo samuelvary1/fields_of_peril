@@ -157,7 +157,7 @@ class InputController
 			return
 		end
 
-		if room_container_checker.size > 0 && inventory_container_checker.size == 0 
+		if room_container_checker.size > 0 && inventory_container_checker.size == 0
 			correct_container = room_container_checker.find do |item|
 				item.has_value?(container)
 			end
@@ -165,15 +165,17 @@ class InputController
 				correct_container = inventory_container_checker.find do |item|
 					item.has_value?(container)
 				end
-		else
-			@current_message = "There are no open containers like that there."
-			return
 		end
 
-		avatar.items.each do |item|
-			if item["handle"] == object
-				avatar.items.delete(item)
-				correct_container["contents"].insert(0, item)
+		if correct_container.nil?
+			@current_message = "There are no open containers like that here"
+			return
+		else
+			avatar.items.each do |item|
+				if item["handle"] == object
+					avatar.items.delete(item)
+					correct_container["contents"].insert(0, item)
+				end
 			end
 		end
 
@@ -196,6 +198,24 @@ class InputController
 			@current_message = "You have dropped the #{object}"
 		else
 			@current_message = "Ummm I don't think you're carrying that, dude"
+		end
+	end
+
+	def read_item(object)
+		inventory_checker = avatar.items.find do |item|
+			item.has_value?(object)
+		end
+
+		room_checker = avatar.location.items.find do |item|
+			item.has_value?(object)
+		end
+
+		if inventory_checker != nil && inventory_checker["handle"] == object && inventory_checker["letter"] 
+			@current_message = inventory_checker["details"]["phrase"]
+			elsif room_checker != nil && room_checker["handle"] == object && room_checker["letter"]
+				@current_message = room_checker["details"]["phrase"]
+		else
+			@current_message = "I don't see anything like that to read here."
 		end
 	end
 
@@ -446,6 +466,9 @@ class InputController
 			use_keypad
 		end
 
+		if command == "read"
+			read_item(command_two)
+		end
 
 		if command == "unlock"
 			unlock_access_point(input, command, command_two, command_three, command_four, command_five)
@@ -475,7 +498,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open close put)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open close put read)
 	end
 
 	def valid_directions
