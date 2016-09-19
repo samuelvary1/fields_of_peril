@@ -78,7 +78,6 @@ class InputController
 	end
 
 	def take_item(object)
-		containers = []
 
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
@@ -115,15 +114,20 @@ class InputController
 			end
 		end
 
+		binding.pry
+
 		if !correct_container.nil? && room_checker.nil?
 			selected_object = correct_container["contents"].find do |item|
 				item.has_value?(object)
 			end
-
 			avatar.items.insert(0, selected_object)
 			correct_container["contents"].delete(selected_object)
 			@current_message = "You've picked up the #{object}"
-			elsif room_checker != nil			
+			elsif room_checker != nil		
+			  if room_checker["mobile"] == false
+			  	@current_message = "It won't budge"
+			  	return
+		  	end	
 				avatar.location.items.each do |item|
 					if item["handle"] == object
 						avatar.items.insert(0, item)

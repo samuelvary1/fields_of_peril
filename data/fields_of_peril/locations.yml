@@ -38,6 +38,7 @@
       container: true
       open: false
       transparent: false
+      mobile: false
       locked: false
       code: 12345
       contents: 
