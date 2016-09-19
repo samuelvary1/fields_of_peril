@@ -49,15 +49,17 @@
           details:
             phrase: not much else to see.
           code: 4918
-    # -
-    #   handle: bookcase
-    #   description: that bookcase looks a little odd...
-    #   special_interaction: push
-    #   visible: true
-    #   # if a player attempts a special interaction with an object, check if that matches what's here
-    #   special_interaction_result: "You give the bookcase a hearty shove, which moves just enough to reveal a small door and a mechanical keypad!"
+    -
+      handle: bookcase
+      description: that bookcase looks a little odd...
+      mobile: false
+      # special_interaction: push
+      # visible: true
+      # if a player attempts a special interaction with an object, check if that matches what's here
+      # special_interaction_result: "You give the bookcase a hearty shove, which moves just enough to reveal a small door and a mechanical keypad!"
     -
       handle: keypad
+      mobile: false
       description: It's got the numbers 0-9 on it. 
       code: 14119
       # visible: false
