@@ -78,6 +78,8 @@ class InputController
 	end
 
 	def take_item(object)
+		containers = []
+
 		inventory_checker = avatar.items.find do |item|
 			item.has_value?(object)
 		end
@@ -91,6 +93,47 @@ class InputController
 			item.has_value?(object)
 		end
 
+		room_container_checker = avatar.location.items.select do |item|
+			item["container"] && item["contents"] && item["open"]
+		end
+
+		inventory_container_checker = avatar.items.select do |item|
+			item["container"] && item["contents"] && item["open"]
+		end
+
+		if inventory_container_checker.size > 0 && room_container_checker.size > 0 
+			containers < inventory_container_checker
+			containers < room_container_checker
+			correct_container = containers.find do |item|
+				item["contents"].find do |content|
+					content.has_value?(object)
+				end
+			end
+		elsif inventory_container_checker.size > 0 && room_container_checker.size == 0 
+			correct_container = inventory_container_checker.find do |item|
+				item["contents"].find do |content|
+					content.has_value?(object)
+				end
+			end
+		elsif inventory_container_checker.size == 0 && room_container_checker.size > 0
+			correct_container = room_container_checker.find do |item|
+				item["contents"].find do |content|
+					content.has_value?(object)
+				end
+			end
+		end
+
+		if !correct_container.nil?
+			selected_object = correct_container["contents"].find do |item|
+				item.has_value?(object)
+			end
+
+			avatar.items.insert(0, selected_object)
+			correct_container["contents"].delete(selected_object)
+			@current_message = "You've picked up the #{object}"
+			return
+		end
+
 		if room_checker != nil
 			avatar.location.items.each do |item|
 				if item["handle"] == object
@@ -102,7 +145,6 @@ class InputController
 		else
 			@current_message = "Sorry, that doesn't appear to be here."
 		end
-		# binding.pry
 	end
 
 	def drop_item(object)
@@ -238,7 +280,7 @@ class InputController
 			end
 		else
 			if check_room["open"] || check_room["transparent"]
-				@current_message = "Inside the #{check_room["handle"]} you see a #{check_room["contents"]["handle"]}"
+				@current_message = "Inside the #{check_room["handle"]} you see a #{check_room["contents"]}"
 			elsif !check_room["open"] && !check_room["transparent"]
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end

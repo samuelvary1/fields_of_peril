@@ -41,16 +41,29 @@
       locked: false
       code: 12345
       contents: 
-        handle: secret_letter
-        letter: true
-        description: if letter is true you should be able to type read letter and it should print details - phrase 
-        details: 
-          phrase: "Dearest diary, this house is haunted!"
+        -
+          handle: secret_letter
+          letter: true
+          description: a charred bit of parchment with some writing on it.
+          details: 
+            phrase: "Dearest diary, this house is haunted!"
     -
-      handle: mail_key 
-      description: i bet you can open the mailbox with that.
+      handle: box
+      description: a simple wooden box
       details:
-
+        phrase:
+      container: true
+      open: false
+      transparent: false
+      locked: false
+      code: 12345
+      contents:
+        -
+          handle: skeleton_key
+          letter: false
+          description: a skeleton key
+          details:
+            phrase: not much else to see.
     # -
     #   handle: bookcase
     #   description: that bookcase looks a little odd...
