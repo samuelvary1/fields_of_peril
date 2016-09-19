@@ -217,6 +217,34 @@ class InputController
 		end			 
 	end
 
+	def look_in(object)
+		check_inventory = avatar.items.find do |item|
+			item.has_value?(object) && item["container"] == true
+		end
+
+		check_room = avatar.location.items.find do |item|
+			item.has_value?(object) && item["container"] == true
+		end
+
+		if check_inventory.nil? && check_room.nil?
+			@current_message = "I don't think you can look inside anything like that here"
+		end
+
+		if check_room.nil? && !check_inventory.nil?
+			if check_inventory["open"] || check_inventory["transparent"]
+				@current_message = "Inside the #{check_inventory["handle"]} you see #{check_inventory["contents"]}."
+			elsif !check_inventory["open"] && !check_inventory["transparent"]
+				@current_message = "That's closed and not transparent, you can't see inside it."
+			end
+		else
+			if check_room["open"] || check_room["transparent"]
+				@current_message = "Inside the #{check_room["handle"]} you see a #{check_room["contents"]["handle"]}"
+			elsif !check_room["open"] && !check_room["transparent"]
+				@current_message = "That's closed and not transparent, you can't see inside it."
+			end
+		end
+	end
+
 	def open(object)
 		container = avatar.location.items.find do |item|
 			item.has_value?(object) && item["container"] == true
@@ -262,7 +290,11 @@ class InputController
 			look_at(command_three)
 		end
 
-		if command == "look" && command_two != "at"
+		if "#{command} #{command_two}" == "look in"
+			look_in(command_three)
+		end
+
+		if command == "look" && command_two != "at" && command_two != "in"
 			look(input, command, command_two)
 		end
 

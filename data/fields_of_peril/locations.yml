@@ -37,15 +37,15 @@
         phrase: it's got some kind of ornate design on the side.
       container: true
       open: false
+      transparent: false
       locked: false
       code: 12345
       contents: 
-        -
-          handle: secret_letter
-          letter: true
-          description: if letter is true you should be able to type read letter and it should print details - phrase 
-          details: 
-            phrase: "Dearest diary, this house is haunted!"
+        handle: secret_letter
+        letter: true
+        description: if letter is true you should be able to type read letter and it should print details - phrase 
+        details: 
+          phrase: "Dearest diary, this house is haunted!"
     -
       handle: mail_key 
       description: i bet you can open the mailbox with that.
