@@ -94,6 +94,22 @@
     knowledge: false
     points:
   items: 
+    -
+      handle: cabinet
+      mobile: false
+      description: a basic medicine cabinet
+      details:
+        phrase: not much else to see
+      container: true
+      open: false
+      transparent: false
+      contents:
+        -
+          handle: toothpaste
+          letter: true
+          description: a tube of toothpaste
+          details: 
+            phrase: "the back of the tube says 'to be used in case of emergency monster gingivitis'"
   rooms:
     north: apartment_living_room
 -

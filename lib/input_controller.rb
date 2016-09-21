@@ -20,7 +20,23 @@ class InputController
 	end
 
 	def input_movement(command_two)
-		direction = command_two
+
+		if command_two == "north" || command_two == "n"
+			direction = "north" 
+		elsif command_two == "south" || command_two == "s"
+			direction = "south"
+		elsif command_two == "east" || command_two == "e"
+			direction = "east"
+		elsif command_two == "west" || command_two == "w"
+			direction = "west"
+		elsif command_two == "up" || command_two == "u"
+			direction = "up"
+		elsif command_two == "down" || command_two == "d"
+			direction = "down"
+		else
+			@current_message = "Sorry, that doesn't seem to be a valid direction"
+			return
+		end
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
 			if !avatar.location.access_points[direction]["visible"]
