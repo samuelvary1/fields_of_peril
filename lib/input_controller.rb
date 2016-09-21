@@ -77,28 +77,36 @@ class InputController
 		end
 	end
 
+	def inventory_checker(object)
+		avatar.items.find do |item|
+			item.has_value?(object)
+		end
+	end
+
+	def room_checker(object)
+		avatar.location.items.find do |item|
+			item.has_value?(object)
+		end
+	end
+
+	def room_container_checker
+		avatar.location.items.select do |item|
+			item["container"] && item["contents"] && item["open"]
+		end
+	end
+
+	def inventory_container_checker
+		avatar.items.select do |item|
+			item["container"] && item["contents"] && item["open"]
+		end
+	end
+
 	def take_item(object)
 		containers = []
 
-		inventory_checker = avatar.items.find do |item|
-			item.has_value?(object)
-		end
-
-		if inventory_checker != nil && inventory_checker["handle"] == object
+		if inventory_checker(object)
 			@current_message = "You're already holding that!"
 			return
-		end
-
-		room_checker = avatar.location.items.find do |item|
-			item.has_value?(object)
-		end
-
-		room_container_checker = avatar.location.items.select do |item|
-			item["container"] && item["contents"] && item["open"]
-		end
-
-		inventory_container_checker = avatar.items.select do |item|
-			item["container"] && item["contents"] && item["open"]
 		end
 
 		if room_container_checker.size > 0
@@ -113,8 +121,8 @@ class InputController
 			end
 		end
 
-		if room_checker != nil		
-		  if room_checker["mobile"] == false
+		if room_checker(object)	
+		  if room_checker(object)["mobile"] == false
 		  	@current_message = "It won't budge"
 		  	return
 	  	end	
@@ -146,18 +154,6 @@ class InputController
 	def put_in_container(object, container)
 		containers = []
 
-		inventory_checker = avatar.items.find do |item|
-			item.has_value?(object)
-		end
-
-		room_container_checker = avatar.location.items.select do |item|
-			item["container"] && item["open"]
-		end
-
-		inventory_container_checker = avatar.items.select do |item|
-			item["container"] && item["open"]
-		end
-
 		if room_container_checker.size > 0
 			room_container_checker.each do |item|
 				containers << item
@@ -170,7 +166,7 @@ class InputController
 			end
 		end
 
-		if inventory_checker.nil?
+		if inventory_checker(object).nil?
 			@current_message = "I don't think you're carrying that"
 			return
 		end
@@ -190,17 +186,11 @@ class InputController
 				end
 			end
 		end
-
 		@current_message = "You have placed the #{object} in the #{container}"
-
 	end
 
 	def drop_item(object)
-		inventory_checker = avatar.items.find do |item|
-			item.has_value?(object)
-		end
-
-		if inventory_checker != nil && inventory_checker["handle"] == object			
+		if inventory_checker(object)	
 			avatar.items.each do |item|
 				if item["handle"] == object
 					avatar.items.delete(item)
@@ -214,18 +204,10 @@ class InputController
 	end
 
 	def read_item(object)
-		inventory_checker = avatar.items.find do |item|
-			item.has_value?(object)
-		end
-
-		room_checker = avatar.location.items.find do |item|
-			item.has_value?(object)
-		end
-
-		if inventory_checker != nil && inventory_checker["handle"] == object && inventory_checker["letter"] 
-			@current_message = inventory_checker["details"]["phrase"]
-			elsif room_checker != nil && room_checker["handle"] == object && room_checker["letter"]
-				@current_message = room_checker["details"]["phrase"]
+		if inventory_checker(object) && inventory_checker(object)["letter"] 
+			@current_message = inventory_checker(object)["details"]["phrase"]
+			elsif room_checker(object) && room_checker(object)["letter"]
+				@current_message = room_checker(object)["details"]["phrase"]
 		else
 			@current_message = "I don't see anything like that to read here."
 		end
@@ -295,7 +277,7 @@ class InputController
 	end
 
 	def view_inventory
-		if avatar.items.size != 0
+		if avatar.items.size > 0
 			@current_message = avatar.list_items
 		else
 			@current_message = "You are not currently carrying anything"
@@ -303,52 +285,33 @@ class InputController
 	end
 
 	def look_at(object)
-		check_inventory = avatar.items.find do |item|
-			item.has_value?(object)
-		end
-
-		check_room = avatar.location.items.find do |item|
-			item.has_value?(object)
-		end
-
-		if check_inventory.nil? && check_room.nil?
-			@current_message = "I don't think you can look at anything like that here."
-		end
-
-		if check_inventory
-			@current_message = check_inventory["description"]
+		if inventory_checker(object)
+			@current_message = inventory_checker(object)["description"]
 			# need to check if knowledge is true and if so add it to a knowledge inventory.. if you decide to implement that system.
-		end
-
-		if check_room
-			@current_message = check_room["description"]
+			elsif room_checker(object)
+				@current_message = room_checker(object)["description"]
+		else
+			@current_message = "I don't think you can look at anything like that here."
 		end			 
 	end
 
 	def look_in(object)
-		check_inventory = avatar.items.find do |item|
-			item.has_value?(object) && item["container"]
-		end
 
-		check_room = avatar.location.items.find do |item|
-			item.has_value?(object) && item["container"]
-		end
-
-		if check_inventory.nil? && check_room.nil?
+		if inventory_checker(object).nil? && room_checker(object).nil?
 			@current_message = "I don't think you can look inside anything like that here"
 			return
 		end
 
-		if check_room.nil? && !check_inventory.nil?
-			if check_inventory["open"] || check_inventory["transparent"]
-				@current_message = "Inside the #{check_inventory["handle"]} you see #{check_inventory["contents"]}."
-			elsif !check_inventory["open"] && !check_inventory["transparent"]
+		if room_checker(object).nil? && inventory_checker(object)
+			if inventory_checker(object)["open"] || inventory_checker(object)["transparent"]
+				@current_message = "Inside the #{inventory_checker(object)["handle"]} you see #{inventory_checker(object)["contents"]}."
+			elsif !inventory_checker(object)["open"] && !inventory_checker(object)["transparent"]
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
 		else
-			if check_room["open"] || check_room["transparent"]
-				@current_message = "Inside the #{check_room["handle"]} you see a #{check_room["contents"]}"
-			elsif !check_room["open"] && !check_room["transparent"]
+			if room_checker(object)["open"] || room_checker(object)["transparent"]
+				@current_message = "Inside the #{room_checker(object)["handle"]} you see a #{room_checker(object)["contents"]}"
+			elsif !room_checker(object)["open"] && !room_checker(object)["transparent"]
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
 		end
