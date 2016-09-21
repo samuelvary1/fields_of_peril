@@ -71,7 +71,7 @@ class InputController
 		if input == "look closer"
 			@current_message = avatar.location.details["phrase"]
 			# this is where you'll need to check if knowledge == true for a room details, and if so add it to the avatar's knowledge array
-		elsif command == "look" && command_two != "closer" && !command_two.nil?
+		elsif command == "look" && command_two != "closer" || input.length > 11
 			@current_message = "Sorry, I only understand you as far as wanting to look."
 		else
 			@current_message = avatar.location.description
