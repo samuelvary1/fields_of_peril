@@ -101,6 +101,18 @@ class InputController
 		end
 	end
 
+	def room_container(object)
+		avatar.location.items.find do |item|
+			item.has_value?(object) && item["container"]
+		end
+	end
+
+	def carried_container(object)
+		avatar.items.find do |item|
+			item.has_value?(object) && item["container"]
+		end
+	end
+
 	def take_item(object)
 		containers = []
 
@@ -204,10 +216,13 @@ class InputController
 	end
 
 	def read_item(object)
-		if inventory_checker(object) && inventory_checker(object)["letter"] 
-			@current_message = inventory_checker(object)["details"]["phrase"]
-			elsif room_checker(object) && room_checker(object)["letter"]
-				@current_message = room_checker(object)["details"]["phrase"]
+		inventory = inventory_checker(object)
+		room = room_checker(object)
+
+		if inventory && inventory["letter"] 
+			@current_message = inventory["details"]["phrase"]
+			elsif room && room["letter"]
+				@current_message = room["details"]["phrase"]
 		else
 			@current_message = "I don't see anything like that to read here."
 		end
@@ -296,83 +311,81 @@ class InputController
 	end
 
 	def look_in(object)
+		inventory = inventory_checker(object)
+		room = room_checker(object)
 
-		if inventory_checker(object).nil? && room_checker(object).nil?
+		if inventory.nil? && room.nil?
 			@current_message = "I don't think you can look inside anything like that here"
 			return
 		end
 
-		if room_checker(object).nil? && inventory_checker(object)
-			if inventory_checker(object)["open"] || inventory_checker(object)["transparent"]
-				@current_message = "Inside the #{inventory_checker(object)["handle"]} you see #{inventory_checker(object)["contents"]}."
-			elsif !inventory_checker(object)["open"] && !inventory_checker(object)["transparent"]
+		if room.nil? && inventory
+			if inventory["open"] || inventory["transparent"]
+				@current_message = "Inside the #{inventory["handle"]} you see #{inventory["contents"]}."
+			elsif !inventory["open"] && !inventory["transparent"]
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
 		else
-			if room_checker(object)["open"] || room_checker(object)["transparent"]
-				@current_message = "Inside the #{room_checker(object)["handle"]} you see a #{room_checker(object)["contents"]}"
-			elsif !room_checker(object)["open"] && !room_checker(object)["transparent"]
+			if room["open"] || room["transparent"]
+				@current_message = "Inside the #{room["handle"]} you see a #{room["contents"]}"
+			elsif !room["open"] && !room["transparent"]
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
-		end
-	end
-
-	def room_container(object)
-		avatar.location.items.find do |item|
-			item.has_value?(object) && item["container"]
-		end
-	end
-
-	def carried_container(object)
-		avatar.items.find do |item|
-			item.has_value?(object) && item["container"]
 		end
 	end
 
 	def open(object)
-		if room_container(object).nil? && carried_container(object).nil?
+		room = room_container(object)
+		carried = carried_container(object)
+
+		if room.nil? && carried.nil?
 			@current_message = "I don't see anything like that to open in here."
+			return
 		end
 
-		if room_container(object).nil? && carried_container(object)
-			if carried_container(object)["locked"]
+		if room.nil? && carried
+			if carried["locked"]
 				@current_message = "That seems to be locked"
-			elsif carried_container(object)["open"]
+			elsif carried["open"]
 				@current_message = "That's already open"
 			else
-				@current_message = "You've opened the #{carried_container(object)["handle"]}"
-				carried_container(object)["open"] = true
+				@current_message = "You've opened the #{carried["handle"]}"
+				carried["open"] = true
 			end
-		elsif carried_container(object).nil? && room_container(object)
-			if room_container(object)["locked"]
+		elsif carried.nil? && room
+			if room["locked"]
 				@current_message = "That seems to be locked"
-			elsif room_container(object)["open"]
+			elsif room["open"]
 				@current_message = "That's already open."
 			else
-				@current_message = "You've opened the #{room_container(object)["handle"]}"
-				room_container(object)["open"] = true
+				@current_message = "You've opened the #{room["handle"]}"
+				room["open"] = true
 			end
 		end
 	end
 
 	def close(object)
-		if room_container(object).nil? && carried_container(object).nil?
+		room = room_container(object)
+		carried = carried_container(object)
+
+		if room.nil? && carried.nil?
 			@current_message = "I don't see anything like that to close in here."
+			return
 		end
 
-		if room_container(object).nil? && carried_container(object)
-			if !carried_container(object)["open"]
+		if room.nil? && carried
+			if !carried["open"]
 				@current_message = "That seems to be already closed"
 			else
-				@current_message = "You've closed the #{carried_container(object)["handle"]}"
-				carried_container(object)["open"] = false
+				@current_message = "You've closed the #{carried["handle"]}"
+				carried["open"] = false
 			end
-		elsif carried_container(object).nil? && room_container(object)
-			if !room_container(object)["open"]
+		elsif carried.nil? && room
+			if !room["open"]
 				@current_message = "That seems to be already closed"
 			else
-				@current_message = "You've closed the #{room_container(object)["handle"]}"
-				room_container(object)["open"] = false
+				@current_message = "You've closed the #{room["handle"]}"
+				room["open"] = false
 			end
 		end
 	end
@@ -405,11 +418,12 @@ class InputController
 			look_at(command_three)
 		end
 
-		if "#{command} #{command_two}" == "look in"
+		if "#{command} #{command_two}" == "look in" || "#{command} #{command_two}" == "look inside" 
 			look_in(command_three)
 		end
 
-		if command == "look" && command_two != "at" && command_two != "in"
+		if command == "look" && command_two != "at" && command_two != "in" && command_two != "inside"
+			binding.pry
 			look(input, command, command_two)
 		end
 
