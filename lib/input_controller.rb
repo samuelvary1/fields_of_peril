@@ -429,7 +429,6 @@ class InputController
 		end
 
 		if command == "look" && command_two != "at" && command_two != "in" && command_two != "inside"
-			binding.pry
 			look(input, command, command_two)
 		end
 

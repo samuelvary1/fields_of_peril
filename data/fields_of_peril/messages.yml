@@ -1,2 +1,2 @@
 splash: "FIELDS OF PERIL by Sam Vary"
-help: "valid commands include:\n -look\n -look closer\n -go [direction]\n -take [item]\n -unlock [access point]\n -unlock [access point] with [item]\n -drop [item]\n -h or help\n -i or inventory"
+help: "valid commands include:\n -look\n -look closer\n -look in/look inside [container]\n -go [direction]\n -take [item]\n -drop [item]\n -unlock [access point]\n -unlock [access point] with [item]\n -use keypad\n -open [container]\n -close [container]\n -put [item] in [container]\n -give [item] to [character]\n -h or help\n -i or inventory"
