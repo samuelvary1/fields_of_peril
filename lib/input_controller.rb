@@ -21,21 +21,7 @@ class InputController
 
 	def input_movement(command_two)
 		direction = command_two
-		case direction 
-			when "n"
-				direction = "north"
-			when "s"
-				direction = "south"
-			when "e"
-				direction = "east"
-			when "w"
-				direction = "west"
-			when "d"
-				direction = "down"
-			when "u"
-				direction = "up"
-		end
-
+		
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
 			if !avatar.location.access_points[direction]["visible"]
 				@current_message = "Sorry, you cannot go #{direction} from here."
