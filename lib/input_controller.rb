@@ -19,9 +19,8 @@ class InputController
 		end
 	end
 
-	def input_movement(command, entered_words)
-		entered_words = [entered_words[0], entered_words[1]]
-		direction = entered_words.last
+	def input_movement(command_two)
+		direction = command_two
 		case direction 
 			when "n"
 				direction = "north"
@@ -233,6 +232,11 @@ class InputController
 			item.has_value?("keypad")
 		end
 
+		if keypad.nil?
+			@current_message = "I don't see that here"
+			return
+		end
+
 		if avatar.location.access_points[keypad["location"]]["locked"] == false
 			@current_message = "you've already successfully authorized with this keypad, ya big dummy."
 			return
@@ -406,8 +410,8 @@ class InputController
 		command_five  = entered_words[4]
 
 		if command == "go"
-			if valid_directions.include?(entered_words[1])
-				input_movement(command, entered_words)
+			if valid_directions.include?(command_two)
+				input_movement(command_two)
 			else
 				@current_message = "Sorry, that doesn't seem to be a valid direction.."
 			end
