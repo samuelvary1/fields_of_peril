@@ -317,66 +317,62 @@ class InputController
 		end
 	end
 
+	def room_container(object)
+		avatar.location.items.find do |item|
+			item.has_value?(object) && item["container"]
+		end
+	end
+
+	def carried_container(object)
+		avatar.items.find do |item|
+			item.has_value?(object) && item["container"]
+		end
+	end
+
 	def open(object)
-		room_container = avatar.location.items.find do |item|
-			item.has_value?(object) && item["container"]
-		end
-
-		carried_container = avatar.items.find do |item|
-			item.has_value?(object) && item["container"]
-		end
-
-		if room_container.nil? && carried_container.nil?
+		if room_container(object).nil? && carried_container(object).nil?
 			@current_message = "I don't see anything like that to open in here."
 		end
 
-		if room_container.nil? && !carried_container.nil?
-			if carried_container["locked"]
+		if room_container(object).nil? && carried_container(object)
+			if carried_container(object)["locked"]
 				@current_message = "That seems to be locked"
-			elsif carried_container["open"]
+			elsif carried_container(object)["open"]
 				@current_message = "That's already open"
 			else
-				@current_message = "You've opened the #{carried_container["handle"]}"
-				carried_container["open"] = true
+				@current_message = "You've opened the #{carried_container(object)["handle"]}"
+				carried_container(object)["open"] = true
 			end
-		elsif carried_container.nil? && !room_container.nil?
-			if room_container["locked"]
+		elsif carried_container(object).nil? && room_container(object)
+			if room_container(object)["locked"]
 				@current_message = "That seems to be locked"
-			elsif room_container["open"]
+			elsif room_container(object)["open"]
 				@current_message = "That's already open."
 			else
-				@current_message = "You've opened the #{room_container["handle"]}"
-				room_container["open"] = true
+				@current_message = "You've opened the #{room_container(object)["handle"]}"
+				room_container(object)["open"] = true
 			end
 		end
 	end
 
 	def close(object)
-		room_container = avatar.location.items.find do |item|
-			item.has_value?(object) && item["container"]
-		end
-
-		carried_container = avatar.items.find do |item|
-			item.has_value?(object) && item["container"]
-		end
-
-		if room_container.nil? && carried_container.nil?
+		if room_container(object).nil? && carried_container(object).nil?
 			@current_message = "I don't see anything like that to close in here."
 		end
 
-		if room_container.nil? && !carried_container.nil?
-			if !carried_container["open"]
+		if room_container(object).nil? && carried_container(object)
+			if !carried_container(object)["open"]
 				@current_message = "That seems to be already closed"
 			else
-				@current_message = "You've closed the #{carried_container["handle"]}"
-				carried_container["open"] = false
+				@current_message = "You've closed the #{carried_container(object)["handle"]}"
+				carried_container(object)["open"] = false
 			end
-		elsif carried_container.nil? && !room_container.nil?
-			if !room_container["open"]
+		elsif carried_container(object).nil? && room_container(object)
+			if !room_container(object)["open"]
 				@current_message = "That seems to be already closed"
 			else
-				@current_message = "You've closed the #{room_container["handle"]}"
-				room_container["open"] = false
+				@current_message = "You've closed the #{room_container(object)["handle"]}"
+				room_container(object)["open"] = false
 			end
 		end
 	end
