@@ -8,7 +8,6 @@ class GameDataLoader
 		rooms = load_initial_state(data)
 		establish_relationships(rooms)
 		rooms
-		binding.pry
   end
 
 	def load_message_data(file)
