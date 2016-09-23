@@ -1,5 +1,5 @@
 class Room
-	attr_accessor :header, :title, :first_time_message, :description, :details, :items, :rooms, :access_points, :been_before
+	attr_accessor :header, :title, :first_time_message, :description, :details, :items, :rooms, :access_points, :been_before, :characters
 	attr_writer :starting_location
 
 	def has_room_to_the?(direction)
