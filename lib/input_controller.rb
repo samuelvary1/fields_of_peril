@@ -186,21 +186,14 @@ class InputController
 
 		containers.each do |container|
 			container.contents.each do |item|
-				if item.class == Item
-					result = item.handle == object
-					mobile = item.mobile
-				else
-					result = item.has_value?(object)
-					mobile = item["mobile"]
-				end
-
-				if result && (mobile.nil? || mobile)
+				if item.handle == object && (item.mobile.nil? || item.mobile)
 				  avatar.items.insert(0, item)
 				  container.contents.delete(item)
 				  # binding.pry
 				  @current_message = "You've picked up the #{object} from the #{container.handle}"	
 				  return
-				elsif !item["mobile"] && item.has_value?(object)
+				elsif !item.mobile && item.handle == object
+					binding.pry
 					@current_message = "That won't budge."
 				end
 			end

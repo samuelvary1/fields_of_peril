@@ -31,7 +31,22 @@ class GameDataLoader
 
 	def load_initial_items_state(data)
 		items = []
+		containers = []
 		data.each {|item_data| items << build_item(item_data)}
+		items.each do |item|
+			if item.container 
+				containers << item
+			end
+		end
+
+		containers.each do |container|
+			items.each do |item|
+				if item.inside == container.handle
+					container.contents << item
+				end
+			end
+			items << container
+		end
 		items
 	end
 
@@ -102,18 +117,19 @@ class GameDataLoader
 		item.handle = item_data["handle"]
 		item.description = item_data["description"]
 		item.details = item_data["details"]
+		item.inside = item_data["inside"]
 		item.location = item_data["location"]
 		item.container = item_data["container"]
 		item.open = item_data["open"]
 		item.transparent = item_data["transparent"]
 		item.mobile = item_data["mobile"]
 		item.letter = item_data["letter"]
-		item.mobile.nil? ? item.mobile = true : item.mobile = false
+		item.mobile.nil? ? item.mobile = true : item.mobile = item_data["mobile"]
 		item.letter.nil? ? item.letter = false : item.letter = false
 		item.direction = item_data["direction"]
 		item.locked = item_data["locked"]
 		item.code = item_data["code"]
-		item.contents = item_data["contents"]
+		item.contents = []
 		item
 	end
 
