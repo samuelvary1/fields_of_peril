@@ -412,7 +412,7 @@ class InputController
 		end
 	end
 
-	def test_answer(character, answer)
+	def get_answer(character, answer)
 		if answer == "a"
 			response = "'#{character.self_explanation}'"
 		elsif answer == "b"
@@ -431,7 +431,7 @@ class InputController
 		character = character_checker(name)
 		if character
 			answer = character.enter_dialogue	
-			@current_message = test_answer(character, answer)
+			@current_message = get_answer(character, answer)
 		else
 			@current_message = "I don't see anyone like that around here, pilgrim."
 		end
