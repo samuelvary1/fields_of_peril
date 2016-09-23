@@ -3,9 +3,11 @@ require File.join(File.dirname(__FILE__), 'character')
 require 'yaml'
 
 class GameDataLoader
-	def load_location_data(file)
-		data = load_data_from(file)
-		rooms = load_initial_state(data)
+	def load_location_data(location_data_file, character_data_file)
+		room_data = load_data_from(location_data_file)
+		character_data = load_data_from(character_data_file)
+		characters = load_initial_characters_state(character_data)
+		rooms = load_initial_state(room_data, characters)
 		establish_relationships(rooms)
 		rooms
   end
@@ -26,9 +28,16 @@ class GameDataLoader
 		characters
 	end
 
-	def load_initial_state(data)
+	def load_initial_state(data, characters)
 		rooms = []
 		data.each {|room_data| rooms << build_room(room_data)}
+		rooms.each do |room|
+			characters.each do |character|
+				if character.lives_in == room.title
+					room.characters << character
+				end
+			end
+		end
 		rooms
 	end
 
@@ -42,6 +51,7 @@ class GameDataLoader
 
 	def build_room(room_data)
 		room = get_room
+		room.characters = []
 		room.starting_location = room_data["starting_location"]
 		room.title = room_data["title"]
 		room.header = room_data["header"]
@@ -64,7 +74,6 @@ class GameDataLoader
 	def build_character(character_data)
 		character = get_character
 		character.name = character_data["name"]
-		# this is what the player will see if they type 'talk to [character]':
 		character.response = character_data["response"]
 		character.lives_in = character_data["lives_in"]
 		character

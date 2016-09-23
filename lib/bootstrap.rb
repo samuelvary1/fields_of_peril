@@ -7,9 +7,9 @@ require 'pry'
 
 class Bootstrap
   def initialize(location_data_file, message_data_file, character_data_file)
-    @locations = loader.load_location_data(location_data_file)
-    @messages = loader.load_message_data(message_data_file)
     @characters = loader.load_character_data(character_data_file)
+    @locations = loader.load_location_data(location_data_file, character_data_file)
+    @messages = loader.load_message_data(message_data_file)
   end
   
   def starting_location
