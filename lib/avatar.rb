@@ -13,13 +13,10 @@ class Avatar
 
 	def list_items
 		puts "You are currently carrying: "
+		puts ""
 		
 		items.collect do |item|
-			if item.class == Item
-				item.description
-			else
-				item["description"]
-			end
+			item.description
 		end
 	end
 

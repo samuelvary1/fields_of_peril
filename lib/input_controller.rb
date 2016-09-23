@@ -330,7 +330,7 @@ class InputController
 				if inventory.contents.size == 0
 					@current_message = "There's nothing in there but a little bit of lint"
 				else
-					@current_message = "Inside the #{inventory.handle} you see #{inventory.contents}."
+					@current_message = inventory.list_contents
 				end
 			elsif !inventory.open && !inventory.transparent
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
@@ -340,7 +340,7 @@ class InputController
 				if room.contents.size == 0
 					@current_message = "There's nothing in there but a little bit of lint"
 				else
-					@current_message = "Inside the #{room.handle} you see #{room.contents}"
+					@current_message = room.list_contents
 				end
 			elsif !room.open && !room.transparent
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
