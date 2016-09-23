@@ -406,8 +406,19 @@ class InputController
 		end
 	end
 
-	def talk_to(character)
-		binding.pry
+	def character_checker(name)
+		avatar.location.characters.find do |character|
+			character.name.downcase == name || character.code_name == name
+		end
+	end
+
+	def talk_to(name)
+		character = character_checker(name)
+		if character
+			@current_message = character.response
+		else
+			@current_message = "I don't see anyone like that around here, pilgrim."
+		end
 	end
 
 	def evaluate(input)
