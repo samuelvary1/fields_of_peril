@@ -89,47 +89,48 @@ class GameDataLoader
 	end
 
 	def build_room(room_data)
-		room = get_room
-		room.characters = []
-		room.items = []
-		room.starting_location = room_data["starting_location"]
-		room.title = room_data["title"]
-		room.header = room_data["header"]
+		room                    = get_room
+		room.characters         = []
+		room.items              = []
+		room.starting_location  = room_data["starting_location"]
+		room.title              = room_data["title"]
+		room.header             = room_data["header"]
 		room.first_time_message = room_data["first_time_message"]
-		room.description = room_data["description"]
-		room.details = room_data["details"]		
-		room.rooms = room_data["rooms"]
-		room.access_points = room_data["access_points"]
-		room.been_before = false
+		room.description        = room_data["description"]
+		room.details            = room_data["details"]		
+		room.rooms              = room_data["rooms"]
+		room.access_points      = room_data["access_points"]
+		room.been_before        = false
 		room
 	end
 
 	def build_character(character_data)
-		character = get_character
-		character.name = character_data["name"]
+		character          = get_character
+		character.name     = character_data["name"]
 		character.response = character_data["response"]
 		character.lives_in = character_data["lives_in"]
 		character
 	end
 
 	def build_item(item_data)
-		item = get_item
-		item.handle = item_data["handle"]
+		item             = get_item
+		item.contents    = []
+		item.handle      = item_data["handle"]
 		item.description = item_data["description"]
-		item.details = item_data["details"]
-		item.inside = item_data["inside"]
-		item.location = item_data["location"]
-		item.container = item_data["container"]
-		item.open = item_data["open"]
+		item.details     = item_data["details"]
+		item.inside      = item_data["inside"]
+		item.location    = item_data["location"]
+		item.container   = item_data["container"]
+		item.open        = item_data["open"]
 		item.transparent = item_data["transparent"]
-		item.mobile = item_data["mobile"]
-		item.letter = item_data["letter"]
+		item.mobile      = item_data["mobile"]
+		item.letter      = item_data["letter"]
+		item.direction   = item_data["direction"]
+		item.locked      = item_data["locked"]
+		item.code        = item_data["code"]
+
 		item.mobile.nil? ? item.mobile = true : item.mobile = item_data["mobile"]
-		item.letter.nil? ? item.letter = false : item.letter = false
-		item.direction = item_data["direction"]
-		item.locked = item_data["locked"]
-		item.code = item_data["code"]
-		item.contents = []
+		item.letter.nil? ? item.letter = false : item.letter = item_data["letter"]
 		item
 	end
 
