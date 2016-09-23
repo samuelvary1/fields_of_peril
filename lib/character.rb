@@ -12,5 +12,6 @@ class Character
 
 		answer = Readline.readline('> ', true)
 
+		answer
 	end
 end

@@ -412,10 +412,26 @@ class InputController
 		end
 	end
 
+	def test_answer(character, answer)
+		if answer == "a"
+			response = "'#{character.self_explanation}'"
+		elsif answer == "b"
+			response = "'#{character.motive}'"
+		elsif answer == "c"
+			response = "'#{character.anything_else}'"
+		elsif answer == "d"
+			response = "Ok, goodbye, then."
+		else
+			response = "I don't understand that response"
+		end
+		response
+	end
+
 	def talk_to(name)
 		character = character_checker(name)
 		if character
-			character.enter_dialogue			
+			answer = character.enter_dialogue	
+			@current_message = test_answer(character, answer)
 		else
 			@current_message = "I don't see anyone like that around here, pilgrim."
 		end
@@ -517,7 +533,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock use open close put read talk)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock open close put read talk)
 	end
 
 	def valid_directions
