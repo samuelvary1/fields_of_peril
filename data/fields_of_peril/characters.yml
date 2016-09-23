@@ -8,11 +8,11 @@
   response: "Hello there, young traveler!"
   # this should be his default response and then enter into dialogue mode. 
   # dialogue mode should be multiple choice: a) who are you? b) what do you want? c) anything else I should know? d) goodbye
-  self_explanation: 
+  self_explanation: "I'm grimsrud"
   # this should be what the character says when you're in dialogue mode and you type 'who are you?'
-  motive: 
+  motive: "who needs motive, i am grimsrud"
   # this should be what the character says when you're in dialogue mode and type 'what do you want?'
-  anything_else:
+  anything_else: "nothing else to tell you right now"
   # this should be what the character says if you type 'anything else?' or 'can you tell me anything else?'
   wants: rifle
   # if you give him the item in the wants attribute, he should either give you an object or say something special

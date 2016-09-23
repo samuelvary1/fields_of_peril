@@ -415,7 +415,7 @@ class InputController
 	def talk_to(name)
 		character = character_checker(name)
 		if character
-			@current_message = character.response
+			character.enter_dialogue			
 		else
 			@current_message = "I don't see anyone like that around here, pilgrim."
 		end
