@@ -7,69 +7,6 @@
   details:
       phrase: Looks like there are some random objects on the dusty mantle. And that bookcase looks a little weird..
       knowledge: true
-  items: 
-    - 
-      handle: rifle
-      description: a battered mosin nagant rifle
-      # points: 5
-      details:
-        phrase: you can just make out initials carved in the stock "V.L."
-    -
-      handle: mailbox
-      description: that's a fine lookin mailbox
-      details:
-        phrase: it's got some kind of ornate design on the side.
-      container: true
-      open: false
-      transparent: false
-      mobile: false
-      locked: false
-      contents: 
-        -
-          handle: letter
-          description: an interesting looking letter... you should probably read it.
-          letter: true
-          details: 
-            phrase: "\nWelcome to Sam Vary's FIELDS OF PERIL, an interactive text-based adventure game that will test you to the marrow.\n\nHERE are some important tips you might want to keep in mind:\n\n* When you enter a location for the first time, you will see a description that only appears once. Any clues about objects you can pick up are usually going to be mentioned here. However, some items or clues may be discovered by typing 'look' or 'look closer'.\n\n* There is an important container system in the game - boxes, treasure chests and the like can be opened and searched for important items and clues.\n\n* Access points are a system in the game that must be solved in order to proceed to certain locations. Some access points are keypads, which must be opened with the correct numerical code, and some access points are locked doors that must be opened by discovering the correct key somewhere in the game.\n\n* Certain riddles may contain keypad codes by translating the answer into numbers, i.e. A = 1, B = 2, etc.\n\n* You may encounter characters in the game that will give you important items, keypad codes, or keys if you answer a question that they ask you correctly, or you give them an item that they want that you've discovered somewhere else in the game.\n\n* Type 'help' or 'h' for a list of available in-game commands.\n\n* This is more Monkey Island than King's Quest: You can't die, you can only get stuck :).\n\n* To get the game rolling, you'll want to open the box in the apartment living room, read the piece of parchment contained within.\n\n\n GOOD LUCK!"
-    -
-      handle: box
-      description: a simple wooden box
-      details:
-        phrase:
-      container: true
-      open: false
-      transparent: false
-      locked: false
-      code: 12345
-      contents:
-        -
-          handle: skeleton_key
-          letter: false
-          description: a skeleton key
-          details:
-            phrase: not much else to see.
-          code: 4918
-        -
-          handle: parchment
-          letter: true
-          description: a charred bit of parchment with some writing on it.
-          details: 
-            phrase: "To open the apartment entrance, who is the artist who wrote Danny Brown's favorite song of all time?"
-    -
-      handle: bookcase
-      description: that bookcase looks a little odd...
-      mobile: false
-      # special_interaction: push
-      # visible: true
-      # if a player attempts a special interaction with an object, check if that matches what's here
-      # special_interaction_result: "You give the bookcase a hearty shove, which moves just enough to reveal a small door and a mechanical keypad!"
-    -
-      handle: keypad
-      mobile: false
-      description: It's got the numbers 0-9 on it. 
-      code: 14119
-      # visible: false
-      location: west
   rooms:
     west: 3rd_floor_stairs
     east: secret_room
@@ -99,23 +36,6 @@
     acquired_phrase:
     knowledge: false
     points:
-  items: 
-    -
-      handle: cabinet
-      mobile: false
-      description: a basic medicine cabinet
-      details:
-        phrase: not much else to see
-      container: true
-      open: false
-      transparent: false
-      contents:
-        -
-          handle: toothpaste
-          letter: true
-          description: a tube of toothpaste
-          details: 
-            phrase: "the back of the tube says 'to be used in case of emergency monster gingivitis'"
   rooms:
     north: apartment_living_room
 -
@@ -128,16 +48,6 @@
     acquired_phrase:
     knowledge:
     points:
-  items: 
-    -
-      handle:
-      description:
-      points:
-      details:
-        phrase:
-        acquired_phrase:
-        knowledge:
-        points:
   rooms:
     west: apartment_living_room
     north: gallery
@@ -154,16 +64,6 @@
     acquired_phrase:
     knowledge:
     points:
-  items: 
-    -
-      handle:
-      description:
-      points:
-      details:
-        phrase:
-        acquired_phrase:
-        knowledge:
-        points:
   rooms:
     north: secret_room
     # east: forbidden_tunnel
@@ -184,16 +84,6 @@
     acquired_phrase:
     knowledge:
     points:
-  items: 
-    -
-      handle:
-      description:
-      points:
-      details:
-        phrase:
-        acquired_phrase:
-        knowledge:
-        points:
   rooms:
     south: secret_room
   access_points:
@@ -208,7 +98,6 @@
     acquired_phrase: You know a way to hop over the rotten stairs on the third floor safely.
     knowledge: true
     points: 1
-  items:
   rooms: 
     east: apartment_living_room
     down: 2nd_floor_stairs
@@ -221,7 +110,6 @@
   description: You're standing on the second floor of the apartment building. 
   details: 
     phrase: Some old lamps flicker in the hallway. It's a wonder there's still any power here.
-  items:
   rooms: 
     up: 3rd_floor_stairs
     down: 1st_floor_stairs  
@@ -232,7 +120,6 @@
   description: you are standing in the entranceway on the first floor of the apartment building
   details: 
     phrase: not much else to see here...
-  items:
   rooms: 
     up: 2nd_floor_stairs
     west: the_street
@@ -244,7 +131,6 @@
   description: Lotta cobwebs down here. There's a heavy looking door built into the eastern wall.
   details: 
     phrase: looks like there's some sort of mechanical keypad on the heavy door. 
-  items:
   rooms:
     east: vault_1
     up: 1st_floor_stairs
@@ -255,7 +141,6 @@
   description: description of the vault to go here.
   details:
     phrase: detailed description of the vault to go here.
-  items:
   rooms:
     west: cellar_1
 -
@@ -265,7 +150,6 @@
   description: Craters decorate the street.
   details: 
     phrase: details of the street
-  items:
   rooms:
     north: apartment_building_north
     south: apartment_building_south
@@ -277,7 +161,6 @@
   description: You are standing to the north of the apartment building.
   details:
     phrase: not much else to see right now..
-  items:
   rooms: 
     north: town_square
     south: the_street
@@ -289,7 +172,6 @@
   description: You're standing in the middle of what was probably once a very beautiful town square. A fountain seems to be the last intact remain of that architectural splendor.
   details:
     phrase: seems like there are actually some valuable objects in the fountain..
-  items:
   rooms: 
     north: abandoned_outpost
     south: apartment_building_north
@@ -300,7 +182,6 @@
   description: "A dead machine gunner wearing a rebel uniform lies slumped over his weapon, which is mounted on a wall of sandbags. You can see a bunker to the east, although it looks pretty secure considering that fairly new-looking padlock on the door."
   details:
     phrase: It looks like that body might have some useful stuff in its pockets. Not much else to see about the bunker. To the north you see a weird path leading off into some brush. Looks sketchy af. Another equally sketchy road (this one looks like it could be used for vehicles) stretches off to the west.
-  items:
   rooms:
     north: scrapyard
     south: town_square
@@ -313,7 +194,6 @@
   description: An old bunker with a dead body slumped over a machine gun at the front window.
   details:
     phrase: More details about the bunker go here.
-  items:
   rooms:
     west: abandoned_outpost
 -
@@ -323,7 +203,6 @@
   description: You are standing to the south of the apartment building. That dog looks hungry.
   details:
     phrase: "I would stay as far away from that dog as possible, if I were you."
-  items:
   rooms:
     north: the_street
     east: alley
@@ -335,7 +214,6 @@
   description: There's a ton of trash and stuff here.
   details:
     phrase: not much else to see right now...
-  items:
   rooms:
     east: behind_apartment_building
     west: apartment_building_south
@@ -346,7 +224,6 @@
   description: Grasshoppers buzz and flit from leaf to leaf. Something about this place gives you the creeps. There's no telling what might be hidden in all this foliage. Off to the west you see what appears to be some kind of dilapidated toolshed."
   details: 
     phrase: Is that a skeletal hand poking out of a flowerbed to the south?
-  items:
   rooms:
     north: access_road
     east: apartment_building_south
@@ -358,7 +235,6 @@
   description: You look around at the various implements and tools. A rug lies in the middle of the shed.
   details: 
     phrase: That rug looks kind of crooked.
-  items:
   rooms:
     east: garden 
     down: secret_bomb_shelter
@@ -369,7 +245,6 @@
   description: bomb shelter description goes here.
   details:
     phrase: bomb shelter details to go here.
-  items:
   rooms:
     up: abandoned_shed
 -
@@ -379,7 +254,6 @@
   description: It's just an access road. You see a few craters and some empty shell casings scattered around in the mud.
   details:
     phrase: not much else to see right now...
-  items:
   rooms:
     north: corpse_road
     south: garden
@@ -392,7 +266,6 @@
   description: You are standing in the entrance way. It is very quiet.
   details:
     phrase: You gaze through a window on the northern wall. You can make out what appears to be a graveyard to the north of the bell tower.
-  items:
   rooms:
     east: access_road
     up: boobytrap_room
@@ -403,7 +276,6 @@
   description: The room appears to be outfitted with a variety of deadly-looking traps.
   details:
     phrase: Detailed description of booby trap room.
-  items:
   rooms:
     up: bell_chamber_a
     down: bell_tower
@@ -414,8 +286,7 @@
   description: You see a ladder leading up into the belfry of the bell tower. There's also a rickety zipline leading out a window and down into the graveyard.
   # might want to think about having a 'special cases' controller that has a kind of 'animation' (bit of specialized text) if special case criteria are fulfilled, for instance going east out of the bell-chamber would be using the zipline to get to the graveyard, so that should maybe have a special blurb anytime you do it. 
   details:
-    phrase: Possible clues here about the sniper nest just above you.
-  items: 
+    phrase: Possible clues here about the sniper nest just above you. 
   rooms:
     up: snipers_nest
     down: boobytrap_room
@@ -428,7 +299,6 @@
   description: Might be some important objects here.
   details: 
     phrase: Perhaps you spot some secret stairs leading down to the monk's quarters here.
-  items:
   rooms:
     east: bell_chamber_a
     down: monks_quarters
@@ -439,7 +309,6 @@
   description: Description of sniper's nest. Possibly a body here.
   details:
     phrase: Probably want to take some items off the sniper's body. Should bodies act like containers? Probably. Just cant open or close them or look 'in' them like other containers. Bodies should be a special container.
-  items:
   rooms:
     down: bell_chamber_a
 -
@@ -449,7 +318,6 @@
   description: The living quarters of a simple monk.
   details: 
     phrase: That floorboard looks a little loose...
-  items:
   rooms:
     up: bell_chamber_b
     down: rebel_war_room
@@ -460,7 +328,6 @@
   description: charts and maps decorate the walls. They were preparing for something big.
   details:
     phrase: That hatch in the middle of the floor looks promising.
-  items:
   rooms:
     up: monks_quarters
     down: tunnel_entrance
@@ -471,7 +338,6 @@
   description: "There are a lot of bodies that appear to have been dropped by machine gun fire. Based on their positions, the bullets must have come from the East."
   details:
     phrase: not much else to see right now...
-  items:
   rooms:
     north: scrapyard
     south: access_road
@@ -484,7 +350,6 @@
   description: "This is a really creepy graveyard. There are also the bodies of some soldiers lying around, but you don't really feel like messing with those."
   details:
     phrase: details of the graveyard to go here.
-  items:
   rooms:
     north: graveyard_north
     south: graveyard_south
@@ -496,7 +361,6 @@
   description: To the north is a seriously creepy looking crypt.
   details:
     phrase: That crypt is very intimidating. I would not go in there.
-  items:
   rooms:
     north: crypt
     south: graveyard
@@ -507,7 +371,6 @@
   description: "You can see the doorway to a bell tower to the south, but it's blocked off by thick foliage."
   details:
     phrase: Something important should happen here.
-  items:
   rooms:
     north: graveyard
 -
@@ -518,7 +381,6 @@
   details:
     phrase: There are some weird stones on the wall. They are labeled A-D. Weird.
     # this will be a good puzzle to get inside terror room A.
-  items:
   rooms:
     south: graveyard_north
     down: terror_room_a
@@ -529,7 +391,6 @@
   description: You don't want to know.
   details:
     phrase: "Oh god, it's so horrible!"
-  items:
   rooms:
     east: terror_room_b
     up: crypt
@@ -540,7 +401,6 @@
   description: You don't want to know.
   details:
     phrase: you've basically already gone blind at this point..
-  items:
   rooms:
     east: terror_room_c
     west: terror_room_a
@@ -551,7 +411,6 @@
   description: You don't want to know.
   details:
     phrase: Oh god what is that???
-  items:
   rooms:
     east: burial_chamber
     west: terror_room_b
@@ -562,7 +421,6 @@
   description: Important accomplishment or item pickup happens in here.
   details:
     phrase: Details of burial chamber go here.
-  items:
   rooms:
     west: terror_room_c
 -
@@ -573,7 +431,6 @@
   description: This place probably contains some useful items.
   details:
     phrase: detailed description of scrapyard to go here...
-  items:
   rooms:
     east: clearing
     south: abandoned_outpost
@@ -585,7 +442,6 @@
   description: pretty empty space.
   details:
     phrase: you look to the south and can see what looks like a bunker. The old concrete pillbox has ivy creeping all over it. 
-  items:
   rooms:
     east: bombed_alley
     west: scrapyard 
@@ -596,7 +452,6 @@
   description: there's some old scaffolding off to the north side of the alley.
   details:
     phrase: You think you see a way to safely climb up the scaffolding.
-  items:
   rooms:
     west: clearing 
     up: scaffolding
@@ -608,7 +463,6 @@
   description: Some very important objects up here.
   details:
     phrase: not much else to see right now.
-  items:
   rooms:
     down: bombed_alley
 -
@@ -618,7 +472,6 @@
   description: you find yourself in a cramped alley directly behind the apartment building you started out in.
   details:
     phrase: this place is weird.
-  items:
   rooms:
     north: bombed_alley
     south: alley
@@ -629,7 +482,6 @@
   description: Wow. This is getting serious. Do you really want to try and proceed down the tunnel?
   details:
     phrase: "Man, that's a big padlock on the gate."
-  items:
   rooms:
     # west: PART_TWO
     up: rebel_war_room

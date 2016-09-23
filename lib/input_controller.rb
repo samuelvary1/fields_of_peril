@@ -68,49 +68,71 @@ class InputController
 	end
 
 	def look(input, command, command_two)
-		if input == "look closer"
-			@current_message = avatar.location.details["phrase"]
-			# this is where you'll need to check if knowledge == true for a room details, and if so add it to the avatar's knowledge array
-		elsif command == "look" && command_two != "closer" || input.length > 11
-			@current_message = "Sorry, I only understand you as far as wanting to look."
-		else
+		if input == "look around"
 			@current_message = avatar.location.description
+		elsif input == "look closer"
+			@current_message = avatar.location.details["phrase"]
+		else
+			@current_message = "Sorry, I only understand you as far as wanting to look."
 		end
 	end
 
 	def inventory_checker(object)
 		avatar.items.find do |item|
-			item.has_value?(object)
+			if item.class == Item
+				item.handle == object
+			else
+				item.has_value?(object)
+			end
 		end
 	end
 
 	def room_checker(object)
 		avatar.location.items.find do |item|
-			item.has_value?(object)
+			if item.class == Item
+				item.handle == object
+			else
+				item.has_value?(object)
+			end
 		end
 	end
 
 	def room_container_checker
 		avatar.location.items.select do |item|
-			item["container"] && item["contents"] && item["open"]
+			if item.class == Item
+				item.container && item.contents && item.open
+			else
+				item["container"] && item.contents && item.open
+			end
 		end
 	end
 
 	def inventory_container_checker
 		avatar.items.select do |item|
-			item["container"] && item["contents"] && item["open"]
+			if item.class == Item
+				item.container && item.contents && item.open
+			else
+				item["container"] && item.contents && item.open
+			end
 		end
 	end
 
 	def room_container(object)
 		avatar.location.items.find do |item|
-			item.has_value?(object) && item["container"]
+			item.handle == object && item.container
 		end
 	end
 
 	def carried_container(object)
 		avatar.items.find do |item|
-			item.has_value?(object) && item["container"]
+			if item.class == Item
+				result = item.handle
+				result_b = item.container
+			else
+				result = item["handle"]
+				result_b = item["container"]
+			end
+			result == object && result_b
 		end
 	end
 
@@ -134,13 +156,25 @@ class InputController
 			end
 		end
 
-		if room_checker(object)	
-		  if room_checker(object)["mobile"] == false
+		if room_checker(object)
+			if room_checker(object).class == Item
+				result = room_checker(object).mobile
+			else 
+				result = room_checker(object)["mobile"]
+			end
+
+		  if !result
 		  	@current_message = "It won't budge"
 		  	return
 	  	end	
 			avatar.location.items.each do |item|
-				if item["handle"] == object
+				if item.class == Item
+					result = item.handle
+				else
+					result = item["handle"]
+				end
+
+				if result == object
 					avatar.items.insert(0, item)
 					avatar.location.items.delete(item)
 					@current_message = "You've picked up the #{object}"
@@ -151,14 +185,23 @@ class InputController
 		end
 
 		containers.each do |container|
-			container["contents"].each do |item|
-				if item.has_value?(object) && item["mobile"].nil? || item["mobile"]
+			container.contents.each do |item|
+				if item.class == Item
+					result = item.handle == object
+					mobile = item.mobile
+				else
+					result = item.has_value?(object)
+					mobile = item["mobile"]
+				end
+
+				if result && (mobile.nil? || mobile)
 				  avatar.items.insert(0, item)
-				  container["contents"].delete(item)
-				  @current_message = "You've picked up the #{item["handle"]} from the #{container["handle"]}"	
+				  container.contents.delete(item)
+				  # binding.pry
+				  @current_message = "You've picked up the #{object} from the #{container.handle}"	
 				  return
 				elsif !item["mobile"] && item.has_value?(object)
-					@current_message = "That won't budge"
+					@current_message = "That won't budge."
 				end
 			end
 		end
@@ -185,7 +228,11 @@ class InputController
 		end
 
 		correct_container = containers.find do |item|
-			item.has_value?(container)
+			if item.class == Item
+				item.handle == container
+			else
+				item.has_value?(container)
+			end
 		end
 
 		if correct_container.nil?
@@ -193,9 +240,15 @@ class InputController
 			return
 		else
 			avatar.items.each do |item|
-				if item["handle"] == object
+				if item.class == Item
+					result = item.handle
+				else
+					result = item["handle"]
+				end
+
+				if result == object
 					avatar.items.delete(item)
-					correct_container["contents"].insert(0, item)
+					correct_container.contents.insert(0, item)
 				end
 			end
 		end
@@ -205,7 +258,12 @@ class InputController
 	def drop_item(object)
 		if inventory_checker(object)	
 			avatar.items.each do |item|
-				if item["handle"] == object
+				if item.class == Item
+					result = item.handle
+				else
+					result = item["handle"]
+				end
+				if result == object
 					avatar.items.delete(item)
 					avatar.location.items.insert(0, item)
 				end
@@ -220,10 +278,26 @@ class InputController
 		inventory = inventory_checker(object)
 		room = room_checker(object)
 
-		if inventory && inventory["letter"] 
-			@current_message = inventory["details"]["phrase"]
-			elsif room && room["letter"]
-				@current_message = room["details"]["phrase"]
+		if inventory.class == Item
+			i_letter = inventory.letter
+			i_phrase = inventory.details["phrase"]
+		elsif inventory.class == Hash
+			i_letter = inventory["letter"]
+			i_phrase = inventory["details"]["phrase"]
+		end
+
+		if room.class == Item
+			r_letter = room.letter
+			r_phrase = room.phrase
+		elsif room.class == Hash
+			r_letter = room["letter"]
+			r_phrase = room["details"]["phrase"]
+		end
+
+		if inventory && i_letter
+			@current_message = i_phrase
+			elsif room && r_letter
+				@current_message = r_phrase
 		else
 			@current_message = "I don't see anything like that to read here."
 		end
@@ -231,7 +305,7 @@ class InputController
 
 	def use_keypad
 		keypad = avatar.location.items.find do |item|
-			item.has_value?("keypad")
+			item.handle == "keypad"
 		end
 
 		if keypad.nil?
@@ -239,21 +313,21 @@ class InputController
 			return
 		end
 
-		if avatar.location.access_points[keypad["location"]]["locked"] == false
+		if avatar.location.access_points[keypad.direction]["locked"] == false
 			@current_message = "you've already successfully authorized with this keypad, ya big dummy."
 			return
 		end
 
-		if keypad != nil && keypad["handle"] == "keypad" 
+		if keypad != nil && keypad.handle == "keypad" 
 			puts "your fingers hover over the keypad. what's the code, champ?"
 			input = Readline.readline('CODE:', true)
 
 			if input.to_i != 0
 				attempt = input.to_i
 
-				if attempt == keypad["code"]
+				if attempt == keypad.code
 					@current_message = "that worked! you've unlocked the access point."
-					avatar.location.access_points[keypad["location"]]["locked"] = false
+					avatar.location.access_points[keypad.direction]["locked"] = false
 				else
 					@current_message = "i'm sorry, that's incorrect."
 				end
@@ -307,10 +381,20 @@ class InputController
 
 	def look_at(object)
 		if inventory_checker(object)
-			@current_message = inventory_checker(object)["description"]
+			if inventory_checker(object).class == Item
+				result = inventory_checker(object).description
+			else
+				result = inventory_checker(object)["description"]
+			end
+			@current_message = result
 			# need to check if knowledge is true and if so add it to a knowledge inventory.. if you decide to implement that system.
 			elsif room_checker(object)
-				@current_message = room_checker(object)["description"]
+				if room_checker(object).class == Item
+					result = room_checker(object).description
+				else
+					result = room_checker(object)["description"]
+				end
+				@current_message = result
 		else
 			@current_message = "I don't think you can look at anything like that here."
 		end			 
@@ -326,16 +410,42 @@ class InputController
 		end
 
 		if room.nil? && inventory
-			if inventory["open"] || inventory["transparent"]
-				@current_message = "Inside the #{inventory["handle"]} you see #{inventory["contents"]}."
-			elsif !inventory["open"] && !inventory["transparent"]
+			if inventory.class == Item
+				open = inventory.open
+				transparent = inventory.transparent
+				handle = inventory.handle
+				contents = inventory.contents
+			else
+				open = inventory["open"]
+				transparent = inventory["transparent"]
+				handle = inventory["handle"]
+				contents = inventory["contents"]
+			end
+
+			if open || transparent
+				@current_message = "Inside the #{handle} you see #{contents}."
+			elsif !open && !transparent
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
 		else
-			if room["open"] || room["transparent"]
-				@current_message = "Inside the #{room["handle"]} you see a #{room["contents"]}"
-			elsif !room["open"] && !room["transparent"]
+			if room.class == Item
+				open = room.open
+				transparent = room.transparent
+				handle = room.handle
+				contents = room.contents
+			else
+				open = room["open"]
+				transparent = room["transparent"]
+				handle = room["handle"]
+				contents = room["contents"]
+			end
+
+			if open || transparent
+				@current_message = "Inside the #{handle} you see a #{contents}"
+			elsif !open && !transparent
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
+			else 
+				@current_message = "I don't see anything you can actually look inside like that here."
 			end
 		end
 	end
@@ -350,22 +460,22 @@ class InputController
 		end
 
 		if room.nil? && carried
-			if carried["locked"]
+			if carried.locked
 				@current_message = "That seems to be locked"
-			elsif carried["open"]
+			elsif carried.open
 				@current_message = "That's already open"
 			else
-				@current_message = "You've opened the #{carried["handle"]}"
-				carried["open"] = true
+				@current_message = "You've opened the #{carried.handle}"
+				carried.open = true
 			end
 		elsif carried.nil? && room
-			if room["locked"]
-				@current_message = "That seems to be locked"
-			elsif room["open"]
+			# if room["locked"]
+			# 	@current_message = "That seems to be locked"
+			if room.open
 				@current_message = "That's already open."
 			else
-				@current_message = "You've opened the #{room["handle"]}"
-				room["open"] = true
+				@current_message = "You've opened the #{room.handle}"
+				room.open = true
 			end
 		end
 	end
@@ -380,18 +490,18 @@ class InputController
 		end
 
 		if room.nil? && carried
-			if !carried["open"]
+			if !carried.open
 				@current_message = "That seems to be already closed"
 			else
-				@current_message = "You've closed the #{carried["handle"]}"
-				carried["open"] = false
+				@current_message = "You've closed the #{carried.handle}"
+				carried.open = false
 			end
 		elsif carried.nil? && room
-			if !room["open"]
+			if !room.open
 				@current_message = "That seems to be already closed"
 			else
-				@current_message = "You've closed the #{room["handle"]}"
-				room["open"] = false
+				@current_message = "You've closed the #{room.handle}"
+				room.open = false
 			end
 		end
 	end
@@ -488,7 +598,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock push pull use shoot open close put read)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock use open close put read)
 	end
 
 	def valid_directions
