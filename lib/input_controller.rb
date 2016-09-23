@@ -68,7 +68,7 @@ class InputController
 	end
 
 	def look(input, command, command_two)
-		if input == "look around"
+		if input == "look"
 			@current_message = avatar.location.description
 		elsif input == "look closer"
 			@current_message = avatar.location.details["phrase"]
