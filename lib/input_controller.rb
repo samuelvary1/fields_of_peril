@@ -406,6 +406,10 @@ class InputController
 		end
 	end
 
+	def talk_to(character)
+		binding.pry
+	end
+
 	def evaluate(input)
 		input.downcase!
 		entered_words = input.split
@@ -440,6 +444,10 @@ class InputController
 
 		if command == "look" && command_two != "at" && command_two != "in" && command_two != "inside"
 			look(input, command, command_two)
+		end
+
+		if "#{command} #{command_two}" == "talk to"
+			talk_to(command_three)
 		end
 
 		if command == "open"
@@ -498,7 +506,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock use open close put read)
+		@commands ||= %w(go look exit quit help h inventory i take drop unlock use open close put read talk)
 	end
 
 	def valid_directions

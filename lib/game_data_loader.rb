@@ -105,10 +105,17 @@ class GameDataLoader
 	end
 
 	def build_character(character_data)
-		character          = get_character
-		character.name     = character_data["name"]
-		character.response = character_data["response"]
-		character.lives_in = character_data["lives_in"]
+		character                  = get_character
+		character.name             = character_data["name"]
+		character.code_name        = character_data["code_name"]
+		character.lives_in         = character_data["lives_in"]
+		character.description      = character_data["description"]
+		character.response         = character_data["response"]
+		character.self_explanation = character_data["self_explanation"]
+		character.motive           = character_data["motive"]
+		character.anything_else    = character_data["anything_else"]
+		character.wants            = character_data["wants"]
+		character.reward           = character_data["reward"]
 		character
 	end
 

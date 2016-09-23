@@ -3,14 +3,14 @@
   code_name: viking
   lives_in: apartment_living_room
   # "code name" can be what you call the guy if you don't know his name yet. So, if you 
-  description:
+  description: A tall bearded man wearing a leather vest.
   # what happens if you type look at character
   response: "Hello there, young traveler!"
   # this should be his default response and then enter into dialogue mode. 
   # dialogue mode should be multiple choice: a) who are you? b) what do you want? c) anything else I should know? d) goodbye
   self_explanation: 
   # this should be what the character says when you're in dialogue mode and you type 'who are you?'
-  desire_explanation: 
+  motive: 
   # this should be what the character says when you're in dialogue mode and type 'what do you want?'
   anything_else:
   # this should be what the character says if you type 'anything else?' or 'can you tell me anything else?'
@@ -18,3 +18,5 @@
   # if you give him the item in the wants attribute, he should either give you an object or say something special
   reward: "If you push that bookcase, you might find something interesting behind it."
   # reward will be a string of whatever happens if you give him the object he wants. otherwise I think he should just tell you some information and ask you a riddle that you figure out on your own to get the object/key (maybe he tips you off to a location of something) or a keypad code by solving the riddle.
+  carrying:
+  # there will definitely need to be a way for characters to give you something if you say the right thing or give them the right object
