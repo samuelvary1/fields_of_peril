@@ -15,7 +15,11 @@ class Avatar
 		puts "You are currently carrying: "
 		
 		items.collect do |item|
-			item.values_at("description")
+			if item.class == Item
+				item.description
+			else
+				item["description"]
+			end
 		end
 	end
 
