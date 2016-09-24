@@ -311,6 +311,8 @@ class InputController
 			# need to check if knowledge is true and if so add it to a knowledge inventory.. if you decide to implement that system.
 			elsif room_checker(object)
 				@current_message = room_checker(object).description
+			elsif character_checker(object)
+				@current_message = character_checker(object).description
 		else
 			@current_message = "I don't think you can look at anything like that here."
 		end			 
