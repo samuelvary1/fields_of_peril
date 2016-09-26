@@ -415,16 +415,17 @@ class InputController
 	end
 
 	def get_answer(character, answer)
-		if answer == "a"
-			response = "'#{character.self_explanation}'"
-		elsif answer == "b"
-			response = "'#{character.motive}'"
-		elsif answer == "c"
-			response = "'#{character.anything_else}'"
-		elsif answer == "d"
-			response = "Ok, goodbye, then."
+		case answer
+			when "a"
+				response = "'#{character.self_explanation}'"
+			when "b"
+				response = "'#{character.motive}'"
+			when "c"
+				response = "'#{character.anything_else}'"
+			when "d"
+				response = "Ok, goodbye, then."
 		else
-			response = "I don't understand that response"
+			response = "'I don't understand that response'"
 		end
 		response
 	end
