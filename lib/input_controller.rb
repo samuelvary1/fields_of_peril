@@ -432,8 +432,13 @@ class InputController
 	def talk_to(name)
 		character = character_checker(name)
 		if character
-			answer = character.enter_dialogue	
-			@current_message = get_answer(character, answer)
+				puts "'#{character.response}'"
+				answer = character.enter_dialogue	
+				while answer != "d" do
+					puts get_answer(character, answer)
+					answer = character.enter_dialogue
+				end
+				@current_message = "Ok, goodbye then."
 		else
 			@current_message = "I don't see anyone like that around here, pilgrim."
 		end

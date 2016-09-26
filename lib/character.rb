@@ -2,7 +2,6 @@ class Character
 	attr_accessor :name, :code_name, :lives_in, :description, :response, :self_explanation, :motive, :anything_else, :wants, :reward
 
 	def enter_dialogue
-		puts "'#{response}'"
 		puts ""
 		puts "a) who are you?"
 		puts "b) what do you want?"
@@ -11,7 +10,5 @@ class Character
 		puts ""
 
 		answer = Readline.readline('> ', true)
-
-		answer
 	end
 end
