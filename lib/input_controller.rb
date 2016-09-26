@@ -36,7 +36,7 @@ class InputController
 		else
 			@current_message = "Sorry, that doesn't seem to be a valid direction"
 			return
-		end
+		end		
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
 			if !avatar.location.access_points[direction]["visible"]
@@ -166,6 +166,7 @@ class InputController
 
 	def put_in_container(object, container)
 		containers = []
+		item = inventory_checker(object)
 
 		if room_container_checker.size > 0
 			room_container_checker.each do |item|
@@ -179,7 +180,7 @@ class InputController
 			end
 		end
 
-		if inventory_checker(object).nil?
+		if item.nil?
 			@current_message = "I don't think you're carrying that"
 			return
 		end
@@ -192,24 +193,22 @@ class InputController
 			@current_message = "There are no open containers like that here"
 			return
 		else
-			avatar.items.each do |item|
-				if item.handle == object
+			# avatar.items.each do |item|
+			# 	if item.handle == object
 					avatar.items.delete(item)
 					correct_container.contents.insert(0, item)
-				end
-			end
+			# 	end
+			# end
 		end
 		@current_message = "You have placed the #{object} in the #{container}"
 	end
 
 	def drop_item(object)
-		if inventory_checker(object)
-			avatar.items.each do |item|
-				if item.handle == object
-					avatar.items.delete(item)
-					avatar.location.items.insert(0, item)
-				end
-			end
+		item = inventory_checker(object)
+
+		if item
+			avatar.items.delete(item)
+			avatar.location.items.insert(0, item)
 			@current_message = "You have dropped the #{object}"
 		else
 			@current_message = "Ummm I don't think you're carrying that, dude"
@@ -445,6 +444,20 @@ class InputController
 		end
 	end
 
+	def give_item_to_character(input, command, command_two, command_three, command_four, command_five)
+		character = character_checker(command_four)
+		item = inventory_checker(command_two)
+		# 'give grimsrud rifle' should work the same as 'give rifle to grimsrud'
+		if character.nil? || item.nil?
+			@current_message = "You either don't have that or that person isn't here."
+		elsif character.wants != item.handle
+			@current_message = "#{character.name} says: 'I'm sorry but I have no use for that...'"
+		else
+			avatar.items.delete(item)
+			@current_message = "You hand the #{item.handle} to #{character.name}!\n\n#{character.name} says: '#{character.reward}'"
+		end
+	end
+
 	def evaluate(input)
 		input.downcase!
 		entered_words = input.split
@@ -517,6 +530,10 @@ class InputController
 			unlock_access_point(input, command, command_two, command_three, command_four, command_five)
 		end
 
+		if command == "give"
+			give_item_to_character(input, command, command_two, command_three, command_four, command_five)
+		end
+
 		if command == "inventory" || command == "i"
 			view_inventory
 		end
@@ -541,7 +558,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take drop unlock open close put read talk)
+		@commands ||= %w(go look exit quit help h inventory i take give drop unlock open close put read talk)
 	end
 
 	def valid_directions
