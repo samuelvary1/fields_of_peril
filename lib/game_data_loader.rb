@@ -123,6 +123,7 @@ class GameDataLoader
 		item             = get_item
 		item.contents    = []
 		item.handle      = item_data["handle"]
+		item.alt_handle  = item_data["alt_handle"]
 		item.description = item_data["description"]
 		item.details     = item_data["details"]
 		item.inside      = item_data["inside"]

@@ -1,5 +1,5 @@
 class Item
-	attr_accessor :handle, :description, :inside, :details, :letter, :direction, :code, :location, :container, :open, :transparent, :mobile, :locked, :contents
+	attr_accessor :handle, :alt_handle, :description, :inside, :details, :letter, :direction, :code, :location, :container, :open, :transparent, :mobile, :locked, :contents
 
 	def list_contents
 		puts "You peer inside the #{handle} and see: "

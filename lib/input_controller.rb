@@ -79,13 +79,13 @@ class InputController
 
 	def inventory_checker(object)
 		avatar.items.find do |item|
-			item.handle == object
+			item.handle == object || item.alt_handle == object
 		end
 	end
 
 	def room_checker(object)
 		avatar.location.items.find do |item|
-			item.handle == object
+			item.handle == object || item.alt_handle == object
 		end
 	end
 
@@ -103,13 +103,13 @@ class InputController
 
 	def room_container(object)
 		avatar.location.items.find do |item|
-			item.handle == object && item.container
+			(item.handle == object || item.alt_handle == object) && item.container
 		end
 	end
 
 	def carried_container(object)
 		avatar.items.find do |item|
-			item.handle == object && item.container
+			(item.handle == object || item.alt_handle == object) && item.container
 		end
 	end
 
@@ -139,7 +139,7 @@ class InputController
 		  	return
 	  	end	
 			avatar.location.items.each do |item|
-				if item.handle == object
+				if item.handle == object || item.alt_handle == object
 					avatar.items.insert(0, item)
 					avatar.location.items.delete(item)
 					@current_message = "You've picked up the #{item.handle}"
@@ -185,7 +185,7 @@ class InputController
 		end
 
 		correct_container = containers.find do |item|
-			item.handle == container
+			item.handle == container || item.alt_handle == container
 		end
 
 		if correct_container.nil?
@@ -546,8 +546,13 @@ class InputController
 			close(object)
 		end
 		
-		if command == "take"
-			object = two_word_object?(command_two, command_three)
+		if command == "take" || "#{command} #{command_two}" == "pick up"
+			if command == "take"
+				object = two_word_object?(command_two, command_three)
+			else
+				object = two_word_object?(command_three, command_four)
+			end
+				
 			take_item(object)
 		end
 
@@ -596,7 +601,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look l exit quit help h inventory i take give drop unlock open close use put read talk)
+		@commands ||= %w(go look l exit quit help h inventory i take pick give drop unlock open close use put read talk)
 	end
 
 	def valid_directions
