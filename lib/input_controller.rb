@@ -67,10 +67,10 @@ class InputController
 		end
 	end
 
-	def look(input, command, command_two)
-		if input == "look"
+	def look(input)
+		if input == "look" || input == "l" || input == "look around"
 			@current_message = avatar.location.description
-		elsif input == "look closer"
+		elsif input == "look closer" || input == "look harder" || input == "look carefully"
 			@current_message = avatar.location.details["phrase"]
 		else
 			@current_message = "Sorry, I only understand you as far as wanting to look."
@@ -154,7 +154,6 @@ class InputController
 				if item.handle == object && (item.mobile.nil? || item.mobile)
 				  avatar.items.insert(0, item)
 				  container.contents.delete(item)
-				  # binding.pry
 				  @current_message = "You've picked up the #{object} from the #{container.handle}"	
 				  return
 				elsif !item.mobile && item.handle == object
@@ -193,12 +192,8 @@ class InputController
 			@current_message = "There are no open containers like that here"
 			return
 		else
-			# avatar.items.each do |item|
-			# 	if item.handle == object
-					avatar.items.delete(item)
-					correct_container.contents.insert(0, item)
-			# 	end
-			# end
+			avatar.items.delete(item)
+			correct_container.contents.insert(0, item)
 		end
 		@current_message = "You have placed the #{object} in the #{container}"
 	end
@@ -262,7 +257,13 @@ class InputController
 		end			
 	end
 
-	def unlock_access_point(input, command, command_two, command_three, command_four, command_five)
+	def unlock_access_point(input, command_two, command_three, command_four, command_five)
+		if command_five.nil?
+			object = command_four
+		else
+			object = "#{command_four} #{command_five}"
+		end
+
 		avatar.location.access_points.each do |direction, access_point|
 			if access_point && access_point["game_handle"] == command_two && access_point["locked"]
 				if input == "unlock #{command_two}" && command_three.nil? || command_four.nil?
@@ -273,7 +274,7 @@ class InputController
 
 			if access_point["game_handle"] && access_point["game_handle"] == command_two && access_point["locked"] && command_three == "with" && !command_four.nil?
 				key = avatar.items.find do |item|
-					item.handle == command_four
+					item.handle == object
 				end
 
 				if key.nil?
@@ -307,7 +308,6 @@ class InputController
 	def look_at(object)
 		if inventory_checker(object)
 			@current_message = inventory_checker(object).description
-			# need to check if knowledge is true and if so add it to a knowledge inventory.. if you decide to implement that system.
 			elsif room_checker(object)
 				@current_message = room_checker(object).description
 			elsif character_checker(object)
@@ -317,11 +317,14 @@ class InputController
 		end			 
 	end
 
-	def look_in(object)
+	def look_in(object, input)
 		inventory = inventory_checker(object)
 		room = room_checker(object)
 
-		if inventory.nil? && room.nil?
+		if inventory.nil? && room.nil? && input == "look inside"
+			@current_message = "what are you trying to look inside?"
+			return
+		elsif inventory.nil? && room.nil? && input.length > 11
 			@current_message = "I don't think you can look inside anything like that here"
 			return
 		end
@@ -361,9 +364,9 @@ class InputController
 		end
 
 		if room.nil? && carried
-			if carried.locked
-				@current_message = "That seems to be locked"
-			elsif carried.open
+			# if carried.locked
+			# 	@current_message = "That seems to be locked"
+			if carried.open
 				@current_message = "That's already open"
 			else
 				@current_message = "You've opened the #{carried.handle}"
@@ -444,7 +447,7 @@ class InputController
 		end
 	end
 
-	def give_item_to_character(input, command, command_two, command_three, command_four, command_five)
+	def give_item_to_character(command_two, command_four)
 		character = character_checker(command_four)
 		item = inventory_checker(command_two)
 		# 'give grimsrud rifle' should work the same as 'give rifle to grimsrud'
@@ -456,6 +459,15 @@ class InputController
 			avatar.items.delete(item)
 			@current_message = "You hand the #{item.handle} to #{character.name}!\n\n#{character.name} says: '#{character.reward}'"
 		end
+	end
+
+	def two_word_object?(command_two, command_three)
+		if command_three.nil?
+			object = command_two
+		else
+			object = "#{command_two} #{command_three}"
+		end
+		object
 	end
 
 	def evaluate(input)
@@ -472,6 +484,7 @@ class InputController
 		command_three = entered_words[2]
 		command_four  = entered_words[3]
 		command_five  = entered_words[4]
+		command_six   = entered_words[5]
 
 		if command == "go"
 			if valid_directions.include?(command_two)
@@ -487,11 +500,16 @@ class InputController
 		end
 
 		if "#{command} #{command_two}" == "look in" || "#{command} #{command_two}" == "look inside" 
-			look_in(command_three)
+			if command_four.nil?
+				object = command_three
+			else
+				object = "#{command_three} #{command_four}"
+			end
+			look_in(object, input)
 		end
 
-		if command == "look" && command_two != "at" && command_two != "in" && command_two != "inside"
-			look(input, command, command_two)
+		if (command == "look" || command == "l") && command_two != "at" && command_two != "in" && command_two != "inside"
+			look(input)
 		end
 
 		if "#{command} #{command_two}" == "talk to"
@@ -499,23 +517,43 @@ class InputController
 		end
 
 		if command == "open"
-			open(command_two)
+			object = two_word_object?(command_two, command_three)
+			open(object)
 		end
 
-		if command == "put" && command_three == "in"
-			put_in_container(command_two, command_four)
+		if command == "put"
+			if entered_words.size == 6
+				container = "#{command_five} #{command_six}"
+				object = "#{command_two} #{command_three}"
+			elsif entered_words.size == 5 && (command_three == "in" || command_three == "into")
+				# one word object, two-word container
+				object = command_two
+				container = "#{command_four} #{command_five}"
+			elsif entered_words.size == 4
+				object = command_two 
+				container = command_four
+			else
+				object = "#{command_two} #{command_three}" 
+				container = command_five
+			end
+
+			container.strip!
+			put_in_container(object, container)
 		end
 
 		if command == "close"
-			close(command_two)
+			object = two_word_object?(command_two, command_three)
+			close(object)
 		end
 		
 		if command == "take"
-			take_item(command_two)
+			object = two_word_object?(command_two, command_three)
+			take_item(object)
 		end
 
 		if command == "drop"
-			drop_item(command_two)
+			object = two_word_object?(command_two, command_three)
+			drop_item(object)
 		end
 
 		if input == "use keypad"
@@ -527,11 +565,11 @@ class InputController
 		end
 
 		if command == "unlock"
-			unlock_access_point(input, command, command_two, command_three, command_four, command_five)
+			unlock_access_point(input, command_two, command_three, command_four, command_five)
 		end
 
 		if command == "give"
-			give_item_to_character(input, command, command_two, command_three, command_four, command_five)
+			give_item_to_character(command_two, command_four)
 		end
 
 		if command == "inventory" || command == "i"
@@ -558,7 +596,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look exit quit help h inventory i take give drop unlock open close put read talk)
+		@commands ||= %w(go look l exit quit help h inventory i take give drop unlock open close use put read talk)
 	end
 
 	def valid_directions
