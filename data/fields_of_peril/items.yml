@@ -49,7 +49,7 @@
 -
   handle: parchment
   letter: true
-  inside: box
+  inside: treasure chest
   description: a charred bit of parchment with some writing on it.
   details: 
     phrase: "To open the apartment entrance, who is the artist who wrote Danny Brown's favorite song of all time?"

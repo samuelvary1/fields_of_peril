@@ -151,10 +151,10 @@ class InputController
 
 		containers.each do |container|
 			container.contents.each do |item|
-				if item.handle == object && (item.mobile.nil? || item.mobile)
+				if (item.handle == object || item.alt_handle == object) && (item.mobile.nil? || item.mobile)
 				  avatar.items.insert(0, item)
 				  container.contents.delete(item)
-				  @current_message = "You've picked up the #{object} from the #{container.handle}"	
+				  @current_message = "You've picked up the #{item.handle} from the #{container.handle}"	
 				  return
 				elsif !item.mobile && item.handle == object
 					@current_message = "That won't budge."
