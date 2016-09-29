@@ -487,6 +487,10 @@ class InputController
 		command_six   = entered_words[5]
 
 		if command == "go"
+			if command_two.nil?
+				@current_message = "Ok, what direction do you want to go in?"
+				return
+			end
 			if valid_directions.include?(command_two)
 				input_movement(command_two)
 			else
