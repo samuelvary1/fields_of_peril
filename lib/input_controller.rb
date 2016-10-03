@@ -19,19 +19,19 @@ class InputController
 		end
 	end
 
-	def input_movement(command_two)
+	def input_movement(direction)
 
-		if command_two == "north" || command_two == "n"
+		if direction == "north" || direction == "n"
 			direction = "north" 
-		elsif command_two == "south" || command_two == "s"
+		elsif direction == "south" || direction == "s"
 			direction = "south"
-		elsif command_two == "east" || command_two == "e"
+		elsif direction == "east" || direction == "e"
 			direction = "east"
-		elsif command_two == "west" || command_two == "w"
+		elsif direction == "west" || direction == "w"
 			direction = "west"
-		elsif command_two == "up" || command_two == "u"
+		elsif direction == "up" || direction == "u"
 			direction = "up"
-		elsif command_two == "down" || command_two == "d"
+		elsif direction == "down" || direction == "d"
 			direction = "down"
 		else
 			@current_message = "Sorry, that doesn't seem to be a valid direction"
