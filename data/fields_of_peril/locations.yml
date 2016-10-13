@@ -4,7 +4,7 @@
   title: apartment_living_room
   first_time_message: "You wake up to find yourself in a seemingly abandoned apartment. You see a small wooden chest, a rifle, and what appears to be a box for stationery on a desk in the corner"
   details:
-      phrase: Looks like there are some random objects on the dusty mantle. And that bookcase looks a little weird..
+      phrase: You spot a keypad by the apartment entrance.
       knowledge: true
   rooms:
     west: 3rd_floor_stairs

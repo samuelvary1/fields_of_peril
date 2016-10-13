@@ -53,7 +53,7 @@
   inside: treasure chest
   description: a charred bit of parchment with some writing on it.
   details: 
-    phrase: "To open the apartment entrance, who is the artist who wrote Danny Brown's favorite song of all time?"
+    phrase: "To open the apartment entrance, please use the answer to the Ultimate Question of Life, the Universe, and Everything on the keypad by the door."
 -
   handle: bookcase
   description: that bookcase looks a little odd...
@@ -67,7 +67,7 @@
   handle: keypad
   mobile: false
   description: It's got the numbers 0-9 on it. 
-  code: 14119
+  code: 42
   # visible: false
   location: apartment_living_room
   direction: west
