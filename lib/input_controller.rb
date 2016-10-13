@@ -324,7 +324,7 @@ class InputController
 		if inventory.nil? && room.nil? && input == "look inside"
 			@current_message = "what are you trying to look inside?"
 			return
-		elsif inventory.nil? && room.nil? && input.length > 11
+		elsif inventory.nil? && room.nil?
 			@current_message = "I don't think you can look inside anything like that here"
 			return
 		end
@@ -348,8 +348,8 @@ class InputController
 				end
 			elsif !room.open && !room.transparent
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
-			else 
-				@current_message = "I don't see anything you can actually look inside like that here."
+			else
+				@current_message = "I'm sorry, I couldn't understand you."
 			end
 		end
 	end
