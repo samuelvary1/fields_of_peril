@@ -321,11 +321,11 @@ class InputController
 		inventory = inventory_checker(object)
 		room = room_checker(object)
 
-		if inventory.nil? && room.nil? && input == "look inside"
-			@current_message = "what are you trying to look inside?"
+		if input == "look in" || input == "look inside"
+			@current_message = "What are you trying to look inside?"
 			return
-		elsif inventory.nil? && room.nil?
-			@current_message = "I don't think you can look inside anything like that here"
+		elsif inventory.nil? && room.nil? && input.length > 11
+			@current_message = "I don't see anything like that around here."
 			return
 		end
 
@@ -340,6 +340,10 @@ class InputController
 				@current_message = "That's closed and/or not transparent, you can't see inside it."
 			end
 		else
+			if room.nil? && inventory.nil?
+				@current_message = "I don't see anything like that around here."
+				return
+			end
 			if room.open || room.transparent
 				if room.contents.size == 0
 					@current_message = "There's nothing in there but a little bit of lint"

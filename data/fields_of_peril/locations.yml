@@ -41,9 +41,9 @@
   header: Secret Room
   title: secret_room
   first_time_message: You pull on the candle-holder above the mantle and watch as a small door in the fireplace slides open. You step through.
-  description: It appears to be some kind of secret meeting room. Various posters supporting the resistance decorate the walls.
+  description: It appears to be some kind of secret meeting room. Various posters supporting the revolution decorate the walls.
   details: 
-    phrase: "One poster says 'death to the fascists'"
+    phrase: "One poster says 'Big Brother is always watching'"
     acquired_phrase:
     knowledge:
     points:
@@ -56,7 +56,7 @@
 -
   header: Intel Room
   title: intel_room 
-  first_time_message: "You solve x puzzle and the secret passageway reveals itself, allowing you to step into a room full of documents and equipment."
+  first_time_message: "You solve TBD puzzle and the secret passageway reveals itself, allowing you to step into a room full of documents and equipment."
   description: "The room seems full of paperwork and specialized equipment, possibly for codebreaking. Most of it looks too heavy to move but there are some interesting pieces of paper on a metal desk against the southern wall."
   details: 
     phrase: Not much else to see right now..
