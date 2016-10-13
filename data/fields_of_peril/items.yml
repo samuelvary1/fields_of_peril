@@ -7,7 +7,8 @@
     phrase: you can just make out initials carved in the stock "V.L."
   location: apartment_living_room
 -
-  handle: mailbox
+  handle: box
+  alt_handle: stationery box
   description: that's a fine lookin mailbox
   details:
     phrase: it's got some kind of ornate design on the side.
