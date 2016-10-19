@@ -50,10 +50,10 @@
 -
   handle: parchment
   letter: true
-  inside: treasure chest
+  inside: wooden chest
   description: a charred bit of parchment with some writing on it.
   details: 
-    phrase: "To open the apartment entrance, please use the answer to the Ultimate Question of Life, the Universe, and Everything on the keypad by the door."
+    phrase: "To open the apartment entrance, please type 'use keypad' and enter the answer to the Ultimate Question of Life, the Universe, and Everything."
 -
   handle: bookcase
   description: that bookcase looks a little odd...
