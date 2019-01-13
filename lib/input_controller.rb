@@ -478,8 +478,8 @@ class InputController
 		input.downcase!
 		entered_words = input.split
 
-		if !valid?(input)
-			@current_message = "Pardon? I'm not sure what you mean by that."
+		unless valid?(input)
+			@current_message = "Sorry, that is not a valid command."
 			return
 		end		
 
@@ -490,13 +490,15 @@ class InputController
 		command_five  = entered_words[4]
 		command_six   = entered_words[5]
 
-		if command == "go" && !command_two
+		if command == "go"
+			if command_two.nil?
 				@current_message = "Ok, what direction do you want to go in?"
 				return
-			elsif valid_directions.include?(command_two)
+			end
+			if valid_directions.include?(command_two)
 				input_movement(command_two)
 			else
-				@current_message = "Valid directions are only north, south, east, west, up, or down. You can also type the first letter."
+				@current_message = "Sorry, that doesn't seem to be a valid direction.."
 			end
 		end
 
