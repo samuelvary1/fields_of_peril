@@ -1,18 +1,23 @@
 -
   starting_location: true
   header: Apartment Living Room
+  # header will be changed to name
   title: apartment_living_room
+  # title will be gotten rid of
   first_time_message: "You wake up to find yourself in a seemingly abandoned apartment. You see a small wooden chest, an old hunting rifle, and what appears to be a box for stationery on a desk in the corner"
   description: "That rifle will probably come in handy, and you should check that box on the desk for any helpful correspondence!"
   details:
       phrase: You spot a keypad by the apartment entrance.
       knowledge: true
   rooms:
+    # this column changed to adjacent_rooms
+    # replace with location ids
     west: 3rd_floor_stairs
     east: secret_room
     south: bathroom
   access_points:
     west:
+      # access_points will have their own table, then this will all be replaced by access_point ids
       handle: entrance
       game_handle: entrance
       game_handle_display: apartment entrance
@@ -29,7 +34,7 @@
 -
   header: Bathroom
   title: bathroom
-  first_time_message: "For the first time, you step into the bathroom"
+  first_time_message: "You step into the bathroom and glance around. Dust covers the mirror, and the pipes are caked with rust. You catch sight of yourself in the glass, and are frightened by the hollow look in your eyes."
   description: Ornate tiles cover the floor. There is a medicine cabinet over the sink.
   details: 
     phrase: Not much else to see right now..
@@ -485,10 +490,5 @@
   rooms:
     # west: PART_TWO
     up: rebel_war_room
-
-
-
-
-
 
 

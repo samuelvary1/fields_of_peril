@@ -3,7 +3,7 @@ lib_dir = File.expand_path(File.dirname(__FILE__))
 require File.join(lib_dir, 'avatar')
 require File.join(lib_dir, 'input_controller')
 require File.join(lib_dir, 'game_data_loader')
-# require 'pry'
+require 'pry'
 
 class Bootstrap
   def initialize(location_data_file, message_data_file, character_data_file, item_data_file)
@@ -11,6 +11,7 @@ class Bootstrap
     @items = loader.load_item_data(item_data_file)
     @locations = loader.load_location_data(location_data_file, character_data_file, item_data_file)
     @messages = loader.load_message_data(message_data_file)
+    # binding.pry
   end
   
   def starting_location

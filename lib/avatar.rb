@@ -16,7 +16,7 @@ class Avatar
 		puts ""
 		
 		items.collect do |item|
-			item.description
+			item.alt_handle
 		end
 	end
 
