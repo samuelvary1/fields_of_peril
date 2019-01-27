@@ -1,4 +1,5 @@
 require 'readline'
+require 'pry'
 
 class InputController
 	attr_reader :avatar, :current_message
@@ -67,15 +68,66 @@ class InputController
 		end
 	end
 
+	# begin look commands
+
 	def look(input)
+		
+		look_phrase = input.split(" ")
+
+		if look_phrase[1] == "at" || look_phrase[2] == "at"
+			look_at(look_phrase)
+			return
+		end
+
+		if look_phrase[1] == "in" || look_phrase[1] == "inside"
+			look_in(look_phrase)
+			return
+		end
+
 		if input == "look" || input == "l" || input == "look around"
 			@current_message = avatar.location.description
-		elsif input == "look closer" || input == "look harder" || input == "look carefully"
+		elsif input == "look closer" || input == "look carefully"
 			@current_message = avatar.location.details["phrase"]
 		else
 			@current_message = "Sorry, I only understand you as far as wanting to look."
 		end
 	end
+
+	def look_at(look_phrase)
+		if (look_phrase[1] == "carefully" || look_phrase[1] == "closer") && look_phrase[2] = "at" && !look_phrase[3].nil?
+			careful_look = true
+			item = look_phrase[3]
+		else
+			item = look_phrase[2]
+		end
+
+		item = inventory_checker(item) || room_checker(item) || character_checker(item)
+
+		if item
+			careful_look ? @current_message = item.details["phrase"] : @current_message = item.description 
+		else
+			@current_message = "I don't think you can look at anything like that here."
+		end			 
+	end
+
+	def look_in(look_phrase)
+
+		container = inventory_checker(look_phrase[2]) || room_checker(look_phrase[2]) || character_checker(look_phrase[2])
+
+		if container && (container.open || container.transparent) 
+			if container.contents.size == 0
+				@current_message = "There's nothing in there but a little bit of lint."
+			else
+				@current_message = container.list_contents
+			end
+		elsif !container.open || !container.transparent
+			@current_message = "That's closed or not transparent, you can't see inside."
+		else
+			@current_message = "I don't see any containers like that around here."
+		end
+	end
+
+	# object checkers
 
 	def inventory_checker(object)
 		avatar.items.find do |item|
@@ -305,59 +357,6 @@ class InputController
 		end
 	end
 
-	def look_at(object)
-		if inventory_checker(object)
-			@current_message = inventory_checker(object).description
-			elsif room_checker(object)
-				@current_message = room_checker(object).description
-			elsif character_checker(object)
-				@current_message = character_checker(object).description
-		else
-			@current_message = "I don't think you can look at anything like that here."
-		end			 
-	end
-
-	def look_in(object, input)
-		inventory = inventory_checker(object)
-		room = room_checker(object)
-
-		if input == "look in" || input == "look inside"
-			@current_message = "What are you trying to look inside?"
-			return
-		elsif inventory.nil? && room.nil? && input.length > 11
-			@current_message = "I don't see anything like that around here."
-			return
-		end
-
-		if room.nil? && inventory
-			if inventory.open || inventory.transparent
-				if inventory.contents.size == 0
-					@current_message = "There's nothing in there but a little bit of lint"
-				else
-					@current_message = inventory.list_contents
-				end
-			elsif !inventory.open && !inventory.transparent
-				@current_message = "That's closed and/or not transparent, you can't see inside it."
-			end
-		else
-			if room.nil? && inventory.nil?
-				@current_message = "I don't see anything like that around here."
-				return
-			end
-			if room.open || room.transparent
-				if room.contents.size == 0
-					@current_message = "There's nothing in there but a little bit of lint"
-				else
-					@current_message = room.list_contents
-				end
-			elsif !room.open && !room.transparent
-				@current_message = "That's closed and/or not transparent, you can't see inside it."
-			else
-				@current_message = "I'm sorry, I couldn't understand you."
-			end
-		end
-	end
-
 	def open(object)
 		room = room_container(object)
 		carried = carried_container(object)
@@ -502,21 +501,7 @@ class InputController
 			end
 		end
 
-		if "#{command} #{command_two}" == "look at"
-			# this will break if you haven't added a details phrase to the item. you could make a default if there isn't much else to see, or you have to write a details phrase for every item in the game, whether there's anything to see or not. might add more layers to the game if you don't rely on a default.
-			look_at(command_three)
-		end
-
-		if "#{command} #{command_two}" == "look in" || "#{command} #{command_two}" == "look inside" 
-			if command_four.nil?
-				object = command_three
-			else
-				object = "#{command_three} #{command_four}"
-			end
-			look_in(object, input)
-		end
-
-		if (command == "look" || command == "l") && command_two != "at" && command_two != "in" && command_two != "inside"
+		if command == "look" || command == "examine"
 			look(input)
 		end
 
@@ -609,7 +594,7 @@ class InputController
 	end
 
 	def valid_commands
-		@commands ||= %w(go look l exit quit help h inventory i take pick give drop unlock open close use put read talk)
+		@commands ||= %w(go look l exit quit help h inventory i take pick give drop unlock open close use put read talk examine)
 	end
 
 	def valid_directions
