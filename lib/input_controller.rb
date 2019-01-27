@@ -74,7 +74,7 @@ class InputController
 		
 		look_phrase = input.split(" ")
 
-		if look_phrase[1] == "at" || look_phrase[2] == "at"
+		if look_phrase[1] == "at" || look_phrase[2] == "at" || look_phrase[0] == "examine"
 			look_at(look_phrase)
 			return
 		end
@@ -94,7 +94,11 @@ class InputController
 	end
 
 	def look_at(look_phrase)
-		if (look_phrase[1] == "carefully" || look_phrase[1] == "closer") && look_phrase[2] = "at" && !look_phrase[3].nil?
+
+		if look_phrase[0] == "examine"
+			careful_look = true
+			item = look_phrase[1]
+		elsif (look_phrase[1] == "carefully" || look_phrase[1] == "closer") && look_phrase[2] = "at" && !look_phrase[3].nil?
 			careful_look = true
 			item = look_phrase[3]
 		else
@@ -104,7 +108,7 @@ class InputController
 		item = inventory_checker(item) || room_checker(item) || character_checker(item)
 
 		if item
-			careful_look ? @current_message = item.details["phrase"] : @current_message = item.description 
+			careful_look && item.details ? @current_message = item.details["phrase"] : @current_message = item.description 
 		else
 			@current_message = "I don't think you can look at anything like that here."
 		end			 
