@@ -1,36 +1,29 @@
 -
   starting_location: true
   header: Apartment Living Room
-  # header will be changed to name
   title: apartment_living_room
-  # title will be gotten rid of
   first_time_message: "You wake up to find yourself in a seemingly abandoned apartment. You see a small wooden chest, an old hunting rifle, and what appears to be a box for stationery on a desk in the corner"
-  description: "That rifle will probably come in handy, and you should check that box on the desk for any helpful correspondence!"
+  description: "That rifle will probably come in handy, and you should check that box on the desk for any helpful correspondence!\nThere's also a chest standing in one corner."
   details:
       phrase: You spot a keypad by the apartment entrance.
-      knowledge: true
   rooms:
-    # this column changed to adjacent_rooms
-    # replace with location ids
     west: 3rd_floor_stairs
     east: secret_room
     south: bathroom
   access_points:
     west:
-      # access_points will have their own table, then this will all be replaced by access_point ids
       handle: entrance
       game_handle: entrance
       game_handle_display: apartment entrance
       locked: true
-      visible: true
-      code: 14119 
     east:
       handle: fireplace
       game_handle: fireplace
       game_handle_display: fireplace
+      # if a special message exists, and you try to go through the access point, 
+      # and it's locked, the special message will display
+      special_message: "I'm not sure how you plan on going through that fireplace."
       locked: true
-      visible: true
-      code: 4918
 -
   header: Bathroom
   title: bathroom

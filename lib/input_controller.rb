@@ -40,11 +40,7 @@ class InputController
 		end		
 
 		if avatar.location.access_points && avatar.location.access_points[direction] && avatar.location.access_points[direction]["locked"]
-			if !avatar.location.access_points[direction]["visible"]
-				@current_message = "Sorry, you cannot go #{direction} from here."
-				return
-			end
-			@current_message = "Sorry, that #{avatar.location.access_points[direction]["game_handle_display"]} seems to be locked."
+			@current_message = avatar.location.access_points[direction]["special_message"] || "Sorry, that #{avatar.location.access_points[direction]["game_handle_display"]} seems to be locked."
 			return
 		end
 
@@ -80,7 +76,7 @@ class InputController
 		end
 
 		if look_phrase[1] == "in" || look_phrase[1] == "inside"
-			look_in(look_phrase)
+			!look_phrase[2].nil? ? look_in(look_phrase) : @current_message = "I'm not sure what you're trying to look inside."
 			return
 		end
 

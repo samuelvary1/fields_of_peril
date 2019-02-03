@@ -36,9 +36,8 @@
   container: true
   open: false
   transparent: false
-  locked: false
-  code: 12345
-  # contents:
+  # locked: true
+  # code: 4918
 -
   handle: skeleton key
   alt_handle: key
@@ -59,16 +58,22 @@
   description: that bookcase looks a little odd...
   mobile: false
   location: apartment_living_room
+  direction: east
   # special_interaction: push
   # visible: true
   # if a player attempts a special interaction with an object, check if that matches what's here
   # special_interaction_result: "You give the bookcase a hearty shove, which moves just enough to reveal a small door and a mechanical keypad!"
 -
+  handle: fireplace
+  description: an imposing stone fireplace.
+  mobile: false
+  location: apartment_living_room
+  # direction: east
+-
   handle: keypad
   mobile: false
   description: It's got the numbers 0-9 on it. 
   code: 42
-  # visible: false
   location: apartment_living_room
   direction: west
 -
